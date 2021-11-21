@@ -66,7 +66,7 @@ class _MeditationAppScreenState extends State<MeditationAppScreen> {
             ),
             child: Center(
               child: ListTile(
-                title: Text('${items[index].name}'),
+                title: Text(items[index].name),
                 leading: IconButton(
                   splashRadius: 2,
                   icon: playingIndex == index
@@ -79,11 +79,22 @@ class _MeditationAppScreenState extends State<MeditationAppScreen> {
                         playingIndex = null;
                       });
                     } else {
-                      audioPlayer.setAsset(items[index].audioPath);
-                      audioPlayer.play();
-                      setState(() {
-                        playingIndex = index;
-                      });
+                      try {
+                        audioPlayer
+                            .setAsset(items[index].audioPath)
+                            .catchError((onError) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.purple.withOpacity(10),
+                            content: const Text('Oops ...'),
+                          ));
+                        });
+                        audioPlayer.play();
+                        setState(() {
+                          playingIndex = index;
+                        });
+                      } catch (error) {
+                        print(error);
+                      }
                     }
                   },
                 ),
