@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:meditation_app/models/item_model.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MeditationAppScreen extends StatefulWidget {
-  MeditationAppScreen({Key? key}) : super(key: key);
+  const MeditationAppScreen({Key? key}) : super(key: key);
 
   @override
   _MeditationAppScreenState createState() => _MeditationAppScreenState();
@@ -52,8 +53,8 @@ class _MeditationAppScreenState extends State<MeditationAppScreen> {
     return Scaffold(
       body: SafeArea(
         child: ListView.builder(
-          physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
           itemExtent: 100,
           itemCount: items.length,
           itemBuilder: (BuildContext context, int index) => Container(
@@ -63,14 +64,29 @@ class _MeditationAppScreenState extends State<MeditationAppScreen> {
               image: DecorationImage(
                   image: AssetImage(items[index].imagePath), fit: BoxFit.cover),
             ),
-            child: ListTile(
-              title: Text('${items[index].name}'),
-              leading: IconButton(
-                icon: Icon(Icons.play_arrow),
-                onPressed: () {
-                  audioPlayer.setAsset(items[index].audioPath);
-                  audioPlayer.play();
-                },
+            child: Center(
+              child: ListTile(
+                title: Text('${items[index].name}'),
+                leading: IconButton(
+                  splashRadius: 2,
+                  icon: playingIndex == index
+                      ? const FaIcon(FontAwesomeIcons.stop)
+                      : const FaIcon(FontAwesomeIcons.play),
+                  onPressed: () {
+                    if (playingIndex == index) {
+                      audioPlayer.stop();
+                      setState(() {
+                        playingIndex = null;
+                      });
+                    } else {
+                      audioPlayer.setAsset(items[index].audioPath);
+                      audioPlayer.play();
+                      setState(() {
+                        playingIndex = index;
+                      });
+                    }
+                  },
+                ),
               ),
             ),
           ),
