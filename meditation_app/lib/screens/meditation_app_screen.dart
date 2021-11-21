@@ -44,15 +44,26 @@ class _MeditationAppScreenState extends State<MeditationAppScreen> {
     return Scaffold(
       body: SafeArea(
         child: ListView.builder(
-            physics:
-                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-            itemExtent: 100,
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index) => Container(
-                  // height: 50,
-                  color: itemsColors[index],
-                  child: Text('${items[index].name}'),
-                )),
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          itemExtent: 100,
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) => Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              image: DecorationImage(
+                image: AssetImage(items[index].imagePath),
+              ),
+            ),
+            child: ListTile(
+              title: Text('${items[index].name}'),
+              leading: IconButton(
+                icon: Icon(Icons.play_arrow),
+                onPressed: () {},
+              ),
+            ),
+          ),
+        ),
 
         // child: ListView(
         //   children: [
