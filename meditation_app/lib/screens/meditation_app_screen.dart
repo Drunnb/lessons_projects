@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meditation_app/models/item_model.dart';
+import 'package:just_audio/just_audio.dart';
 
 class MeditationAppScreen extends StatefulWidget {
   MeditationAppScreen({Key? key}) : super(key: key);
@@ -31,13 +32,20 @@ class _MeditationAppScreenState extends State<MeditationAppScreen> {
         imagePath: 'assets/meditation_images/wind.jpeg',
         audioPath: 'assets/meditation_audios/wind.mp3'),
   ];
-  final List<Color> itemsColors = <Color>[
-    Colors.yellow,
-    Colors.green,
-    Colors.blue,
-    Colors.red,
-    Colors.purple
-  ];
+  late AudioPlayer audioPlayer;
+  int? playingIndex;
+
+  @override
+  void initState() {
+    audioPlayer = AudioPlayer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,41 +57,24 @@ class _MeditationAppScreenState extends State<MeditationAppScreen> {
           itemExtent: 100,
           itemCount: items.length,
           itemBuilder: (BuildContext context, int index) => Container(
+            margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               image: DecorationImage(
-                image: AssetImage(items[index].imagePath),
-              ),
+                  image: AssetImage(items[index].imagePath), fit: BoxFit.cover),
             ),
             child: ListTile(
               title: Text('${items[index].name}'),
               leading: IconButton(
                 icon: Icon(Icons.play_arrow),
-                onPressed: () {},
+                onPressed: () {
+                  audioPlayer.setAsset(items[index].audioPath);
+                  audioPlayer.play();
+                },
               ),
             ),
           ),
         ),
-
-        // child: ListView(
-        //   children: [
-        //     Container(
-        //       height: 50,
-        //       color: Colors.yellow,
-        //       child: Text('${items[0].name}'),
-        //     ),
-        //     Container(
-        //       height: 50,
-        //       color: Colors.green,
-        //       child: Text('${items[1].name}'),
-        //     ),
-        //     Container(
-        //       height: 50,
-        //       color: Colors.blue,
-        //       child: Text('${items[2].name}'),
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }
