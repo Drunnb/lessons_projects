@@ -1,3 +1,4 @@
+import 'package:black_jack_app/screens/black_jack_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(),
+      home: BlackJackScreen(),
     );
   }
 }
