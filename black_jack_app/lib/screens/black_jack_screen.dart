@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:black_jack_app/widgets/cards_grid_view.dart';
+import 'package:black_jack_app/widgets/my_button.dart';
+import 'package:black_jack_app/widgets/text_score_widget.dart';
 import 'package:flutter/material.dart';
 
 class BlackJackScreen extends StatefulWidget {
@@ -79,6 +82,13 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
   };
   Map<String, int> playingCards = {};
 
+  String randomCard() {
+    Random random = Random();
+    String cardOneKey =
+        playingCards.keys.elementAt(random.nextInt(playingCards.length));
+    return cardOneKey;
+  }
+
   void changeCards() {
     setState(() {
       isGameStarted = true;
@@ -90,32 +100,10 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
     myCards = [];
     dealersCards = [];
 
-    Random random = Random();
-
-    // String randomCard() {
-    //   String cardOneKey =
-    //       playingCards.keys.elementAt(random.nextInt(playingCards.length));
-    //   return cardOneKey;
-    // }
-
-    String cardOneKey =
-        playingCards.keys.elementAt(random.nextInt(playingCards.length));
-    //from 1 to playingCards.length inclusive
-    playingCards.removeWhere((key, value) => key == cardOneKey);
-    String cardTwoKey =
-        playingCards.keys.elementAt(random.nextInt(playingCards.length));
-    playingCards.removeWhere((key, value) => key == cardTwoKey);
-    String cardThreeKey =
-        playingCards.keys.elementAt(random.nextInt(playingCards.length));
-    playingCards.removeWhere((key, value) => key == cardThreeKey);
-    String cardFourKey =
-        playingCards.keys.elementAt(random.nextInt(playingCards.length));
-    playingCards.removeWhere((key, value) => key == cardFourKey);
-
-    dealersFirstCard = cardOneKey;
-    dealersSecondsCard = cardTwoKey;
-    playesFirstCard = cardThreeKey;
-    playesSecondsCard = cardFourKey;
+    dealersFirstCard = randomCard();
+    dealersSecondsCard = randomCard();
+    playesFirstCard = randomCard();
+    playesSecondsCard = randomCard();
 
     dealersCards.add(Image.asset(dealersFirstCard!));
     dealersCards.add(Image.asset(dealersSecondsCard!));
@@ -129,9 +117,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
         deckOfCards[playesFirstCard]! + deckOfCards[playesSecondsCard]!;
 
     if (dealerScore <= 14) {
-      String thirdDealersCardKey =
-          playingCards.keys.elementAt(random.nextInt(playingCards.length));
-      playingCards.removeWhere((key, value) => key == thirdDealersCardKey);
+      String thirdDealersCardKey = randomCard();
       dealersCards.add(Image.asset(thirdDealersCardKey));
       dealerScore = dealerScore + deckOfCards[thirdDealersCardKey]!;
     }
@@ -139,10 +125,8 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
 
   void addCard() {
     Random random = Random();
-    if (playingCards.length > 0) {
-      String cardKey =
-          playingCards.keys.elementAt(random.nextInt(playingCards.length));
-      playingCards.removeWhere((key, value) => key == cardKey);
+    if (playingCards.isNotEmpty) {
+      String cardKey = randomCard();
       setState(() {
         myCards.add(Image.asset(cardKey));
       });
@@ -167,57 +151,16 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
                   children: [
                     Column(
                       children: [
-                        Text(
-                          'Dealer score $dealerScore',
-                          style: TextStyle(
-                              color: dealerScore <= 21
-                                  ? Colors.green[900]
-                                  : Colors.red[900]),
-                        ),
+                        TextScoreWidget(score: dealerScore),
                         const SizedBox(height: 20),
-                        Container(
-                          height: 200,
-                          child: GridView.builder(
-                              itemCount: dealersCards.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3),
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8.0),
-                                  child: dealersCards[index],
-                                );
-                              }),
-                        ),
+                        CardsGridView(cards: dealersCards),
                       ],
                     ),
                     Column(
                       children: [
-                        Text(
-                          'Player score $playerScore',
-                          style: TextStyle(
-                              color: playerScore <= 21
-                                  ? Colors.green[900]
-                                  : Colors.red[900]),
-                        ),
+                        TextScoreWidget(score: playerScore),
                         const SizedBox(height: 20),
-                        Container(
-                          height: 200,
-                          child: GridView.builder(
-                              itemCount: myCards.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8.0),
-                                  child: myCards[index],
-                                );
-                              }),
-                        ),
+                        CardsGridView(cards: myCards),
                       ],
                     ),
                     IntrinsicWidth(
@@ -225,16 +168,10 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          MaterialButton(
-                            child: const Text('Another Card'),
-                            color: Colors.brown[200],
-                            onPressed: addCard,
-                          ),
-                          MaterialButton(
-                            child: const Text('Next Round'),
-                            color: Colors.brown[200],
-                            onPressed: changeCards,
-                          ),
+                          MyButtonStyle(
+                              label: 'Another Card', onPressed: addCard),
+                          MyButtonStyle(
+                              label: 'Next Round', onPressed: changeCards),
                         ],
                       ),
                     ),
@@ -245,11 +182,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
           )
         : Scaffold(
             body: Center(
-              child: MaterialButton(
-                child: const Text('Start Game'),
-                color: Colors.brown[200],
-                onPressed: changeCards,
-              ),
+              child: MyButtonStyle(label: 'Start Game', onPressed: changeCards),
             ),
           );
   }
