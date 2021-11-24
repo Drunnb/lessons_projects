@@ -60,16 +60,8 @@ class _DiceScreenState extends State<DiceScreen> {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(
-                        height: 150,
-                        width: 150,
-                        child: diceInGame[0],
-                      ),
-                      SizedBox(
-                        height: 150,
-                        width: 150,
-                        child: diceInGame[1],
-                      ),
+                      DiceWidget(dices: diceInGame, index: 0),
+                      DiceWidget(dices: diceInGame, index: 1),
                     ],
                   ),
             const SizedBox(height: 150),
@@ -88,6 +80,25 @@ class _DiceScreenState extends State<DiceScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class DiceWidget extends StatelessWidget {
+  List<Image> dices;
+  int? index;
+  DiceWidget({
+    Key? key,
+    required this.dices,
+    this.index,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 150,
+      width: 150,
+      child: dices[index!],
     );
   }
 }
