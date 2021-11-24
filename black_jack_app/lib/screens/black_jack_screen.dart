@@ -86,6 +86,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
     Random random = Random();
     String cardOneKey =
         playingCards.keys.elementAt(random.nextInt(playingCards.length));
+    playingCards.removeWhere((key, value) => key == cardOneKey);
     return cardOneKey;
   }
 
