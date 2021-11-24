@@ -19,6 +19,7 @@ class _DiceScreenState extends State<DiceScreen> {
     "assets/dice/dice6.png": 6,
   };
   List<Image> diceInGame = [];
+  int score = 0;
 
   String randomDice() {
     Random random = Random();
@@ -32,6 +33,7 @@ class _DiceScreenState extends State<DiceScreen> {
     var diceTwo = randomDice();
     diceInGame.add(Image.asset(diceOne));
     diceInGame.add(Image.asset(diceTwo));
+    score = dices[diceOne]! + dices[diceTwo]!;
   }
 
   @override
@@ -65,6 +67,13 @@ class _DiceScreenState extends State<DiceScreen> {
                     ],
                   ),
             const SizedBox(height: 150),
+            score > 0
+                ? Text(
+                    'Score: $score',
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  )
+                : Text(''),
+            const SizedBox(height: 20),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     primary: const Color.fromRGBO(221, 81, 81, 1),
