@@ -125,7 +125,6 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
   }
 
   void addCard() {
-    Random random = Random();
     if (playingCards.isNotEmpty) {
       String cardKey = randomCard();
       setState(() {
