@@ -7,8 +7,16 @@ class DiceScreen extends StatefulWidget {
   _DiceScreenState createState() => _DiceScreenState();
 }
 
-// rgb(253,164,164)
 class _DiceScreenState extends State<DiceScreen> {
+  final Map<String, int> dices = {
+    "assets/dice/dice1.png": 1,
+    "assets/dice/dice2.png": 2,
+    "assets/dice/dice3.png": 3,
+    "assets/dice/dice4.png": 4,
+    "assets/dice/dice5.png": 5,
+    "assets/dice/dice6.png": 6,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
