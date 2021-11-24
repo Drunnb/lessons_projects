@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class DiceScreen extends StatefulWidget {
@@ -16,6 +18,21 @@ class _DiceScreenState extends State<DiceScreen> {
     "assets/dice/dice5.png": 5,
     "assets/dice/dice6.png": 6,
   };
+  List<Image> diceInGame = [];
+
+  String randomDice() {
+    Random random = Random();
+    String dice = dices.keys.elementAt(random.nextInt(dices.length));
+    return dice;
+  }
+
+  void rollDices() {
+    diceInGame.clear();
+    var diceOne = randomDice();
+    var diceTwo = randomDice();
+    diceInGame.add(Image.asset(diceOne));
+    diceInGame.add(Image.asset(diceTwo));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,27 +42,48 @@ class _DiceScreenState extends State<DiceScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  child: Image.asset("assets/dice/dice1.png"),
-                ),
-                Container(
-                  height: 150,
-                  width: 150,
-                  child: Image.asset("assets/dice/dice6.png"),
-                ),
-              ],
-            ),
+            diceInGame.isEmpty
+                ? Center(
+                    child: Container(
+                      height: 150,
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Бросай Кости',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(
+                        height: 150,
+                        width: 150,
+                        child: diceInGame[0],
+                      ),
+                      SizedBox(
+                        height: 150,
+                        width: 150,
+                        child: diceInGame[1],
+                      ),
+                    ],
+                  ),
             const SizedBox(height: 150),
             ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        const Color.fromRGBO(221, 81, 81, 1))),
-                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                    primary: const Color.fromRGBO(221, 81, 81, 1),
+                    fixedSize: const Size(100, 50),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15))),
+                onPressed: () {
+                  setState(() {
+                    rollDices();
+                  });
+                },
                 child: const Text('Roll')),
           ],
         ),
