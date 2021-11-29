@@ -3,7 +3,7 @@ import 'package:gallery_app/keys.dart';
 import 'package:gallery_app/services/network_helper.dart';
 
 class PhotoGallery extends StatefulWidget {
-  PhotoGallery({Key? key}) : super(key: key);
+  const PhotoGallery({Key? key}) : super(key: key);
 
   @override
   _PhotoGalleryState createState() => _PhotoGalleryState();
@@ -27,22 +27,50 @@ class _PhotoGalleryState extends State<PhotoGallery> {
   void initState() {
     super.initState();
     images = getImages();
+    // getImages().then((value) => print(value));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 6,
-              mainAxisSpacing: 6,
-            ),
-            itemBuilder: (context, index) {
-              return Container();
-            }),
-      ),
+      body: FutureBuilder(
+          future: images,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+            //   if (snapshot.connectionState == ConnectionState.none) {
+            //     return Center( child: Text('Error'));
+            //   }
+            //  if (snapshot.connectionState == ConnectionState.active ||snapshot.connectionState == ConnectionState.waiting ) {
+            //     return Center( child: CircularProgressIndicator());
+            //   }
+
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+
+              case ConnectionState.waiting:
+
+              case ConnectionState.active:
+                return const Center(child: CircularProgressIndicator());
+              case ConnectionState.done:
+                return Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: SafeArea(
+                    child: GridView.builder(
+                        itemCount: snapshot.data?.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 6,
+                          mainAxisSpacing: 6,
+                        ),
+                        itemBuilder: (context, index) {
+                          return Image.network(snapshot.data![index],
+                              fit: BoxFit.cover);
+                        }),
+                  ),
+                );
+            }
+          }),
     );
   }
 }
