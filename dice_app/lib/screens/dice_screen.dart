@@ -70,9 +70,9 @@ class _DiceScreenState extends State<DiceScreen> {
             score > 0
                 ? Text(
                     'Score: $score',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
+                    style: const TextStyle(color: Colors.white, fontSize: 24),
                   )
-                : Text(''),
+                : const Text(''),
             const SizedBox(height: 20),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
