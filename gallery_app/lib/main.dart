@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_app/screens/photo_gallery_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Scaffold(),
+      home: PhotoGallery(),
     );
   }
 }
