@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stb_v1/screens/map_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,9 +13,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        // Color.fromARGB(255, 54, 70, 92),
+        primarySwatch: Colors.blueGrey, // app bar color
+        colorScheme: const ColorScheme.light().copyWith(
+          primary: const Color(0xff548CA8), // textField color
+          secondary: const Color(0xff96BAFF), // Floating action button
+        ),
       ),
-      home: Container(),
+      home: MapScreen(),
     );
   }
 }
