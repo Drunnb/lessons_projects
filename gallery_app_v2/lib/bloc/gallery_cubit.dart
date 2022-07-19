@@ -7,14 +7,14 @@ import 'package:gallery_app_v2/services/network_helper.dart';
 part 'gallery_state.dart';
 
 class GalleryCubit extends Cubit<GalleryState> {
-  GalleryCubit() : super(GalleryInitial());
+  GalleryCubit() : super(const GalleryInitial());
 
   Future<void> getPhotos() async {
-    emit(GalleryLoading());
+    emit(const GalleryLoading());
 
     List<String> images = [];
     String url =
-        "https://api.unsplash.com/photos/random/?client_id=$unsplashApiKey&count=20";
+        "https://api.unsplash.com/photos/random/?client_id=$unsplashApiKey&count=21";
     NetworkHelper networkHelper = NetworkHelper(url: url);
     dynamic data = await networkHelper.getData();
     List<dynamic> photoList = data as List<dynamic>;
