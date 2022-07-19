@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gallery_app_v2/provider/gallery_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gallery_app_v2/bloc/gallery_cubit.dart';
+
 import 'package:gallery_app_v2/screens/photo_gallery_screen.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,11 +11,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => GalleryData()..getImages(),
+    return BlocProvider<GalleryCubit>(
+      create: (context) => GalleryCubit()..getPhotos(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData.dark(),
