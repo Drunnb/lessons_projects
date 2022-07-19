@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stb_v1/bloc/location_cubit.dart';
 import 'package:stb_v1/screens/map_screen.dart';
 
 void main() {
@@ -10,17 +12,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // Color.fromARGB(255, 54, 70, 92),
-        primarySwatch: Colors.blueGrey, // app bar color
-        colorScheme: const ColorScheme.light().copyWith(
-          primary: const Color(0xff548CA8), // textField color
-          secondary: const Color(0xff96BAFF), // Floating action button
+    return BlocProvider<LocationCubit>(
+      create: (context) => LocationCubit()..getLocation(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          // Color.fromARGB(255, 54, 70, 92),
+          primarySwatch: Colors.blueGrey, // app bar color
+          colorScheme: const ColorScheme.light().copyWith(
+            primary: const Color(0xff548CA8), // textField color
+            secondary: const Color(0xff96BAFF), // Floating action button
+          ),
         ),
+        home: MapScreen(),
       ),
-      home: MapScreen(),
     );
   }
 }
