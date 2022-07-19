@@ -20,22 +20,7 @@ class NetworkHelper {
       // print(photosList[0].urls.raw);
       return photosList;
     } else {
-      // print(response.statusCode);
       return;
     }
   }
 }
-/*
-
-
-Future <List<Data>> fetchData() async {
-  final response =
-      await http.get('https://jsonplaceholder.typicode.com/albums');
-  if (response.statusCode == 200) {
-    List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((data) => new Data.fromJson(data)).toList();
-  } else {
-    throw Exception('Unexpected error occured!');
-  }
-}
-*/

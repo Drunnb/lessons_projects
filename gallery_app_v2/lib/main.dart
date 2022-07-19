@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gallery_app_v2/provider/gallery_data.dart';
 import 'package:gallery_app_v2/screens/photo_gallery_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,10 +13,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      home: PhotoGallery(),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => GalleryData()..getImages(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData.dark(),
+        home: PhotoGallery(),
+      ),
     );
   }
 }
