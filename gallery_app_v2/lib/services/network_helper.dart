@@ -16,7 +16,7 @@ class NetworkHelper {
           dynamic>; // декодируем и сохраняем в переменную как лист динамиков
       final photosList = json
           .map((e) => PhotosClassJson.fromMap(e as Map<String, dynamic>))
-          .toList(); // парсим список через модель JSON и сохраняем в новый лист
+          .toList(); // парсим список через модель JSON и сохраняем в новый лист  e - элементы из листа динамиков json, представляющий собой Map <String, dynamic>
       // print(photosList[0].urls.raw);
       return photosList;
     } else {
