@@ -3,47 +3,53 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:stb_v1/bloc/location_cubit.dart';
+import 'package:stb_v1/screens/add_bird_screen.dart';
 
 // ignore: use_key_in_widget_constructors
 class MapScreen extends StatelessWidget {
+  final MapController _mapController = MapController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<LocationCubit, LocationState>(
-        builder: ((context, state) {
-          if (state is LocationLoaded) {
-            return FlutterMap(
-              options: MapOptions(
-                center: LatLng(state.latitude, state.longitude),
-                zoom: 15.3,
-                maxZoom: 17,
-                minZoom: 3.5,
-              ),
-              layers: [
-                TileLayerOptions(
-                  urlTemplate:
-                      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  subdomains: ['a', 'b', 'c'],
-                  retinaMode: true,
-                ),
-              ],
-            );
+      body: BlocListener<LocationCubit, LocationState>(
+        listener: (previousState, currentState) {
+          if (currentState is LocationLoaded) {
+            _mapController.onReady.then((_) => _mapController.move(
+                LatLng(currentState.latitude, currentState.longitude), 14));
           }
-          if (state is LocationError) {
-            return Center(
-              child: MaterialButton(
-                child: const Text('Try again'),
-                onPressed: () {
-                  context.read<LocationCubit>().getLocation;
-                },
-              ),
-            );
+          if (currentState is LocationError) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              duration: const Duration(seconds: 2),
+              backgroundColor: Colors.red.withOpacity(0.6),
+              content: const Text('Error, unable to fetch location ...'),
+            ));
           }
-
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }),
+        },
+        child: FlutterMap(
+          mapController: _mapController,
+          options: MapOptions(
+            onLongPress: (tapPosition, point) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => AddBirdScreen(
+                          latLng: point,
+                        )),
+              );
+            },
+            center: LatLng(0, 0),
+            zoom: 15.3,
+            maxZoom: 17,
+            minZoom: 3.5,
+          ),
+          layers: [
+            TileLayerOptions(
+              urlTemplate: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              subdomains: ['a', 'b', 'c'],
+              retinaMode: true,
+            ),
+          ],
+        ),
       ),
     );
   }
