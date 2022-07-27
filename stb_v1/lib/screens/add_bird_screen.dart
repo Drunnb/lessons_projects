@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
 class AddBirdScreen extends StatefulWidget {
   final LatLng latLng;
-  AddBirdScreen({required this.latLng});
+  final File image;
+  AddBirdScreen({required this.latLng, required this.image});
 
   @override
   State<AddBirdScreen> createState() => _AddBirdScreenState();
