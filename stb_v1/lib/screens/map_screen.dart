@@ -32,10 +32,11 @@ class MapScreen extends StatelessWidget {
           if (state is LocationError) {
             return Center(
               child: MaterialButton(
-                  child: const Text('Try again'),
-                  onPressed: () {
-                    context.read<LocationCubit>().getLocation;
-                  }),
+                child: const Text('Try again'),
+                onPressed: () {
+                  context.read<LocationCubit>().getLocation;
+                },
+              ),
             );
           }
 
