@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           // Color.fromARGB(255, 54, 70, 92),
           primarySwatch: Colors.blueGrey, // app bar color
           colorScheme: const ColorScheme.light().copyWith(
-            primary: const Color(0xff548CA8), // textField color
+            primary: Color.fromARGB(255, 71, 113, 134), // textField color
             secondary: const Color(0xff96BAFF), // Floating action button
           ),
         ),
