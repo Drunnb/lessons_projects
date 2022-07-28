@@ -50,15 +50,17 @@ class MapScreen extends StatelessWidget {
         child: FlutterMap(
           mapController: _mapController,
           options: MapOptions(
-            onLongPress: (tapPosition, point) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => AddBirdScreen(
-                    latLng: point,
-                  ),
-                ),
-              );
-            },
+            onLongPress: ((tapPosition, point) =>
+                _pickImageAndCreatePost(latLng: point, context: context)),
+            // onLongPress: (tapPosition, point) {
+            //   // Navigator.of(context).push(
+            //   //   MaterialPageRoute(
+            //   //     builder: (context) => AddBirdScreen(
+            //   //       latLng: point,image:,
+            //   //     ),
+            //   //   ),
+            //   // );
+            // },
             center: LatLng(0, 0),
             zoom: 15.3,
             maxZoom: 17,
