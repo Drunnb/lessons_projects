@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:stb_v1/bloc/bird_post_cubit.dart';
 import 'package:stb_v1/models/bird_post_model.dart';
 
 class AddBirdScreen extends StatefulWidget {
@@ -19,11 +21,20 @@ class _AddBirdScreenState extends State<AddBirdScreen> {
   String? name;
   String? description;
 
-  void _submit(BirdModel birdModel, BuildContext context) {
+  void _submit(BuildContext context) {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     _formKey.currentState!.save();
+
+    final BirdModel birdModel = BirdModel(
+        birdName: name,
+        latitude: widget.latLng.latitude,
+        longitude: widget.latLng.longitude,
+        birdDescriprion: description,
+        image: widget.image);
+
+    context.read<BirdPostCubit>().addBirdPost(birdModel);
     Navigator.of(context).pop();
   }
 
@@ -70,7 +81,8 @@ class _AddBirdScreenState extends State<AddBirdScreen> {
                   onSaved: (value) {
                     name = value?.trim();
                   },
-                  onFieldSubmitted: (_) {
+                  onFieldSubmitted: (value) {
+                    //  name = value.trim();
                     FocusScope.of(context).requestFocus(_descriptionFocusNode);
                   },
                   validator: ((value) {
@@ -89,15 +101,10 @@ class _AddBirdScreenState extends State<AddBirdScreen> {
                       hintText: 'Enter a bird description'),
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: ((_) {
-                    final BirdModel birdModel = BirdModel(
-                        birdName: name,
-                        latitude: widget.latLng.latitude,
-                        longitude: widget.latLng.longitude,
-                        birdDescriprion: description,
-                        image: widget.image);
+                    _submit(context);
                   }),
                   onSaved: (value) {
-                    name = description?.trim();
+                    description = value?.trim();
                   },
                   validator: ((value) {
                     if (value!.isEmpty) {
@@ -116,13 +123,7 @@ class _AddBirdScreenState extends State<AddBirdScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final BirdModel birdModel = BirdModel(
-              birdName: name,
-              latitude: widget.latLng.latitude,
-              longitude: widget.latLng.longitude,
-              birdDescriprion: description,
-              image: widget.image);
-          _submit(birdModel, context);
+          _submit(context);
         },
         child: const Icon(
           Icons.check,

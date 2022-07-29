@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:stb_v1/bloc/bird_post_cubit.dart';
 import 'package:stb_v1/bloc/location_cubit.dart';
 import 'package:stb_v1/screens/add_bird_screen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stb_v1/screens/bird_info_screen.dart';
 import 'dart:io';
+
+import '../models/bird_post_model.dart';
 
 // ignore: use_key_in_widget_constructors
 class MapScreen extends StatelessWidget {
@@ -28,6 +32,30 @@ class MapScreen extends StatelessWidget {
     }
   }
 
+  List<Marker> _buildMarkers(BuildContext context, List<BirdModel> birdPosts) {
+    List<Marker> markers = [];
+    birdPosts.forEach((post) {
+      markers.add(Marker(
+        width: 55,
+        height: 55,
+        point: LatLng(post.latitude, post.longitude),
+        builder: (context) => GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BirdPostInfoScreen(birdModel: post),
+              ),
+            );
+          },
+          child: Container(
+            child: Image.asset('assets/bird_icon.png'),
+          ),
+        ),
+      ));
+    });
+    return markers;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,32 +73,33 @@ class MapScreen extends StatelessWidget {
             ));
           }
         },
-        child: FlutterMap(
-          mapController: _mapController,
-          options: MapOptions(
-            onLongPress: ((tapPosition, point) =>
-                _pickImageAndCreatePost(latLng: point, context: context)),
-            // onLongPress: (tapPosition, point) {
-            //   // Navigator.of(context).push(
-            //   //   MaterialPageRoute(
-            //   //     builder: (context) => AddBirdScreen(
-            //   //       latLng: point,image:,
-            //   //     ),
-            //   //   ),
-            //   // );
-            // },
-            center: LatLng(0, 0),
-            zoom: 15.3,
-            maxZoom: 17,
-            minZoom: 3.5,
-          ),
-          layers: [
-            TileLayerOptions(
-              urlTemplate: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              subdomains: ['a', 'b', 'c'],
-              retinaMode: true,
-            ),
-          ],
+        child: BlocBuilder<BirdPostCubit, BirdPostState>(
+          buildWhen: (prevState, currentState) =>
+              (prevState.status != currentState.status),
+          builder: (context, BirdPostState) {
+            return FlutterMap(
+              mapController: _mapController,
+              options: MapOptions(
+                onLongPress: ((tapPosition, point) =>
+                    _pickImageAndCreatePost(latLng: point, context: context)),
+                center: LatLng(0, 0),
+                zoom: 15.3,
+                maxZoom: 17,
+                minZoom: 3.5,
+              ),
+              layers: [
+                TileLayerOptions(
+                  urlTemplate:
+                      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  subdomains: ['a', 'b', 'c'],
+                  retinaMode: true,
+                ),
+                MarkerLayerOptions(
+                  markers: _buildMarkers(context, BirdPostState.birdPosts),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
