@@ -19,4 +19,12 @@ class BirdPostCubit extends Cubit<BirdPostState> {
         birdPosts: birdPosts,
         status: BirdPostStatus.loaded)); // меняем состояние на "загружено"
   }
+
+  void removeBirdPost(BirdModel birdModel) {
+    emit(state.copyWith(status: BirdPostStatus.loading));
+    List<BirdModel> birdPosts = state.birdPosts;
+
+    birdPosts.removeWhere((element) => element == birdModel);
+    emit(state.copyWith(birdPosts: birdPosts, status: BirdPostStatus.loaded));
+  }
 }

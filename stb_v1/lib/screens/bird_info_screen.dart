@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stb_v1/bloc/bird_post_cubit.dart';
 import 'package:stb_v1/models/bird_post_model.dart';
 
 class BirdPostInfoScreen extends StatelessWidget {
@@ -36,7 +38,11 @@ class BirdPostInfoScreen extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
             const SizedBox(height: 5),
-            TextButton(onPressed: () {}, child: const Text('Delete')),
+            TextButton(
+                onPressed: () {
+                  context.read<BirdPostCubit>().removeBirdPost(birdModel);
+                },
+                child: const Text('Delete')),
           ],
         ),
       ),
