@@ -41,6 +41,7 @@ class BirdPostInfoScreen extends StatelessWidget {
             TextButton(
                 onPressed: () {
                   context.read<BirdPostCubit>().removeBirdPost(birdModel);
+                  Navigator.of(context).pop();
                 },
                 child: const Text('Delete')),
           ],
