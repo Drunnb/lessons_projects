@@ -93,6 +93,7 @@ class _DiceScreenState extends State<DiceScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class DiceWidget extends StatelessWidget {
   List<Image> dices;
   int? index;

@@ -139,7 +139,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
 
   void addCard() {
     Random random = Random();
-    if (playingCards.length > 0) {
+    if (playingCards.isNotEmpty) {
       String cardKey =
           playingCards.keys.elementAt(random.nextInt(playingCards.length));
       playingCards.removeWhere((key, value) => key == cardKey);
@@ -175,7 +175,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
                                   : Colors.red[900]),
                         ),
                         const SizedBox(height: 20),
-                        Container(
+                        SizedBox(
                           height: 200,
                           child: GridView.builder(
                               itemCount: dealersCards.length,
@@ -203,7 +203,7 @@ class _BlackJackScreenState extends State<BlackJackScreen> {
                                   : Colors.red[900]),
                         ),
                         const SizedBox(height: 20),
-                        Container(
+                        SizedBox(
                           height: 200,
                           child: GridView.builder(
                               itemCount: myCards.length,
