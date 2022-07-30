@@ -12,7 +12,7 @@ class DatabaseHelper {
   static final columnDescription = 'birdDescription';
   static final columnUrl = 'url';
   static final longitude = 'longitude';
-  static final latutude = 'latutude';
+  static final latitude = 'latitude';
 
   // Singleton
   DatabaseHelper._privedConstructor();
@@ -20,7 +20,7 @@ class DatabaseHelper {
   // inly one add-wide reference to database
   static Database? _database;
   Future<Database?> get database async {
-    if (database != null) return _database;
+    if (_database != null) return _database;
     _database = await _initDatabase();
     return _database;
   }
@@ -39,7 +39,7 @@ class DatabaseHelper {
         $columnTitle TEXT NOT NULL,
         $columnDescription TEXT NOT NULL,
         $columnUrl TEXT NOT NULL,
-        $latutude REAL NOT NULL,
+        $latitude REAL NOT NULL,
         $longitude REAL NOT NULL) 
       ''');
   }
