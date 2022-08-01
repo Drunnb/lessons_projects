@@ -14,8 +14,19 @@ class _SignInScreenState extends State<SignInScreen> {
 
   late String _email;
   late String _password;
+  late final FocusNode _passwordFocusNode;
 
-  final FocusNode _passwordFocusNode = FocusNode();
+  @override
+  void initState() {
+    super.initState();
+    _passwordFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
