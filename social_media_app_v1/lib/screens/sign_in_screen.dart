@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_app_v1/screens/sign_up_screen.dart';
 
-class SingUpScreen extends StatefulWidget {
-  const SingUpScreen({Key? key}) : super(key: key);
+class SignInScreen extends StatefulWidget {
+  static const String id = 'sign_in_screen';
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
-  State<SingUpScreen> createState() => _SingUpScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SingUpScreenState extends State<SingUpScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+
   late String _email;
-  late String _userName;
   late String _password;
 
   final FocusNode _passwordFocusNode = FocusNode();
-  final FocusNode _userNameFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                     ),
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_userNameFocusNode);
+                      FocusScope.of(context).requestFocus(_passwordFocusNode);
                     },
                     onSaved: (value) {
                       _email = value!.trim();
@@ -51,30 +52,6 @@ class _SingUpScreenState extends State<SingUpScreen> {
                     validator: ((value) {
                       if (value!.isEmpty) {
                         return 'Please enter your email';
-                      }
-                      return null;
-                    }),
-                  ),
-                  const SizedBox(height: 15),
-                  TextFormField(
-                    focusNode: _userNameFocusNode,
-                    keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      labelText: 'Enter your username',
-                    ),
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_passwordFocusNode);
-                    },
-                    onSaved: (value) {
-                      _userName = value!.trim();
-                    },
-                    validator: ((value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your username';
                       }
                       return null;
                     }),
@@ -104,10 +81,17 @@ class _SingUpScreenState extends State<SingUpScreen> {
                       return null;
                     }),
                   ),
-                  const SizedBox(height: 55),
+                  const SizedBox(height: 15),
                   TextButton(
                     onPressed: () {},
-                    child: const Text('Sing Up'),
+                    child: const Text('Sign In'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .pushReplacementNamed(SignUpScreen.id);
+                    },
+                    child: const Text('Sing Up instead'),
                   ),
                 ],
               ),
