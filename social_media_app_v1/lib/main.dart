@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_app_v1/screens/sign_in_screen.dart';
 import 'package:social_media_app_v1/screens/sign_up_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
