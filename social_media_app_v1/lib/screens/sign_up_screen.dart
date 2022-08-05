@@ -11,9 +11,9 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  late String _email;
-  late String _userName;
-  late String _password;
+  String? _email;
+  String? _userName;
+  String? _password;
 
   late final FocusNode _passwordFocusNode;
   late final FocusNode _userNameFocusNode;
@@ -67,6 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     validator: ((value) {
                       if (value!.isEmpty) {
+                        print('пмыло в синг ап');
                         return 'Please enter your email';
                       }
                       return null;
@@ -91,6 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     validator: ((value) {
                       if (value!.isEmpty) {
+                        print('введите имя');
                         return 'Please enter your username';
                       }
                       return null;
@@ -113,9 +115,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     validator: ((value) {
                       if (value!.isEmpty) {
+                        print('пас в синг ап');
                         return 'Please enter your password';
                       }
                       if (value.length < 5) {
+                        print('коротки пас в синг ап');
                         return 'Please enter more symbols';
                       }
                       return null;

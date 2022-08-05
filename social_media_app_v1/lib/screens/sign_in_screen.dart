@@ -12,8 +12,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  late String _email;
-  late String _password;
+  String? _email;
+  String? _password;
   late final FocusNode _passwordFocusNode;
 
   @override
