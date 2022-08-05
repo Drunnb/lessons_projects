@@ -15,13 +15,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
-<<<<<<< Updated upstream
-  String? _email;
-  String? _password;
-=======
   String _email = '';
   String _password = '';
->>>>>>> Stashed changes
   late final FocusNode _passwordFocusNode;
 
   @override
@@ -67,6 +62,7 @@ class _SignInScreenState extends State<SignInScreen> {
           }
           return SafeArea(
             child: Form(
+              key: _formKey,
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: SingleChildScrollView(

@@ -14,15 +14,9 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-<<<<<<< Updated upstream
-  String? _email;
-  String? _userName;
-  String? _password;
-=======
   String _email = '';
   String _userName = '';
   String _password = '';
->>>>>>> Stashed changes
 
   late final FocusNode _passwordFocusNode;
   late final FocusNode _userNameFocusNode;
@@ -74,6 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         return SafeArea(
           child: Form(
+            key: _formKey,
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: SingleChildScrollView(
@@ -108,30 +103,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return null;
                       }),
                     ),
-<<<<<<< Updated upstream
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_userNameFocusNode);
-                    },
-                    onSaved: (value) {
-                      _email = value!.trim();
-                    },
-                    validator: ((value) {
-                      if (value!.isEmpty) {
-                        print('пмыло в синг ап');
-                        return 'Please enter your email';
-                      }
-                      return null;
-                    }),
-                  ),
-                  const SizedBox(height: 15),
-                  TextFormField(
-                    focusNode: _userNameFocusNode,
-                    keyboardType: TextInputType.name,
-                    decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-=======
                     const SizedBox(height: 15),
                     TextFormField(
                       focusNode: _userNameFocusNode,
@@ -141,7 +112,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: Colors.black),
                         ),
                         labelText: 'Enter your username',
->>>>>>> Stashed changes
                       ),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
@@ -157,30 +127,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         return null;
                       }),
                     ),
-<<<<<<< Updated upstream
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) {
-                      FocusScope.of(context).requestFocus(_passwordFocusNode);
-                    },
-                    onSaved: (value) {
-                      _userName = value!.trim();
-                    },
-                    validator: ((value) {
-                      if (value!.isEmpty) {
-                        print('введите имя');
-                        return 'Please enter your username';
-                      }
-                      return null;
-                    }),
-                  ),
-                  const SizedBox(height: 15),
-                  TextFormField(
-                    focusNode: _passwordFocusNode,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-=======
                     const SizedBox(height: 15),
                     TextFormField(
                       focusNode: _passwordFocusNode,
@@ -190,7 +136,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           borderSide: BorderSide(color: Colors.black),
                         ),
                         labelText: 'Enter your password',
->>>>>>> Stashed changes
                       ),
                       textInputAction: TextInputAction.done,
                       onFieldSubmitted: (_) {
@@ -223,41 +168,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       },
                       child: const Text('Sing In instead'),
                     ),
-<<<<<<< Updated upstream
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (_) {},
-                    onSaved: (value) {
-                      _password = value!.trim();
-                    },
-                    validator: ((value) {
-                      if (value!.isEmpty) {
-                        print('пас в синг ап');
-                        return 'Please enter your password';
-                      }
-                      if (value.length < 5) {
-                        print('коротки пас в синг ап');
-                        return 'Please enter more symbols';
-                      }
-                      return null;
-                    }),
-                  ),
-                  const SizedBox(height: 15),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text('Sign Up'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(SignInScreen.id);
-                    },
-                    child: const Text('Sing In instead'),
-                  ),
-                ],
-=======
                   ],
                 ),
->>>>>>> Stashed changes
               ),
             ),
           ),
