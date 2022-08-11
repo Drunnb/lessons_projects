@@ -51,15 +51,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AuthCubit, AuthState>(
-          listener: (pervState, currentState) {
-        if (currentState is AuthSignedUp) {
+      body:
+          BlocConsumer<AuthCubit, AuthState>(listener: (pervState, currState) {
+        if (currState is AuthSignedUp) {
           Navigator.of(context).pushReplacementNamed(PostsScreen.id);
         }
-        if (currentState is AuthFailure) {
+        if (currState is AuthFailure) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               duration: const Duration(seconds: 2),
-              content: Text(currentState.message)));
+              content: Text(currState.message)));
         }
       }, builder: (context, state) {
         if (state is AuthLoading) {

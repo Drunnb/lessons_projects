@@ -110,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) {
-                          _submit;
+                          _submit(context);
                         },
                         onSaved: (value) {
                           _password = value!.trim();

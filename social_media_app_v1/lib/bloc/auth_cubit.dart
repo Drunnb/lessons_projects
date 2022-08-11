@@ -13,16 +13,15 @@ class AuthCubit extends Cubit<AuthState> {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
-      emit(const AuthSignedIn());
+      emit(AuthSignedIn());
     } on FirebaseAuth catch (e) {
       if (e == 'user-not-found') {
-        emit(const AuthFailure(message: 'No user found for that email.'));
+        emit(AuthFailure(message: 'No user found for that email.'));
       } else if (e == 'wrong-password') {
-        emit(const AuthFailure(
-            message: 'Wrong password provided for that user.'));
+        emit(AuthFailure(message: 'Wrong password provided for that user.'));
       }
     } catch (error) {
-      emit(const AuthFailure(message: 'An error has accurated'));
+      emit(AuthFailure(message: 'An error has accurated'));
     }
   }
 
@@ -31,7 +30,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String userName,
     required String password,
   }) async {
-    emit(const AuthLoading());
+    emit(AuthLoading());
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       final UserCredential userCredential = await auth
@@ -45,16 +44,16 @@ class AuthCubit extends Cubit<AuthState> {
         'userName': userName,
         'email': email
       });
-      emit(const AuthSignedUp());
+      emit(AuthSignedUp());
     } on FirebaseAuth catch (e) {
       if (e == 'weak-password') {
         emit(const AuthFailure(message: 'The password provided is too weak.'));
       } else if (e == 'email-already-in-use') {
-        emit(const AuthFailure(
-            message: 'The account already exists for that email.'));
+        emit(
+            AuthFailure(message: 'The account already exists for that email.'));
       }
     } catch (error) {
-      emit(const AuthFailure(message: 'An error has accurated'));
+      emit(AuthFailure(message: 'An error has accurated'));
     }
   }
 }
