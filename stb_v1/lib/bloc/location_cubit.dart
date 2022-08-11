@@ -17,6 +17,7 @@ class LocationCubit extends Cubit<LocationState> {
         emit(LocationLoaded(
             latitude: position.latitude, longitude: position.longitude));
       } catch (error) {
+        // ignore: avoid_print
         print(error.toString());
         emit(const LocationError());
       }

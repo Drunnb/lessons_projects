@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,7 +11,7 @@ import 'package:stb_v1/models/bird_post_model.dart';
 class AddBirdScreen extends StatefulWidget {
   final LatLng latLng;
   final File image;
-  AddBirdScreen({required this.latLng, required this.image});
+  const AddBirdScreen({required this.latLng, required this.image});
 
   @override
   State<AddBirdScreen> createState() => _AddBirdScreenState();

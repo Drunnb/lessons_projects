@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -9,7 +11,8 @@ part 'bird_post_state.dart';
 
 class BirdPostCubit extends Cubit<BirdPostState> {
   BirdPostCubit()
-      : super(BirdPostState(birdPosts: [], status: BirdPostStatus.initial));
+      : super(
+            const BirdPostState(birdPosts: [], status: BirdPostStatus.initial));
 
   final dbHelprer = DatabaseHelper.instance;
 
@@ -18,7 +21,7 @@ class BirdPostCubit extends Cubit<BirdPostState> {
 
     List<BirdModel> birdPosts = [];
     final List<Map<String, dynamic>> rows = await dbHelprer.qureyAllRows();
-    if (rows.length == 0) {
+    if (rows.isEmpty) {
       print('Rows are empty');
     } else {
       print('Rows have data');

@@ -5,7 +5,8 @@ import 'package:stb_v1/models/bird_post_model.dart';
 
 class BirdPostInfoScreen extends StatelessWidget {
   final BirdModel birdModel;
-  BirdPostInfoScreen({required this.birdModel});
+  // ignore: use_key_in_widget_constructors
+  const BirdPostInfoScreen({required this.birdModel});
 
   @override
   Widget build(BuildContext context) {

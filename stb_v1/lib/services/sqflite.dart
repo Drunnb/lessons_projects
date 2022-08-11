@@ -4,15 +4,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
-  static final _databaseName = 'MyDatabase.db';
-  static final _databaseVersion = 1;
-  static final table = 'my_table';
-  static final columnId = 'id';
-  static final columnTitle = 'birdName';
-  static final columnDescription = 'birdDescription';
-  static final columnUrl = 'url';
-  static final longitude = 'longitude';
-  static final latitude = 'latitude';
+  static const _databaseName = 'MyDatabase.db';
+  static const _databaseVersion = 1;
+  static const table = 'my_table';
+  static const columnId = 'id';
+  static const columnTitle = 'birdName';
+  static const columnDescription = 'birdDescription';
+  static const columnUrl = 'url';
+  static const longitude = 'longitude';
+  static const latitude = 'latitude';
 
   // Singleton
   DatabaseHelper._privedConstructor();

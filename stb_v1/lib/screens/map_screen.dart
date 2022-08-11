@@ -22,18 +22,21 @@ class MapScreen extends StatelessWidget {
         await picker.pickImage(source: ImageSource.gallery, imageQuality: 40);
     if (pickFile != null) {
       image = File(pickFile.path);
+      // ignore: use_build_context_synchronously
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => AddBirdScreen(
                 latLng: latLng,
                 image: image!,
               )));
     } else {
+      // ignore: avoid_print
       print('User didn`t pick file');
     }
   }
 
   List<Marker> _buildMarkers(BuildContext context, List<BirdModel> birdPosts) {
     List<Marker> markers = [];
+    // ignore: avoid_function_literals_in_foreach_calls
     birdPosts.forEach((post) {
       markers.add(Marker(
         width: 55,
@@ -47,9 +50,7 @@ class MapScreen extends StatelessWidget {
               ),
             );
           },
-          child: Container(
-            child: Image.asset('assets/bird_icon.png'),
-          ),
+          child: Image.asset('assets/bird_icon.png'),
         ),
       ));
     });
@@ -76,6 +77,7 @@ class MapScreen extends StatelessWidget {
         child: BlocBuilder<BirdPostCubit, BirdPostState>(
           buildWhen: (prevState, currentState) =>
               (prevState.status != currentState.status),
+          // ignore: non_constant_identifier_names, avoid_types_as_parameter_names
           builder: (context, BirdPostState) {
             return FlutterMap(
               mapController: _mapController,
