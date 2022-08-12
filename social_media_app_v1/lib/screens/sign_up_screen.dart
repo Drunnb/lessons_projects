@@ -5,7 +5,7 @@ import 'package:social_media_app_v1/screens/posts_screen.dart';
 import 'package:social_media_app_v1/screens/sign_in_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const id = 'sign_up_screen';
+  static const String id = 'sign_up_screen';
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,9 +14,9 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email = '';
-  String _userName = '';
-  String _password = '';
+  late String _email;
+  late String _userName;
+  late String _password;
 
   late final FocusNode _passwordFocusNode;
   late final FocusNode _userNameFocusNode;
@@ -38,7 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _submit(BuildContext context) {
     FocusScope.of(context).unfocus();
-    if (_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
     _formKey.currentState!.save();
@@ -51,15 +51,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          BlocConsumer<AuthCubit, AuthState>(listener: (pervState, currState) {
-        if (currState is AuthSignedUp) {
+      body: BlocConsumer<AuthCubit, AuthState>(
+          listener: (pervState, currentState) {
+        if (currentState is AuthSignedUp) {
           Navigator.of(context).pushReplacementNamed(PostsScreen.id);
         }
-        if (currState is AuthFailure) {
+        if (currentState is AuthFailure) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               duration: const Duration(seconds: 2),
-              content: Text(currState.message)));
+              content: Text(currentState.message)));
         }
       }, builder: (context, state) {
         if (state is AuthLoading) {

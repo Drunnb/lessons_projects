@@ -15,8 +15,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email = '';
-  String _password = '';
+  late String _email;
+  late String _password;
   late final FocusNode _passwordFocusNode;
 
   @override
@@ -48,7 +48,6 @@ class _SignInScreenState extends State<SignInScreen> {
         listener: (prevState, currentState) {
           if (currentState is AuthSignedIn) {
             Navigator.of(context).pushReplacementNamed(PostsScreen.id);
-            // navigation to posts
           }
           if (currentState is AuthFailure) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

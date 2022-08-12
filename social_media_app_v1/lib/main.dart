@@ -22,11 +22,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData.dark(),
-        home: SignUpScreen(),
+        home: const SignUpScreen(),
         routes: {
-          SignInScreen.id: (context) => SignInScreen(),
-          SignUpScreen.id: (context) => SignUpScreen(),
-          PostsScreen.id: (context) => PostsScreen(),
+          SignInScreen.id: (context) => const SignInScreen(),
+          SignUpScreen.id: (context) => const SignUpScreen(),
+          PostsScreen.id: (context) => const PostsScreen(),
         },
       ),
     );
