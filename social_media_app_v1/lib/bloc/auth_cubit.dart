@@ -60,4 +60,8 @@ class AuthCubit extends Cubit<AuthState> {
       emit(const AuthFailure(message: 'An error has accurated'));
     }
   }
+
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }
