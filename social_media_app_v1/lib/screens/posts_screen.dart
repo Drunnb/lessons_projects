@@ -35,7 +35,7 @@ class _PostsScreenState extends State<PostsScreen> {
 
                     Navigator.of(context).pushNamed(
                       CreatePostScreen.id,
-                      arguments: xFile,
+                      arguments: file,
                     );
                   }
                 });
