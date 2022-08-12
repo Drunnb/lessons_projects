@@ -7,17 +7,20 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(const AuthInitial());
 
-  Future<void> signIn({required String email, required String password}) async {
+  Future<void> signIn({
+    required String email,
+    required String password,
+  }) async {
     emit(const AuthLoading());
 
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       emit(AuthSignedIn());
-    } on FirebaseAuth catch (e) {
-      if (e == 'user-not-found') {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
         emit(AuthFailure(message: 'No user found for that email.'));
-      } else if (e == 'wrong-password') {
+      } else if (e.code == 'wrong-password') {
         emit(AuthFailure(message: 'Wrong password provided for that user.'));
       }
     } catch (error) {
@@ -38,17 +41,17 @@ class AuthCubit extends Cubit<AuthState> {
 
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(userCredential.user?.uid)
+          .doc(userCredential.user!.uid)
           .set({
-        'userID': userCredential.user?.uid,
+        'userID': userCredential.user!.uid,
         'userName': userName,
         'email': email
       });
       emit(AuthSignedUp());
-    } on FirebaseAuth catch (e) {
-      if (e == 'weak-password') {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
         emit(const AuthFailure(message: 'The password provided is too weak.'));
-      } else if (e == 'email-already-in-use') {
+      } else if (e.code == 'email-already-in-use') {
         emit(
             AuthFailure(message: 'The account already exists for that email.'));
       }
