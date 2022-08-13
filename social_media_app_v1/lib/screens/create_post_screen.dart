@@ -19,7 +19,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   Future<void> _submit({required File image}) async {
     FocusScope.of(context).unfocus();
-    if (_description.trim().isEmpty) {
+    if (_description.trim().isNotEmpty) {
       late String imageUrl;
 
       firebase_storage.FirebaseStorage storage =
@@ -49,37 +49,44 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       appBar: AppBar(
         title: const Text('Create Post'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width / 1.4,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(
-                  image: FileImage(imageFile),
-                  fit: BoxFit.cover,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.width / 1.4,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    image: DecorationImage(
+                      image: FileImage(imageFile),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            TextField(
-              decoration: const InputDecoration(
-                hintText: 'Enter a description',
-              ),
-              textInputAction: TextInputAction.done,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(150),
+                TextField(
+                  decoration: const InputDecoration(
+                    hintText: 'Enter a description',
+                  ),
+                  textInputAction: TextInputAction.done,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(150),
+                  ],
+                  onChanged: (value) {
+                    _description = value;
+                  },
+                  onEditingComplete: () {
+                    _submit(image: imageFile);
+                  },
+                ),
               ],
-              onChanged: (value) {
-                _description = value;
-              },
-              onEditingComplete: () {
-                _submit(image: imageFile);
-              },
             ),
-          ],
+          ),
         ),
       ),
     );
