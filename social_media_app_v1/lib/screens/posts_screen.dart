@@ -75,12 +75,13 @@ class _PostsScreenState extends State<PostsScreen> {
                         borderRadius: BorderRadius.circular(10.0),
                         image: DecorationImage(
                           image: NetworkImage(doc['imageURL']),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      doc['userName'],
+                      doc['userName'] ?? '',
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     const SizedBox(height: 5),
