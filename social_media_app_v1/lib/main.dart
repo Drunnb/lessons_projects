@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
         routes: {
           SignInScreen.id: (context) => const SignInScreen(),
           SignUpScreen.id: (context) => const SignUpScreen(),
-          PostsScreen.id: (context) => const PostsScreen(),
-          CreatePostScreen.id: (context) => const CreatePostScreen(),
+          PostsScreen.id: (context) => PostsScreen(),
+          CreatePostScreen.id: (context) => CreatePostScreen(),
         },
       ),
     );
