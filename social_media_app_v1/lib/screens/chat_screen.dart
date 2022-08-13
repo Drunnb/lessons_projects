@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app_v1/models/chat_model.dart';
 import 'package:social_media_app_v1/models/post_model.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -57,8 +58,25 @@ class _ChatScreenState extends State<ChatScreen> {
                   itemBuilder: (context, index) {
                     final QueryDocumentSnapshot doc =
                         snapshot.data!.docs[index];
-                    ////закончил тут
-                    return Container();
+                    final ChatModel chatModel = ChatModel(
+                      timestamp: doc['timestamp'],
+                      message: doc['message'],
+                      userName: doc['userName'],
+                      userID: doc['userID'],
+                    );
+                    return Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Text('By ${chatModel.userName}'),
+                            const SizedBox(height: 4),
+                            Text(chatModel.message),
+                            const SizedBox(height: 4),
+                          ],
+                        ),
+                      ),
+                    );
                   },
                 );
               },
