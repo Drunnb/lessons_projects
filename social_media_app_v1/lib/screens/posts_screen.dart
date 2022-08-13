@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_media_app_v1/bloc/auth_cubit.dart';
+import 'package:social_media_app_v1/models/post_model.dart';
+import 'package:social_media_app_v1/screens/chat_screen.dart';
 import 'package:social_media_app_v1/screens/create_post_screen.dart';
 import 'package:social_media_app_v1/screens/sign_in_screen.dart';
 
@@ -65,31 +67,46 @@ class _PostsScreenState extends State<PostsScreen> {
             itemCount: snapshot.data?.docs.length ?? 0,
             itemBuilder: (context, index) {
               final QueryDocumentSnapshot doc = snapshot.data!.docs[index];
-              return Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Column(
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        image: DecorationImage(
-                          image: NetworkImage(doc['imageURL']),
-                          fit: BoxFit.cover,
+
+              final Post post = Post(
+                  imageURL: doc['imageURL'],
+                  userName: doc['userName'],
+                  id: doc['postID'],
+                  userID: doc['userID'],
+                  description: doc['description'],
+                  timestamp: doc['timestamp']);
+
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(ChatScreen.id, arguments: post);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: DecorationImage(
+                            image: NetworkImage(post.imageURL),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      doc['userName'] ?? '',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      doc['description'],
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                  ],
+                      const SizedBox(height: 5),
+                      Text(
+                        post.userName,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        post.description,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

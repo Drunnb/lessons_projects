@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_media_app_v1/bloc/auth_cubit.dart';
+import 'package:social_media_app_v1/screens/chat_screen.dart';
 import 'package:social_media_app_v1/screens/create_post_screen.dart';
 import 'package:social_media_app_v1/screens/posts_screen.dart';
 import 'package:social_media_app_v1/screens/sign_in_screen.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
           SignUpScreen.id: (context) => const SignUpScreen(),
           PostsScreen.id: (context) => PostsScreen(),
           CreatePostScreen.id: (context) => CreatePostScreen(),
+          ChatScreen.id: (context) => ChatScreen()
         },
       ),
     );
