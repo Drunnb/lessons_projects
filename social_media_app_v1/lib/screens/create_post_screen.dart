@@ -38,7 +38,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         'userName': FirebaseAuth.instance.currentUser!.displayName,
         'imageURL': imageUrl,
       }).then((docref) => docref.update({'postID': docref.id}));
-      Navigator.of(context).pop();
     }
   }
 
@@ -82,6 +81,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   },
                   onEditingComplete: () {
                     _submit(image: imageFile);
+                    Navigator.of(context).pop();
                   },
                 ),
               ],

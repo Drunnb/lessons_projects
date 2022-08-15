@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,21 +13,20 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String password,
   }) async {
-    emit(const AuthLoading());
+    emit(AuthLoading());
 
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
-      emit(const AuthSignedIn());
+      emit(AuthSignedIn());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        emit(const AuthFailure(message: 'No user found for that email.'));
+        emit(AuthFailure(message: 'No user found for that email.'));
       } else if (e.code == 'wrong-password') {
-        emit(const AuthFailure(
-            message: 'Wrong password provided for that user.'));
+        emit(AuthFailure(message: 'Wrong password provided for that user.'));
       }
     } catch (error) {
-      emit(const AuthFailure(message: 'An error has accurated'));
+      emit(AuthFailure(message: 'An error has accurated'));
     }
   }
 
@@ -34,7 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String userName,
     required String password,
   }) async {
-    emit(const AuthLoading());
+    emit(AuthLoading());
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       final UserCredential userCredential = await auth
@@ -51,16 +52,16 @@ class AuthCubit extends Cubit<AuthState> {
 
       userCredential.user!.updateDisplayName(userName);
 
-      emit(const AuthSignedUp());
+      emit(AuthSignedUp());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        emit(const AuthFailure(message: 'The password provided is too weak.'));
+        emit(AuthFailure(message: 'The password provided is too weak.'));
       } else if (e.code == 'email-already-in-use') {
-        emit(const AuthFailure(
-            message: 'The account already exists for that email.'));
+        emit(
+            AuthFailure(message: 'The account already exists for that email.'));
       }
     } catch (error) {
-      emit(const AuthFailure(message: 'An error has accurated'));
+      emit(AuthFailure(message: 'An error has accurated'));
     }
   }
 

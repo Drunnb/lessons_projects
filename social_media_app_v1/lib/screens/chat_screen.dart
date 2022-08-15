@@ -6,7 +6,7 @@ import 'package:social_media_app_v1/models/post_model.dart';
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
-  ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -47,11 +47,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Center(child: const Text('Error'));
+                  return const Center(child: Text('Error'));
                 }
                 if (snapshot.connectionState == ConnectionState.waiting ||
                     snapshot.connectionState == ConnectionState.none) {
-                  return Center(child: const Text('Loading...'));
+                  return const Center(child: Text('Loading...'));
                 }
                 return ListView.builder(
                   itemCount: snapshot.data?.docs.length ?? 0,
@@ -89,7 +89,7 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.all(4.0),
+                  padding: const EdgeInsets.all(4.0),
                   child: TextField(
                     controller: _textEditingController,
                     maxLines: 2,

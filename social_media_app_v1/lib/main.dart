@@ -26,10 +26,10 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData.dark(),
-        home: const SignUpScreen(),
+        home: SignUpScreen(),
         routes: {
-          SignInScreen.id: (context) => const SignInScreen(),
-          SignUpScreen.id: (context) => const SignUpScreen(),
+          SignInScreen.id: (context) => SignInScreen(),
+          SignUpScreen.id: (context) => SignUpScreen(),
           PostsScreen.id: (context) => PostsScreen(),
           CreatePostScreen.id: (context) => CreatePostScreen(),
           ChatScreen.id: (context) => ChatScreen()

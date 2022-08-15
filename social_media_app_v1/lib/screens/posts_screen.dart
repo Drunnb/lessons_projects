@@ -70,7 +70,7 @@ class _PostsScreenState extends State<PostsScreen> {
 
               final Post post = Post(
                   imageURL: doc['imageURL'],
-                  userName: doc['userName'],
+                  userName: doc['userName'] ?? '',
                   id: doc['postID'],
                   userID: doc['userID'],
                   description: doc['description'],
