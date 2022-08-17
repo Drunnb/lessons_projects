@@ -63,7 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       }, builder: (context, state) {
         if (state is AuthLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator());
         }
 
         return SafeArea(
