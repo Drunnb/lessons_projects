@@ -22,9 +22,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthCubit>(
-      create: ((context) => AuthCubit()),
+      create: (context) => AuthCubit(),
       child: MaterialApp(
-        title: 'Flutter Demo',
         theme: ThemeData.dark(),
         home: SignUpScreen(),
         routes: {
