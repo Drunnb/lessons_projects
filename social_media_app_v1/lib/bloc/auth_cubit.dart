@@ -41,6 +41,8 @@ class AuthCubit extends Cubit<AuthState> {
       final UserCredential userCredential = await auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      userCredential.user!.updateDisplayName(userName);
+
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userCredential.user!.uid)
@@ -49,8 +51,6 @@ class AuthCubit extends Cubit<AuthState> {
         'userName': userName,
         'email': email
       });
-
-      userCredential.user!.updateDisplayName(userName);
 
       emit(AuthSignedUp());
     } on FirebaseAuthException catch (e) {

@@ -32,5 +32,5 @@ class AuthFailure extends AuthState {
   final String message;
   const AuthFailure({required this.message});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 }
