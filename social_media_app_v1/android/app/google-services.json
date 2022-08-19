@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "115584462613",
-    "project_id": "social-media-test-app-v1",
-    "storage_bucket": "social-media-test-app-v1.appspot.com"
+    "project_number": "917366346312",
+    "project_id": "social-media-app-test-v1",
+    "storage_bucket": "social-media-app-test-v1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:115584462613:android:64b04ae27f2ee5bc29431c",
+        "mobilesdk_app_id": "1:917366346312:android:17e9c69f1307a0d8e8be7d",
         "android_client_info": {
           "package_name": "com.drunnb.social_media_app_v1"
         }
       },
       "oauth_client": [
         {
-          "client_id": "115584462613-56r5qau71levkn9beal7kq7trnutsscq.apps.googleusercontent.com",
+          "client_id": "917366346312-71b96aft90stqhukcle7apjnqpnij3ph.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAykDaOnIPw0QuQHDHnlRW-746OuadQXAY"
+          "current_key": "AIzaSyB_68LG29lpG-8ORjN9Xe0aiBtpgphGeg0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "115584462613-56r5qau71levkn9beal7kq7trnutsscq.apps.googleusercontent.com",
+              "client_id": "917366346312-71b96aft90stqhukcle7apjnqpnij3ph.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
