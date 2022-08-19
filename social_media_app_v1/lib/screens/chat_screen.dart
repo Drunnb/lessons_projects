@@ -96,7 +96,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     decoration: const InputDecoration(
                       hintText: 'Enter message',
                     ),
-                    onChanged: (value) => _message = value,
+                    onChanged: (value) {
+                      _message = value;
+                    },
                   ),
                 )),
                 IconButton(
