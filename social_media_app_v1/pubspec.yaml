@@ -44,6 +44,7 @@ dependencies:
   cloud_firestore: ^3.4.3
   image_picker: ^0.8.4
   firebase_storage: ^10.3.5
+  sentry_flutter: ^6.9.1
 
 dev_dependencies:
   flutter_test:
