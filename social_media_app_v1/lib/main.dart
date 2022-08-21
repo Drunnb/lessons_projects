@@ -13,9 +13,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+  await SentryFlutter.init((options) {
+    options.dsn =
+        'https://4261fae208304d23b57fa8a3644c94a2@o1369621.ingest.sentry.io/6674008';
+    options.tracesSampleRate = 1.0;
+  }, appRunner: () async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
