@@ -9,15 +9,15 @@ class MainTabsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: _BodyWidget(),
-      bottomNavigationBar: const _NavBarWidget(),
+      bottomNavigationBar: _NavBarWidget(),
     );
   }
 }
 
 class _BodyWidget extends StatelessWidget {
-  const _BodyWidget({super.key});
+  const _BodyWidget();
 
   @override
   Widget build(BuildContext context) {
