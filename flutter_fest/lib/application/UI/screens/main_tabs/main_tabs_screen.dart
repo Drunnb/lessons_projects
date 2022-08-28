@@ -9,24 +9,47 @@ class MainTabsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              color: Colors.white,
-            ),
+      body: _BodyWidget(),
+      bottomNavigationBar: const _NavBarWidget(),
+    );
+  }
+}
+
+class _BodyWidget extends StatelessWidget {
+  const _BodyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final currentIndex =
+        context.select((MainTabsViewMidel vm) => vm.currentTabIndex);
+    return IndexedStack(
+      index: currentIndex,
+      children: const [
+        Center(
+          child: Text(
+            '1',
+            style: TextStyle(color: Colors.red),
           ),
-        ],
-      ),
-      bottomNavigationBar: _NavBarWidget(),
+        ),
+        Center(
+          child: Text(
+            '2',
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+        Center(
+          child: Text(
+            '3',
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      ],
     );
   }
 }
 
 class _NavBarWidget extends StatelessWidget {
-  const _NavBarWidget({
-    super.key,
-  });
+  const _NavBarWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -38,27 +61,17 @@ class _NavBarWidget extends StatelessWidget {
       _BottonNavigationBarItemFactory(AppImages.tabbarCalendar, 'Расписание'),
       _BottonNavigationBarItemFactory(AppImages.tabbarBookmark, 'Избранное'),
       _BottonNavigationBarItemFactory(AppImages.tabbarPoint, 'Как добраться'),
-    ];
+    ]
+        .asMap()
+        .map((index, value) {
+          return MapEntry(index, value.build(index, currentIndex, theme));
+        })
+        .values
+        .toList();
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: model.setCurrentTabIndex,
-      items: [
-        BottomNavigationBarItem(
-          label: '',
-          tooltip: 'Расписание',
-          icon: Image.asset(AppImages.tabbarCalendar),
-        ),
-        BottomNavigationBarItem(
-          label: '',
-          tooltip: 'Избранное',
-          icon: Image.asset(AppImages.tabbarBookmark),
-        ),
-        BottomNavigationBarItem(
-          label: '',
-          tooltip: 'Как добраться',
-          icon: Image.asset(AppImages.tabbarPoint),
-        ),
-      ],
+      items: buttons,
     );
   }
 }
