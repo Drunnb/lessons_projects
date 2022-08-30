@@ -81,7 +81,7 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
+    # - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
@@ -94,3 +94,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: BasisGrotesquePro
+      fonts:
+        - asset: assets/fonts/basis_grotesque_pro/reqular.ttf
+        - asset: assets/fonts/basis_grotesque_pro/medium.ttf
+          weight: 500
