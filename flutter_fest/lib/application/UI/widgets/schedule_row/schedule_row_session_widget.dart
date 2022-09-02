@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
 import 'package:flutter_fest/resources/app_fonts.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
@@ -11,19 +12,19 @@ class ScheduleRowSessionWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: configuration._style.widgetBackground,
-        gradient: RadialGradient(
-          center: Alignment(1, -1),
-          radius: 1.5,
-          colors: [
-            Color(0xFF00B90D),
-            configuration._style.widgetBackground,
-          ],
-        ),
+        // gradient: RadialGradient(
+        //   center: Alignment(1, -1),
+        //   radius: 1.5,
+        //   colors: [
+        //     Color(0xFF00B90D),
+        //     configuration._style.widgetBackground,
+        //   ],
+        // ),
         borderRadius: const BorderRadius.all(Radius.circular(20.0)),
       ),
       padding:
           const EdgeInsets.only(left: 16.0, top: 4.0, right: 4.0, bottom: 16.0),
-      margin: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 8),
+      // margin: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -121,12 +122,6 @@ class _DescriptionWidget extends StatelessWidget {
   }
 }
 
-enum ScheduleRowSessionWidgetConfigurationProgessStatus {
-  oncoming,
-  current,
-  past
-}
-
 class _ScheduleRowSessionWidgetConfigurationProgressStyle {
   final Color widgetBackground;
   final Color speakerNameColor;
@@ -156,15 +151,15 @@ class ScheduleRowSessionWidgetConfiguration {
   final String speakerName;
   final String sessionTitle;
   final bool isFavorite;
-  final ScheduleRowSessionWidgetConfigurationProgessStatus progressStatus;
+  final ScheduleRowWidgetConfigurationProgessStatus progressStatus;
 
   _ScheduleRowSessionWidgetConfigurationProgressStyle get _style {
     switch (progressStatus) {
-      case ScheduleRowSessionWidgetConfigurationProgessStatus.oncoming:
+      case ScheduleRowWidgetConfigurationProgessStatus.oncoming:
 
-      case ScheduleRowSessionWidgetConfigurationProgessStatus.current:
+      case ScheduleRowWidgetConfigurationProgessStatus.current:
         return oncomingStyle;
-      case ScheduleRowSessionWidgetConfigurationProgessStatus.past:
+      case ScheduleRowWidgetConfigurationProgessStatus.past:
         return pastStyle;
     }
   }

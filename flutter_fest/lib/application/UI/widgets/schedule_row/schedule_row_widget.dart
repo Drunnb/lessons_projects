@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_session_widget.dart';
+import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_time_widget.dart';
 
 abstract class ScheduleRowWidget extends StatelessWidget {
   const ScheduleRowWidget({super.key});
@@ -20,14 +23,60 @@ class _ScheduleRowSingleSessionWidget extends ScheduleRowWidget {
       speakerName: 'Алексей Чулпин',
       sessionTitle: 'Субъективность в оценке дизайна',
       isFavorite: true,
-      progressStatus:
-          ScheduleRowSessionWidgetConfigurationProgessStatus.oncoming,
+      progressStatus: ScheduleRowWidgetConfigurationProgessStatus.oncoming,
     );
-    return Row(
-      children: const [
-        Expanded(child: ScheduleRowSessionWidget(configuration: configuration)),
-      ],
+    return SizedBox(
+      height: 100,
+      child: CustomMultiChildLayout(
+        delegate: RowLayoutDelegate(),
+        children: [
+          LayoutId(id: 1, child: const ScheduleRowTimeWidget()),
+          LayoutId(
+              id: 2,
+              child:
+                  const ScheduleRowSessionWidget(configuration: configuration)),
+        ],
+      ),
     );
+  }
+}
+
+class RowLayoutDelegate extends MultiChildLayoutDelegate {
+  @override
+  void performLayout(Size size) {
+    const firstChildWidth = 48.0;
+    const spaceChildWidth = 12.0;
+    const secondChildXoffset = firstChildWidth + spaceChildWidth;
+
+    var secondChildSize = Size.zero;
+
+    if (hasChild(2)) {
+      final maxWidth = size.width - secondChildXoffset; // ????
+      secondChildSize = layoutChild(
+        2,
+        BoxConstraints(
+          maxWidth: maxWidth,
+        ),
+      );
+    }
+    if (hasChild(1)) {
+      final maxHeight = max(secondChildSize.height, 90.0);
+      layoutChild(
+        1,
+        BoxConstraints(
+          maxWidth: firstChildWidth,
+          maxHeight: maxHeight,
+        ),
+      );
+    }
+
+    positionChild(1, Offset.zero);
+    positionChild(2, const Offset(secondChildXoffset, 0));
+  }
+
+  @override
+  bool shouldRelayout(covariant RowLayoutDelegate oldDelegate) {
+    return true;
   }
 }
 
@@ -38,4 +87,10 @@ class _ScheduleRowMultiSessionWidget extends ScheduleRowWidget {
   Widget build(BuildContext context) {
     return Container();
   }
+}
+
+enum ScheduleRowWidgetConfigurationProgessStatus {
+  oncoming,
+  current,
+  past,
 }
