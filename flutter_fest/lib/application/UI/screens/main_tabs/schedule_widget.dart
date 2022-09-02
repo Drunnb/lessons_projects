@@ -18,14 +18,25 @@ class ScheduleWidget extends StatelessWidget {
             delegate: _SliverAppBarDelegate(topInset: topInset),
           ),
           SliverList(
-              delegate: SliverChildListDelegate([
-            ScheduleRowWidget.single(),
-            ScheduleRowWidget.single(),
-            ScheduleRowWidget.single(),
-            ScheduleRowWidget.single(),
-            ScheduleRowWidget.single(),
-            ScheduleRowWidget.single(),
-          ])),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.only(top: 16.0, left: 20.0, right: 20.0),
+                  child: ScheduleRowWidget.single(),
+                );
+              },
+              childCount: 10,
+            ),
+            //   delegate: SliverChildListDelegate([
+            // ScheduleRowWidget.single(),
+            // ScheduleRowWidget.single(),
+            // ScheduleRowWidget.single(),
+            // ScheduleRowWidget.single(),
+            // ScheduleRowWidget.single(),
+            // ScheduleRowWidget.single(),
+            // ])
+          ),
         ],
       ),
     );
