@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fest/application/UI/themes/app_colors.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
@@ -28,14 +29,6 @@ class ScheduleWidget extends StatelessWidget {
               },
               childCount: 10,
             ),
-            //   delegate: SliverChildListDelegate([
-            // ScheduleRowWidget.single(),
-            // ScheduleRowWidget.single(),
-            // ScheduleRowWidget.single(),
-            // ScheduleRowWidget.single(),
-            // ScheduleRowWidget.single(),
-            // ScheduleRowWidget.single(),
-            // ])
           ),
         ],
       ),
@@ -145,7 +138,7 @@ class _SectionsButtonsWidget extends StatelessWidget {
                           begin: Alignment(-currentGradientStarPoint, 0.0),
                           end: Alignment(
                               currentGradientEndPoint.toDouble(), 0.0),
-                          colors: const [Color(0xFF00BD13), Color(0xFF170AF4)],
+                          colors: const [AppColors.green, AppColors.blue],
                         ),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(80.0)),

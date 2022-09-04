@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fest/application/UI/themes/app_colors.dart';
+import 'package:flutter_fest/application/UI/themes/app_text_style.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
 import 'package:flutter_fest/resources/app_fonts.dart';
 import 'package:flutter_fest/resources/resources.dart';
@@ -12,19 +14,10 @@ class ScheduleRowSessionWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: configuration._style.widgetBackground,
-        // gradient: RadialGradient(
-        //   center: Alignment(1, -1),
-        //   radius: 1.5,
-        //   colors: [
-        //     Color(0xFF00B90D),
-        //     configuration._style.widgetBackground,
-        //   ],
-        // ),
         borderRadius: const BorderRadius.all(Radius.circular(20.0)),
       ),
       padding:
           const EdgeInsets.only(left: 16.0, top: 4.0, right: 4.0, bottom: 16.0),
-      // margin: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,12 +64,8 @@ class _SpeakerWidget extends StatelessWidget {
             configuration.speakerName,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: AppTextStyle.bookText.copyWith(
               color: configuration._style.speakerNameColor,
-              fontSize: 14,
-              fontFamily: AppFonts.basisGrotesquePro,
-              fontWeight: FontWeight.w500,
-              height: 1.4285714286,
             ),
           ),
         ),
@@ -109,14 +98,8 @@ class _DescriptionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       configuration.sessionTitle,
-      // maxLines: 1,
-      // overflow: TextOverflow.ellipsis,
-      style: TextStyle(
+      style: AppTextStyle.stainbeckNormalText.copyWith(
         color: configuration._style.sessionTitleColor,
-        fontSize: 18,
-        fontFamily: AppFonts.steinbeck,
-        fontWeight: FontWeight.w500,
-        height: 1.22,
       ),
     );
   }
@@ -177,20 +160,20 @@ class ScheduleRowSessionWidgetConfiguration {
 
   static const oncomingStyle =
       _ScheduleRowSessionWidgetConfigurationProgressStyle(
-    widgetBackground: Color(0xFF101115),
-    speakerNameColor: Color(0xFF52525E),
-    sessionTitleColor: Colors.white,
+    widgetBackground: AppColors.darkSecondary,
+    speakerNameColor: AppColors.darkText,
+    sessionTitleColor: AppColors.white,
   );
   static const pastStyle = _ScheduleRowSessionWidgetConfigurationProgressStyle(
     widgetBackground: Colors.transparent,
-    speakerNameColor: Color(0x7A52525E),
-    sessionTitleColor: Color(0xFF52525E),
+    speakerNameColor: AppColors.darkText48,
+    sessionTitleColor: AppColors.darkText,
   );
 
   static const isFavoriteStyle =
       _ScheduleRowSessionWidgetConfigurationFavoriteStyle(
-          favoriteButtonColor: Color(0xFF00BD13),
-          widgetBackgroundGradient: Color(0xFF00BD13),
+          favoriteButtonColor: AppColors.green,
+          widgetBackgroundGradient: AppColors.green,
           favoriteButtonIcon: AppImages.bookmarkFull);
 
   static const isNotFavoriteStyle =
