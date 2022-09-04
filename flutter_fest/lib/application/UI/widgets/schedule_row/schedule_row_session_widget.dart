@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fest/application/UI/themes/app_colors.dart';
 import 'package:flutter_fest/application/UI/themes/app_text_style.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
-import 'package:flutter_fest/resources/app_fonts.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
 class ScheduleRowSessionWidget extends StatelessWidget {
@@ -42,7 +41,7 @@ class ScheduleRowSessionWidget extends StatelessWidget {
 
 class _SpeakerWidget extends StatelessWidget {
   final ScheduleRowSessionWidgetConfiguration configuration;
-  const _SpeakerWidget({super.key, required this.configuration});
+  const _SpeakerWidget({required this.configuration});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +75,7 @@ class _SpeakerWidget extends StatelessWidget {
 
 class _FavoriteWidget extends StatelessWidget {
   final ScheduleRowSessionWidgetConfiguration configuration;
-  const _FavoriteWidget({super.key, required this.configuration});
+  const _FavoriteWidget({required this.configuration});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +91,7 @@ class _FavoriteWidget extends StatelessWidget {
 
 class _DescriptionWidget extends StatelessWidget {
   final ScheduleRowSessionWidgetConfiguration configuration;
-  const _DescriptionWidget({super.key, required this.configuration});
+  const _DescriptionWidget({required this.configuration});
 
   @override
   Widget build(BuildContext context) {
