@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_fest/application/UI/themes/app_colors.dart';
-import 'package:flutter_fest/application/UI/widgets/dialogs/cupertino_dialog_widget.dart';
+import 'package:flutter_fest/application/UI/widgets/dialogs/dialog_widget.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_break_widget.dart';
 import 'package:flutter_fest/application/UI/widgets/schedule_row/schedule_row_widget.dart';
 import 'package:flutter_fest/resources/resources.dart';
-import 'package:provider/provider.dart';
 
 class ScheduleWidget extends StatelessWidget {
   const ScheduleWidget({super.key});
@@ -14,46 +11,20 @@ class ScheduleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void showOverlay(BuildContext context) {
-      // context.read<TopNotificationManager>().show('provider show');
-
-      showDialog<void>(
-        context: context,
-        barrierDismissible: true,
-        barrierColor: Colors.black.withOpacity(0.8),
-        builder: (BuildContext context) {
-          return BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
-              child: CupertinoDialogWidget(
-                title:
-                    'Хотите получить напоминание за 10 минут до начала лекции?',
-                actions: [
-                  DialogActionConfiguration('Не надо', true, () {}),
-                  DialogActionConfiguration('Да', false, () {}),
-                ],
-              ));
-        },
-      );
-    }
-
-    Widget makeAndroidDialog() {
-      return AlertDialog(
-        title: const Text('AlertDialog Tittle'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: const [
-              Text('This is a demo alert dialog.'),
-              Text('Would you like to approve jf this message?'),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Approve')),
+      final configuration = DialogConfiguration(
+        title: 'Хотите получить напоминание за 10 минут до начала лекции?',
+        actions: [
+          DialogActionConfiguration('Не надо', true, () {
+            Navigator.of(context).pop();
+          }),
+          DialogActionConfiguration('Да', false, () {
+            Navigator.of(context).pop();
+          }),
         ],
       );
+      // context.read<TopNotificationManager>().show('provider show');
+
+      DialogWidget.show<void>(context, configuration);
     }
 
     final topInset = MediaQuery.of(context).padding.top;

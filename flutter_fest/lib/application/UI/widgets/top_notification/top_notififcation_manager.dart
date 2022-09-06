@@ -46,6 +46,5 @@ class _TopNotificationManagerWidgetState
   @override
   void show(String text) {
     _topNotificationOvelayKey.currentState?.show(text);
-    print(text);
   }
 }
