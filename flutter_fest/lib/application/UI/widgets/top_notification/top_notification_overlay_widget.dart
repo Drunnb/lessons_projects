@@ -21,7 +21,7 @@ class TopNotificationOvelayWidgetState
   Timer? _timer;
   var _text = '';
   var _offset = _hidedOffset;
-  List<String> _textQueue = <String>[];
+  final List<String> _textQueue = <String>[];
   bool get isHidien => _offset == _hidedOffset;
 
   void show(String text) {
