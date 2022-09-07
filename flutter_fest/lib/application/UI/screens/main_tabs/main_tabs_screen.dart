@@ -22,7 +22,7 @@ class _BodyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentIndex =
-        context.select((MainTabsViewMidel vm) => vm.currentTabIndex);
+        context.select((MainTabsViewModel vm) => vm.currentTabIndex);
     return IndexedStack(
       index: currentIndex,
       children: const [
@@ -56,8 +56,8 @@ class _NavBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentIndex =
-        context.select((MainTabsViewMidel vm) => vm.currentTabIndex);
-    final model = context.read<MainTabsViewMidel>();
+        context.select((MainTabsViewModel vm) => vm.currentTabIndex);
+    final model = context.read<MainTabsViewModel>();
     final theme = Theme.of(context).bottomNavigationBarTheme;
     final buttons = [
       _BottonNavigationBarItemFactory(AppImages.tabbarCalendar, 'Расписание'),
