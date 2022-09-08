@@ -245,6 +245,153 @@ class _ScheduleInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, top: 24.0, right: 20.0),
+      child: Row(
+        children: const [
+          _ScheduleInfoElementWidget(
+            label: 'Старт',
+            text: '8:00',
+          ),
+          SizedBox(width: 16.0),
+          _ScheduleInfoElementWidget(
+            label: 'Секция',
+            text: '№1',
+          ),
+        ],
+      ),
+    );
   }
+}
+
+class _ScheduleInfoElementWidget extends StatelessWidget {
+  final String label;
+  final String text;
+  const _ScheduleInfoElementWidget({required this.label, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 76.0,
+      height: 60.0,
+      decoration: BoxDecoration(
+        color: AppColors.darkSecondary,
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: GradientBorder(
+        borderWidth: 2.0,
+        radius: 16.0,
+        gradient: const RadialGradient(
+          center: Alignment(0.1, -1.0),
+          radius: 1.0,
+          colors: <Color>[
+            Color(0xFF50AF64),
+            Color(0xFF3d734D),
+            Color(0xFF3d734D),
+            Color(0xFF206D82),
+          ],
+          stops: [
+            0.35,
+            0.59,
+            0.74,
+            0.91,
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            top: 10.0,
+            right: 20.0,
+            bottom: 10.0,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: AppTextStyle.snackText.copyWith(
+                  color: AppColors.darkText,
+                ),
+              ),
+              // const SizedBox(width: 2.0),
+              Text(
+                text,
+                style: AppTextStyle.timeText.copyWith(
+                  color: AppColors.white88,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class GradientBorder extends StatelessWidget {
+  final double borderWidth;
+  final double radius;
+  final Gradient gradient;
+  final Widget child;
+
+  const GradientBorder({
+    super.key,
+    required this.borderWidth,
+    required this.radius,
+    required this.gradient,
+    required this.child,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: GradientPainter(
+          radius: radius, borderWidth: borderWidth, gradient: gradient),
+      child: child,
+    );
+  }
+}
+
+class GradientPainter extends CustomPainter {
+  final double borderWidth;
+  final double radius;
+  final Gradient gradient;
+
+  GradientPainter({
+    required this.radius,
+    required this.borderWidth,
+    required this.gradient,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final outerRect = Offset.zero & size;
+    final outRRect = RRect.fromRectAndRadius(
+      outerRect,
+      Radius.circular(radius),
+    );
+
+    final innerRect = Rect.fromLTWH(
+      borderWidth,
+      borderWidth,
+      size.width - borderWidth * 2,
+      size.height - borderWidth * 2,
+    );
+
+    final innerRrect = RRect.fromRectAndRadius(
+      innerRect,
+      Radius.circular(radius - borderWidth),
+    );
+
+    final paint = Paint()..shader = gradient.createShader(outerRect);
+
+    final outerPath = Path()..addRRect(outRRect);
+    final innerPath = Path()..addRRect(innerRrect);
+    final path = Path.combine(PathOperation.difference, outerPath, innerPath);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => oldDelegate != this;
 }
