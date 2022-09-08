@@ -12,12 +12,18 @@ class SessionDetailsScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: const _AddToFavoriteWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             maxWidth: maxScreenWidth,
           ),
           child: ListView(
+            padding: EdgeInsets.zero,
             children: const [
               _HeaderWidget(),
               _SessionTitleWidget(),
@@ -122,20 +128,29 @@ class _AddToFavoriteWidget extends StatelessWidget {
 }
 
 class _HeaderWidget extends StatelessWidget {
-  const _HeaderWidget({super.key});
+  const _HeaderWidget();
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: const [
-        _SpeakerInfoWidget(),
+      children: [
+        Positioned(
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            child: Image.asset(
+              AppImages.speakerBackground,
+              fit: BoxFit.fill,
+            )),
+        const _SpeakerInfoWidget(),
       ],
     );
   }
 }
 
 class _SpeakerInfoWidget extends StatelessWidget {
-  const _SpeakerInfoWidget({super.key});
+  const _SpeakerInfoWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +187,19 @@ class _SpeakerInfoWidget extends StatelessWidget {
               ],
             ),
           ),
-          const Placeholder(),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            left: 0,
+            child: Align(
+                alignment: Alignment.bottomRight,
+                child: FractionallySizedBox(
+                    widthFactor: 208 / 375,
+                    child: Image.asset(
+                      AppImages.photoMock,
+                      fit: BoxFit.fill,
+                    ))),
+          ),
         ],
       ),
     );
@@ -180,7 +207,7 @@ class _SpeakerInfoWidget extends StatelessWidget {
 }
 
 class _SessionTitleWidget extends StatelessWidget {
-  const _SessionTitleWidget({super.key});
+  const _SessionTitleWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +224,7 @@ class _SessionTitleWidget extends StatelessWidget {
 }
 
 class _SessionDiscriptionWidget extends StatelessWidget {
-  const _SessionDiscriptionWidget({super.key});
+  const _SessionDiscriptionWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +241,7 @@ class _SessionDiscriptionWidget extends StatelessWidget {
 }
 
 class _ScheduleInfoWidget extends StatelessWidget {
-  const _ScheduleInfoWidget({super.key});
+  const _ScheduleInfoWidget();
 
   @override
   Widget build(BuildContext context) {
