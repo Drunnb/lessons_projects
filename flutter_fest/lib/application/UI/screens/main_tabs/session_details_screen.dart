@@ -4,8 +4,15 @@ import 'package:flutter_fest/application/UI/themes/app_text_style.dart';
 import 'package:flutter_fest/application/UI/themes/app_theme.dart';
 import 'package:flutter_fest/resources/resources.dart';
 
-class SessionDetailsScreen extends StatelessWidget {
+class SessionDetailsScreen extends StatefulWidget {
   const SessionDetailsScreen({super.key});
+
+  @override
+  State<SessionDetailsScreen> createState() => _SessionDetailsScreenState();
+}
+
+class _SessionDetailsScreenState extends State<SessionDetailsScreen> {
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +29,100 @@ class SessionDetailsScreen extends StatelessWidget {
           constraints: const BoxConstraints(
             maxWidth: maxScreenWidth,
           ),
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: const [
-              _HeaderWidget(),
-              _SessionTitleWidget(),
-              _SessionDiscriptionWidget(),
-              _ScheduleInfoWidget(),
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: EasterEggWidget(
+                  scrollController: _scrollController,
+                ),
+              ),
+              ListView(
+                physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                controller: _scrollController,
+                padding: EdgeInsets.zero,
+                children: const [
+                  _HeaderWidget(),
+                  _SessionTitleWidget(),
+                  _SessionDescriptionWidget(),
+                  _ScheduleInfoWidget(),
+                ],
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+}
+
+class EasterEggWidget extends StatefulWidget {
+  final ScrollController scrollController;
+
+  const EasterEggWidget({
+    Key? key,
+    required this.scrollController,
+  }) : super(key: key);
+
+  @override
+  State<EasterEggWidget> createState() => _EasterEggWidgetState();
+}
+
+class _EasterEggWidgetState extends State<EasterEggWidget> {
+  late ScrollController _scrollController;
+  var _easterEggScale = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = widget.scrollController;
+    _scrollController.addListener(_onChangeScrollOffset);
+  }
+
+  @override
+  void didUpdateWidget(covariant EasterEggWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (!identical(oldWidget.scrollController, widget.scrollController)) {
+      _scrollController.removeListener(_onChangeScrollOffset);
+      _scrollController = widget.scrollController;
+      _scrollController.addListener(_onChangeScrollOffset);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Transform.scale(
+      scale: _easterEggScale,
+      child: Image.asset(AppImages.easterEggLarge),
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_onChangeScrollOffset);
+    super.dispose();
+  }
+
+  void _onChangeScrollOffset() {
+    final offset =
+        _scrollController.offset - _scrollController.position.maxScrollExtent;
+    print(offset);
+    if (offset >= 0) {
+      setState(() {
+        _easterEggScale = offset / 200;
+      });
+    }
   }
 }
 
@@ -223,8 +312,8 @@ class _SessionTitleWidget extends StatelessWidget {
   }
 }
 
-class _SessionDiscriptionWidget extends StatelessWidget {
-  const _SessionDiscriptionWidget();
+class _SessionDescriptionWidget extends StatelessWidget {
+  const _SessionDescriptionWidget();
 
   @override
   Widget build(BuildContext context) {
