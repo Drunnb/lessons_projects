@@ -117,7 +117,6 @@ class _EasterEggWidgetState extends State<EasterEggWidget> {
   void _onChangeScrollOffset() {
     final offset =
         _scrollController.offset - _scrollController.position.maxScrollExtent;
-    print(offset);
     if (offset >= 0) {
       setState(() {
         _easterEggScale = offset / 200;
