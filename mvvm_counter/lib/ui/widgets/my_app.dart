@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm_counter/ui/widgets/example_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:mvvm_counter/ui/widgets/auth_widget.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,10 +11,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ChangeNotifierProvider(
-        create: (_) => ViewModel(),
-        child: const ExampleWidget(),
-      ),
+      home: AuthWidget.create(),
     );
   }
 }
