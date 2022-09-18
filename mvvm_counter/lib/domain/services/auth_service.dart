@@ -15,7 +15,7 @@ class AuthService {
     await _sessionDataProvide.saveApiKey(apiKey);
   }
 
-  Future<void> logout(String login, String password) async {
+  Future<void> logout() async {
     await _sessionDataProvide.clearApiKey();
   }
 }
