@@ -13,6 +13,7 @@ class _AuthWidgetState extends State<AuthWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Login to your account'),
       ),
       body: ListView(
@@ -83,10 +84,9 @@ class __FormWidgetState extends State<_FormWidget> {
     final password = _passwordTextConroller.text;
     if (login == 'admin' && password == 'admin') {
       errorText = null;
-      print('open app');
+      Navigator.of(context).pushReplacementNamed('/main_screen');
     } else {
       errorText = 'Ошибка логина или пароля ';
-      print('show error');
     }
     setState(() {});
   }

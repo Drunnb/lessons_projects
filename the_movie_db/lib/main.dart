@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/widgets/auth/auth_widget.dart';
+import 'package:the_movie_db/widgets/main_screen/main_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,20 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color.fromRGBO(3, 37, 65, 1),
         ),
       ),
-      home: const AuthWidget(),
+      routes: {
+        '/auth': (context) => const AuthWidget(),
+        '/main_screen': (context) => const MainScreenWidget(),
+      },
+      initialRoute: '/auth',
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute<void>(builder: (context) {
+          return const Scaffold(
+            body: Center(
+              child: Text('Произошла ошибка навигации'),
+            ),
+          );
+        });
+      },
     );
   }
 }
