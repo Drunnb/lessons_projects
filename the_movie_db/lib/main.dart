@@ -29,15 +29,15 @@ class MyApp extends StatelessWidget {
         '/main_screen': (context) => const MainScreenWidget(),
       },
       initialRoute: '/auth',
-      onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute<void>(builder: (context) {
-          return const Scaffold(
-            body: Center(
-              child: Text('Произошла ошибка навигации'),
-            ),
-          );
-        });
-      },
+      // onGenerateRoute: (RouteSettings settings) {
+      //   return MaterialPageRoute<void>(builder: (context) {
+      //     return const Scaffold(
+      //       body: Center(
+      //         child: Text('Произошла ошибка навигации'),
+      //       ),
+      //     );
+      //   });
+      // },
     );
   }
 }
