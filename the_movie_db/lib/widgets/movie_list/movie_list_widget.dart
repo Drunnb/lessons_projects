@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:the_movie_db/resources/resources.dart';
 
 class Movie {
+  final int id;
   final String imageName;
   final String title;
   final String time;
   final String description;
 
   Movie({
+    required this.id,
     required this.imageName,
     required this.title,
     required this.time,
@@ -25,6 +27,7 @@ class MovieListWidget extends StatefulWidget {
 class _MovieListWidgetState extends State<MovieListWidget> {
   final _movies = [
     Movie(
+      id: 1,
       imageName: AppImages.moviePlacholder,
       title: 'Mortal Kombat',
       time: 'April 7, 2021',
@@ -32,6 +35,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'Washed-up MMA fighter Cole Young, unware of his heritage, and hunted by Emperator Shang Tsungs besons as he prepares to stand against the enemies of Outworld in a high stake battle for the universe.',
     ),
     Movie(
+      id: 2,
       imageName: AppImages.moviePlacholder,
       title: 'Прибытие',
       time: 'April 7, 2021',
@@ -39,6 +43,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'Washed-up MMA fighter Cole Young, unware of his heritage, and hunted by Emperator Shang Tsungs besons as he prepares to stand against the enemies of Outworld in a high stake battle for the universe.',
     ),
     Movie(
+      id: 3,
       imageName: AppImages.moviePlacholder,
       title: 'Назад в будущее 1',
       time: 'April 7, 2021',
@@ -46,6 +51,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'Washed-up MMA fighter Cole Young, unware of his heritage, and hunted by Emperator Shang Tsungs besons as he prepares to stand against the enemies of Outworld in a high stake battle for the universe.',
     ),
     Movie(
+      id: 4,
       imageName: AppImages.moviePlacholder,
       title: 'Назад в будущее 2',
       time: 'April 7, 2021',
@@ -53,6 +59,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'Washed-up MMA fighter Cole Young, unware of his heritage, and hunted by Emperator Shang Tsungs besons as he prepares to stand against the enemies of Outworld in a high stake battle for the universe.',
     ),
     Movie(
+      id: 5,
       imageName: AppImages.moviePlacholder,
       title: 'Тихие Зори',
       time: 'April 7, 2021',
@@ -60,6 +67,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'Washed-up MMA fighter Cole Young, unware of his heritage, and hunted by Emperator Shang Tsungs besons as he prepares to stand against the enemies of Outworld in a high stake battle for the universe.',
     ),
     Movie(
+      id: 6,
       imageName: AppImages.moviePlacholder,
       title: 'Дюна',
       time: 'April 7, 2021',
@@ -67,6 +75,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
           'Washed-up MMA fighter Cole Young, unware of his heritage, and hunted by Emperator Shang Tsungs besons as he prepares to stand against the enemies of Outworld in a high stake battle for the universe.',
     ),
     Movie(
+      id: 7,
       imageName: AppImages.moviePlacholder,
       title: 'Остров проклятых',
       time: 'April 7, 2021',
@@ -96,6 +105,14 @@ class _MovieListWidgetState extends State<MovieListWidget> {
     super.initState();
     _filteredMovies = _movies;
     _searchController.addListener(_searchMovies);
+  }
+
+  void _onMovieTap(int index) {
+    final id = _movies[index].id;
+    Navigator.of(context).pushNamed(
+      '/main_screen/movie_details',
+      arguments: id,
+    );
   }
 
   @override
@@ -170,7 +187,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                       color: Colors.transparent,
                       child: InkWell(
                         borderRadius: BorderRadius.circular(10.0),
-                        onTap: () {},
+                        onTap: () => _onMovieTap(index),
                       )),
                 ],
               ),
