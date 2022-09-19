@@ -92,7 +92,7 @@ class __FormWidgetState extends State<_FormWidget> {
   }
 
   void _resetPassword() {
-    print('reset password');
+    // print('reset password');
   }
 
   @override
