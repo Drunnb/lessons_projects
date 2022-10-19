@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/Theme/app_colors.dart';
+import 'package:the_movie_db/widgets/auth/auth_model.dart';
 import 'package:the_movie_db/widgets/auth/auth_widget.dart';
 import 'package:the_movie_db/widgets/main_screen/main_screen.dart';
 import 'package:the_movie_db/widgets/movie_details/movie_details_widget.dart';
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/auth': (context) => const AuthWidget(),
+        '/auth': (context) => AuthProvider(
+              model: AuthModel(),
+              child: const AuthWidget(),
+            ),
         '/main_screen': (context) => const MainScreenWidget(),
         '/main_screen/movie_details': (context) {
           final arguments = ModalRoute.of(context)?.settings.arguments;
@@ -38,15 +42,6 @@ class MyApp extends StatelessWidget {
         }
       },
       initialRoute: '/auth',
-      // onGenerateRoute: (RouteSettings settings) {
-      //   return MaterialPageRoute<void>(builder: (context) {
-      //     return const Scaffold(
-      //       body: Center(
-      //         child: Text('Произошла ошибка навигации'),
-      //       ),
-      //     );
-      //   });
-      // },
     );
   }
 }
