@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/resources/resources.dart';
 import 'package:the_movie_db/ui/navigation/maint_navigation.dart';
@@ -19,7 +21,7 @@ class TVShow {
 }
 
 class TWShowListWidget extends StatefulWidget {
-  TWShowListWidget({Key? key}) : super(key: key);
+  const TWShowListWidget({Key? key}) : super(key: key);
 
   @override
   _TWShowListWidgetState createState() => _TWShowListWidgetState();

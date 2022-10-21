@@ -4,6 +4,7 @@ import 'dart:io';
 class ApiClient {
   final _client = HttpClient();
   static const _host = 'https://api.themoviedb.org/3';
+  // ignore: unused_field
   static const _imageUrl = 'https://image.tmdb.org/t/p/w500';
   static const _apiKey = '0a2a46b5593a0978cc8e87ba34037430';
 
