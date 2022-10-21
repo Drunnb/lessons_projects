@@ -37,10 +37,21 @@ class AuthModel extends ChangeNotifier {
         username: login,
         password: password,
       );
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-      _errorMessage = 'Неправильный логин пароль!';
+    } on ApiClientException catch (e) {
+      switch (e.type) {
+        case ApiClientExceptionType.network:
+          _errorMessage =
+              'Сервер не допуспен, проверьте подключение к интернету';
+          break;
+        case ApiClientExceptionType.auth:
+          _errorMessage = 'Неправильный логин пароль!';
+
+          break;
+        case ApiClientExceptionType.other:
+          _errorMessage = 'Произошла ошибка. Попробуйте еще раз';
+
+          break;
+      }
     }
     _isAuthProgress = false;
     if (_errorMessage != null) {
