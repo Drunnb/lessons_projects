@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/resources/resources.dart';
+import 'package:the_movie_db/domain/api_client/api_client.dart';
 import 'package:the_movie_db/ui/widgets/elements/radial_percent_widget.dart';
+import 'package:the_movie_db/ui/widgets/movie_details/movie_details_model.dart';
+import '../../../Library/Widgets/inherited/provider.dart';
 
 class MovieDetailsMainInfoWidget extends StatelessWidget {
   const MovieDetailsMainInfoWidget({super.key});
@@ -37,9 +39,10 @@ class _DescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'An elite Navy SEAL uncovers an international conspiracy while seeking justice for the murder of his pregnant wife.',
-      style: TextStyle(
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    return Text(
+      model?.movieDetails?.overview ?? '',
+      style: const TextStyle(
         color: Colors.white,
         fontSize: 16.0,
         fontWeight: FontWeight.w400,
@@ -69,15 +72,26 @@ class _TopPosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: const [
-        Image(image: AssetImage(AppImages.topHeader)),
-        Positioned(
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    final backdropPath = model?.movieDetails?.backdropPath;
+    final posterPath = model?.movieDetails?.posterPath;
+    return AspectRatio(
+      aspectRatio: 390 / 219,
+      child: Stack(
+        children: [
+          backdropPath != null
+              ? Image.network(ApiClient.imageUrl(backdropPath))
+              : const SizedBox.shrink(),
+          Positioned(
             top: 20.0,
             left: 20.0,
             bottom: 20.0,
-            child: Image(image: AssetImage(AppImages.topHeaderSubImage))),
-      ],
+            child: posterPath != null
+                ? Image.network(ApiClient.imageUrl(posterPath))
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -87,26 +101,32 @@ class _MovieNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      maxLines: 3,
-      textAlign: TextAlign.center,
-      text: const TextSpan(
-        children: [
-          TextSpan(
-            text: 'Tom Clancy`s Without Remorse',
-            style: TextStyle(
-              fontSize: 17.0,
-              fontWeight: FontWeight.w600,
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    var year = model?.movieDetails?.releaseDate?.year.toString();
+    year = year != null ? ' ($year)' : '';
+
+    return Center(
+      child: RichText(
+        maxLines: 3,
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: model?.movieDetails?.title ?? '',
+              style: const TextStyle(
+                fontSize: 17.0,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-          TextSpan(
-            text: ' (2021)',
-            style: TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w400,
+            TextSpan(
+              text: year,
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -117,27 +137,30 @@ class _ScoreWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final movieDetails = NotifierProvider.watch<MovieDetailsModel>(context);
+    var voteAverage = movieDetails?.movieDetails?.voteAverage ?? 0;
+    voteAverage = voteAverage * 10;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         TextButton(
             onPressed: () {},
             child: Row(
-              children: const [
+              children: [
                 SizedBox(
                   width: 40.0,
                   height: 40.0,
                   child: RadialPercentWidget(
-                    percent: 0.72,
-                    fillColor: Color.fromARGB(255, 10, 23, 25),
-                    lineColor: Color.fromARGB(255, 137, 203, 103),
-                    freeColor: Color.fromARGB(255, 25, 54, 31),
+                    percent: voteAverage / 100,
+                    fillColor: const Color.fromARGB(255, 10, 23, 25),
+                    lineColor: const Color.fromARGB(255, 137, 203, 103),
+                    freeColor: const Color.fromARGB(255, 25, 54, 31),
                     lineWidth: 3,
-                    child: Text('72'),
+                    child: Text(voteAverage.toStringAsFixed(0)),
                   ),
                 ),
-                SizedBox(width: 10.0),
-                Text('User Score'),
+                const SizedBox(width: 10.0),
+                const Text('User Score'),
               ],
             )),
         Container(color: Colors.grey, width: 1.0, height: 15.0),
@@ -159,15 +182,43 @@ class _SummeryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ColoredBox(
-      color: Color.fromRGBO(22, 21, 25, 1.0),
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    if (model == null) return const SizedBox.shrink();
+
+    var texts = <String>[];
+
+    final releaseDate = model.movieDetails?.releaseDate;
+    if (releaseDate != null) {
+      texts.add(model.stringFromDate(releaseDate));
+    }
+    final productionCountries = model.movieDetails?.productionCountries;
+    if (productionCountries != null && productionCountries.isNotEmpty) {
+      texts.add('(${productionCountries.first.iso})');
+    }
+    final runtime = model.movieDetails?.runtime ?? 0;
+    final duration = Duration(minutes: runtime);
+    final hours = duration.inHours;
+    final minutes = duration.inMinutes.remainder(60);
+    texts.add('${hours}h ${minutes}m');
+
+    final genres = model.movieDetails?.genres;
+    if (genres != null && genres.isNotEmpty) {
+      var genresNames = <String>[];
+      for (var genr in genres) {
+        genresNames.add(genr.name);
+      }
+      texts.add(genresNames.join(', '));
+    }
+
+    return ColoredBox(
+      color: const Color.fromRGBO(22, 21, 25, 1.0),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 70.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
         child: Text(
-          'R 04/29/2021 (US) 1h49m Action, Adventure, Thriller, War',
+          texts.join(' '),
           maxLines: 3,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 16.0,
             fontWeight: FontWeight.w400,
