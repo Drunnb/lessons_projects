@@ -1,5 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:the_movie_db/domain/entity/movie_data_parser.dart';
+
+import 'movie_details_credits.dart';
 
 part 'movie_details.g.dart';
 
@@ -31,6 +35,7 @@ class MovieDetails {
   final bool video;
   final double voteAverage;
   final int voteCount;
+  final MovieDetailsCredits credits;
   MovieDetails({
     required this.adult,
     required this.backdropPath,
@@ -57,6 +62,7 @@ class MovieDetails {
     required this.video,
     required this.voteAverage,
     required this.voteCount,
+    required this.credits,
   });
   factory MovieDetails.fromJson(Map<String, dynamic> json) =>
       _$MovieDetailsFromJson(json);
