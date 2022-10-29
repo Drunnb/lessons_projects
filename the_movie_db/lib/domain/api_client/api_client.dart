@@ -8,7 +8,8 @@ import 'package:the_movie_db/domain/entity/popular_movie_response.dart';
 enum ApiClientExceptionType { network, auth, other }
 
 class ApiClientException implements Exception {
-  late final ApiClientExceptionType type;
+  final ApiClientExceptionType type;
+
   ApiClientException(this.type);
 }
 
@@ -74,6 +75,7 @@ class ApiClient {
     try {
       final url = _makeUri(path, urlParameters);
       final request = await _client.postUrl(url);
+
       request.headers.contentType = ContentType.json;
       request.write(jsonEncode(bodyParameters));
       final response = await request.close();
@@ -126,7 +128,10 @@ class ApiClient {
   }
 
   Future<PopularMovieResponse> searchMovie(
-      int page, String locale, String query) async {
+    int page,
+    String locale,
+    String query,
+  ) async {
     parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = PopularMovieResponse.fromJson(jsonMap);
@@ -161,7 +166,7 @@ class ApiClient {
       '/movie/$movieId',
       parser,
       <String, dynamic>{
-        'append_to_response': 'credits',
+        'append_to_response': 'credits,videos',
         'api_key': _apiKey,
         'language': locale,
       },
@@ -185,7 +190,6 @@ class ApiClient {
       'password': password,
       'request_token': requestToken,
     };
-
     final result = _post(
       '/authentication/token/validate_with_login',
       parameters,
@@ -200,14 +204,13 @@ class ApiClient {
   }) async {
     parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
-      final sessionId = json['session_id'] as String;
+      final sessionId = jsonMap['session_id'] as String;
       return sessionId;
     }
 
     final parameters = <String, dynamic>{
       'request_token': requestToken,
     };
-
     final result = _post(
       '/authentication/session/new',
       parameters,
