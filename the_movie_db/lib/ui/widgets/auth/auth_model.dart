@@ -53,6 +53,9 @@ class AuthModel extends ChangeNotifier {
           _errorMessage = 'Произошла ошибка. Попробуйте еще раз';
 
           break;
+        case ApiClientExceptionType.sessionExpired:
+          _errorMessage = 'Сессия истекла. Обновите сессию';
+          break;
       }
     }
     _isAuthProgress = false;

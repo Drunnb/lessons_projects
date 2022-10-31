@@ -14,6 +14,8 @@ class MovieDetailsModel extends ChangeNotifier {
   String _locale = '';
   late DateFormat _dateFormat;
 
+  Future<void>? Function()? onSessionExpired;
+
   MovieDetails? get movieDetails => _movieDetails;
   bool get isFavorite => _isFavorite;
 
@@ -31,12 +33,16 @@ class MovieDetailsModel extends ChangeNotifier {
   }
 
   Future<void> loadDetails() async {
-    _movieDetails = await _apiClient.movieDetails(movieId, _locale);
-    final sessionId = await _sessionDataProvider.getSessionId();
-    if (sessionId != null) {
-      _isFavorite = await _apiClient.isFavorite(movieId, sessionId);
+    try {
+      _movieDetails = await _apiClient.movieDetails(movieId, _locale);
+      final sessionId = await _sessionDataProvider.getSessionId();
+      if (sessionId != null) {
+        _isFavorite = await _apiClient.isFavorite(movieId, sessionId);
+      }
+      notifyListeners();
+    } on ApiClientException catch (e) {
+      _handleApiClientException(e);
     }
-    notifyListeners();
   }
 
   Future<void> toggleFavorite() async {
@@ -45,11 +51,25 @@ class MovieDetailsModel extends ChangeNotifier {
     if (sessionId == null || accountId == null) return;
     _isFavorite = !_isFavorite;
     notifyListeners();
-    await _apiClient.markAsFavorite(
-        accountId: accountId,
-        sessionId: sessionId,
-        mediaType: MediaType.movie,
-        mediaId: movieId,
-        isFavorite: _isFavorite);
+    try {
+      await _apiClient.markAsFavorite(
+          accountId: accountId,
+          sessionId: sessionId,
+          mediaType: MediaType.movie,
+          mediaId: movieId,
+          isFavorite: _isFavorite);
+    } on ApiClientException catch (e) {
+      _handleApiClientException(e);
+    }
+  }
+
+  void _handleApiClientException(ApiClientException exception) {
+    switch (exception.type) {
+      case ApiClientExceptionType.sessionExpired:
+        onSessionExpired?.call();
+        break;
+      default:
+        print(exception);
+    }
   }
 }

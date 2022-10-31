@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:the_movie_db/domain/data_providers/session_data_provider.dart';
+import 'package:the_movie_db/ui/navigation/maint_navigation.dart';
 
 class MyAppModel {
   final _sessionDataProvider = SessionDataProvider();
@@ -8,5 +10,12 @@ class MyAppModel {
   Future<void> checkAuth() async {
     final sessionId = await _sessionDataProvider.getSessionId();
     _isAuth = sessionId != null;
+  }
+
+  Future<void> resetSession(BuildContext context) async {
+    await _sessionDataProvider.setSessionId(null);
+    await _sessionDataProvider.setAccountId(null);
+    await Navigator.of(context)
+        .pushNamedAndRemoveUntil(MainNavigationRouteNames.auth, (_) => false);
   }
 }
