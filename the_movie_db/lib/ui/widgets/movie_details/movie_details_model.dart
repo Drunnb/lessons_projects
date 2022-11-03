@@ -72,7 +72,7 @@ class MovieDetailsModel extends ChangeNotifier {
         onSessionExpired?.call();
         break;
       default:
-        print(exception);
+      // print(exception);
     }
   }
 }

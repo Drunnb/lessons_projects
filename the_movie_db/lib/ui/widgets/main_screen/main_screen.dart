@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/Library/Widgets/inherited/provider.dart';
 import 'package:the_movie_db/domain/data_providers/session_data_provider.dart';
-import 'package:the_movie_db/ui/widgets/main_screen/main_screen_model.dart';
-import 'package:the_movie_db/ui/widgets/movie_list/movie_list_model.dart';
-import 'package:the_movie_db/ui/widgets/movie_list/movie_list_widget.dart';
-import 'package:the_movie_db/ui/widgets/news/new_widget.dart';
-import 'package:the_movie_db/ui/widgets/tv_show_list/tv_show_list_widget.dart';
+import 'package:the_movie_db/domain/factoryes/screen_factory.dart';
 
 class MainScreenWidget extends StatefulWidget {
   const MainScreenWidget({super.key});
@@ -16,7 +11,7 @@ class MainScreenWidget extends StatefulWidget {
 
 class _MainScreenWidgetState extends State<MainScreenWidget> {
   int _selectedTab = 0;
-  final movieListModel = MovieListModel();
+  final _screenFactory = ScreenFactory();
 
   void onSelectedTab(int index) {
     setState(() {
@@ -26,15 +21,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    movieListModel.setupLocale(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    final model = NotifierProvider.read<MainScreenModel>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -49,13 +36,9 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       body: IndexedStack(
         index: _selectedTab,
         children: [
-          const NewsWidget(),
-          NotifierProvider(
-            create: () => movieListModel,
-            isManagingModel: false,
-            child: const MovieListWidget(),
-          ),
-          const TWShowListWidget(),
+          _screenFactory.makeNewsList(),
+          _screenFactory.makeMovieList(),
+          _screenFactory.makeTVShowList(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
