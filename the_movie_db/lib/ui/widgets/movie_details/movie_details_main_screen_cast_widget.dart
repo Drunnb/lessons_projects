@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
 import 'package:the_movie_db/Library/Widgets/inherited/provider.dart';
-import 'package:the_movie_db/domain/api_client/api_client.dart';
+import 'package:the_movie_db/domain/api_client/image_downloader.dart';
 import 'package:the_movie_db/ui/widgets/movie_details/movie_details_model.dart';
 
 class MovieDetailsMainScreenCastWidget extends StatelessWidget {
@@ -93,7 +92,7 @@ class _ActorListItemWidget extends StatelessWidget {
             children: [
               profilePath != null
                   ? Image.network(
-                      ApiClient.imageUrl(profilePath),
+                      ImageDownloader.imageUrl(profilePath),
                       width: 120,
                       height: 120.0,
                       fit: BoxFit.cover,
