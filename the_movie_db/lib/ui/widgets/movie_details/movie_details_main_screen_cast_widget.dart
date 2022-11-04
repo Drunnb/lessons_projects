@@ -1,6 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/Library/Widgets/inherited/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:the_movie_db/domain/api_client/image_downloader.dart';
 import 'package:the_movie_db/ui/widgets/movie_details/movie_details_model.dart';
 
@@ -46,11 +45,11 @@ class _ActorListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = NotifierProvider.watch<MovieDetailsModel>(context);
-    var cast = model?.movieDetails?.credits.cast;
-    if (cast == null || cast.isEmpty) return const SizedBox.shrink();
+    var data =
+        context.select((MovieDetailsModel model) => model.data.actorsData);
+    if (data.isEmpty) return const SizedBox.shrink();
     return ListView.builder(
-        itemCount: 20,
+        itemCount: data.length,
         itemExtent: 120,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
@@ -68,8 +67,8 @@ class _ActorListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = NotifierProvider.read<MovieDetailsModel>(context);
-    final actor = model!.movieDetails!.credits.cast[actorIndex];
+    final model = context.read<MovieDetailsModel>();
+    final actor = model.data.actorsData[actorIndex];
     final profilePath = actor.profilePath;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -90,14 +89,13 @@ class _ActorListItemWidget extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           child: Column(
             children: [
-              profilePath != null
-                  ? Image.network(
-                      ImageDownloader.imageUrl(profilePath),
-                      width: 120,
-                      height: 120.0,
-                      fit: BoxFit.cover,
-                    )
-                  : const SizedBox.shrink(),
+              if (profilePath != null)
+                Image.network(
+                  ImageDownloader.imageUrl(profilePath),
+                  width: 120,
+                  height: 120.0,
+                  fit: BoxFit.cover,
+                ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

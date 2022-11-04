@@ -1,8 +1,4 @@
-// ignore_for_file: library_prefixes
-
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/Library/Widgets/inherited/provider.dart'
-    as old_Provider;
 import 'package:provider/provider.dart';
 import 'package:the_movie_db/ui/widgets/auth/auth_model.dart';
 import 'package:the_movie_db/ui/widgets/auth/auth_widget.dart';
@@ -38,8 +34,8 @@ class ScreenFactory {
   }
 
   Widget makeMovieDetails(int movieId) {
-    return old_Provider.NotifierProvider(
-        create: () => MovieDetailsModel(movieId),
+    return ChangeNotifierProvider(
+        create: (_) => MovieDetailsModel(movieId),
         child: const MovieDetailsWidget());
   }
 
