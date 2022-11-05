@@ -8,16 +8,16 @@ class MovieDetailsWidget extends StatefulWidget {
   const MovieDetailsWidget({Key? key}) : super(key: key);
 
   @override
-  _MovieDetailsWidgetState createState() => _MovieDetailsWidgetState();
+  MovieDetailsWidgetState createState() => MovieDetailsWidgetState();
 }
 
-class _MovieDetailsWidgetState extends State<MovieDetailsWidget> {
+class MovieDetailsWidgetState extends State<MovieDetailsWidget> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
+    final locale = Localizations.localeOf(context);
     Future.microtask(
-      () => context.read<MovieDetailsModel>().setupLocale(context),
+      () => context.read<MovieDetailsModel>().setupLocale(context, locale),
     );
   }
 

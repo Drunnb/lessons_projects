@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:the_movie_db/Library/Widgets/inherited/localezed_model.dart';
 import 'package:the_movie_db/Library/paginator.dart';
 import 'package:the_movie_db/domain/entity/movie.dart';
 import 'package:the_movie_db/domain/services/movie_service.dart';
@@ -27,7 +28,7 @@ class MovieListViewModel extends ChangeNotifier {
   late final Paginator<Movie> _searchMoviePaginator;
 
   Timer? searchDeboubce;
-  String _locale = '';
+  final _localeStorage = LocalizedModelStorage();
 
   var _movies = <MovieListRowData>[];
   String? _searchQuery;
@@ -42,7 +43,8 @@ class MovieListViewModel extends ChangeNotifier {
 
   MovieListViewModel() {
     _popularMoviePaginator = Paginator<Movie>((page) async {
-      final result = await _movieService.popularMovie(page, _locale);
+      final result =
+          await _movieService.popularMovie(page, _localeStorage.localeTag);
       return PaginatorLoadResult(
           data: result.movies,
           currentPage: result.page,
@@ -51,7 +53,7 @@ class MovieListViewModel extends ChangeNotifier {
     _searchMoviePaginator = Paginator<Movie>((page) async {
       final result = await _movieService.searchMovie(
         page,
-        _locale,
+        _localeStorage.localeTag,
         _searchQuery ?? '',
       );
       return PaginatorLoadResult(
@@ -61,11 +63,10 @@ class MovieListViewModel extends ChangeNotifier {
     });
   }
 
-  Future<void> setupLocale(BuildContext context) async {
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    if (_locale == locale) return;
-    _locale = locale;
-    _dateFormat = DateFormat.yMMMMd(locale);
+  // final locale = Localizations.localeOf(context).toLanguageTag();
+  Future<void> setupLocale(Locale locale) async {
+    if (!_localeStorage.updateLocale(locale)) return;
+    _dateFormat = DateFormat.yMMMMd(_localeStorage.localeTag);
     await _resetList();
   }
 

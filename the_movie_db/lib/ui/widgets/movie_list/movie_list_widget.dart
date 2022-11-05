@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:the_movie_db/domain/api_client/image_downloader.dart';
 import 'package:the_movie_db/ui/widgets/movie_list/movie_list_model.dart';
 
@@ -17,7 +15,9 @@ class MovieListWidgetState extends State<MovieListWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    context.read<MovieListViewModel>().setupLocale(context);
+    final locale = Localizations.localeOf(context);
+    Future.microtask(
+        () => context.read<MovieListViewModel>().setupLocale(locale));
   }
 
   @override
