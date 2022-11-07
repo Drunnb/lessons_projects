@@ -1,5 +1,5 @@
-import 'package:mvvm_counter/domain/data_provider/auth_api_data_provider.dart';
-import 'package:mvvm_counter/domain/data_provider/session_data_provider.dart';
+import 'package:mvvm_counter/domain/data_providers/auth_api_data_provider.dart';
+import 'package:mvvm_counter/domain/data_providers/session_data_provider.dart';
 
 class AuthService {
   final _sessionDataProvide = SessionDataProvider();

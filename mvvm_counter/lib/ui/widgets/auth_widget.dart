@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mvvm_counter/domain/data_provider/auth_api_data_provider.dart';
+import 'package:mvvm_counter/domain/data_providers/auth_api_data_provider.dart';
 import 'package:mvvm_counter/domain/services/auth_service.dart';
 import 'package:mvvm_counter/ui/navigation/main_navigation.dart';
 import 'package:provider/provider.dart';
