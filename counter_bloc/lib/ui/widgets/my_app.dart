@@ -1,7 +1,7 @@
-import 'package:counter_bloc/ui/widgets/auth_widget.dart';
+import 'package:counter_bloc/domain/blocs/users_bloc.dart';
 import 'package:counter_bloc/ui/widgets/example_widget.dart';
-import 'package:counter_bloc/ui/widgets/loader_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -10,32 +10,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      onGenerateRoute: (RouteSettings settings) {
-        if (settings.name == 'auth') {
-          return PageRouteBuilder<dynamic>(
-            pageBuilder: (context, animation1, animation2) =>
-                AuthWidget.create(),
-            transitionDuration: Duration.zero,
-          );
-        } else if (settings.name == 'example') {
-          return PageRouteBuilder<dynamic>(
-            pageBuilder: (context, animation1, animation2) =>
-                ExampleWidget.create(),
-            transitionDuration: Duration.zero,
-          );
-        } else if (settings.name == 'loader') {
-          return PageRouteBuilder<dynamic>(
-            pageBuilder: (context, animation1, animation2) =>
-                LoaderWidget.create(),
-            transitionDuration: Duration.zero,
-          );
-        }
-        return null;
-      },
+      // onGenerateRoute: (RouteSettings settings) {
+      //   if (settings.name == 'auth') {
+      //     return PageRouteBuilder<dynamic>(
+      //       pageBuilder: (context, animation1, animation2) =>
+      //           AuthWidget.create(),
+      //       transitionDuration: Duration.zero,
+      //     );
+      //   } else if (settings.name == 'example') {
+      //     return PageRouteBuilder<dynamic>(
+      //       pageBuilder: (context, animation1, animation2) =>
+      //           ExampleWidget.create(),
+      //       transitionDuration: Duration.zero,
+      //     );
+      //   } else if (settings.name == 'loader') {
+      //     return PageRouteBuilder<dynamic>(
+      //       pageBuilder: (context, animation1, animation2) =>
+      //           LoaderWidget.create(),
+      //       transitionDuration: Duration.zero,
+      //     );
+      //   }
+      //   return null;
+      // },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoaderWidget.create(),
+      home: Provider(
+        create: (_) => UsersBloc(),
+        child: const ExampleWidget(),
+      ),
     );
   }
 }
