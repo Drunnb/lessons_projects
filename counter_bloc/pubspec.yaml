@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^5.0.0
   shared_preferences: ^2.0.6
+  bloc: ^8.1.0
+  bloc_concurrency: ^0.2.0
 
 dev_dependencies:
   flutter_test:
