@@ -35,9 +35,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Provider(
-        create: (_) => UsersBloc(),
+      home: Provider<UsersCubit>(
+        create: (_) => UsersCubit(),
         child: const ExampleWidget(),
+        dispose: (context, value) => value.close(),
       ),
     );
   }

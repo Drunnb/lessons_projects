@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:bloc/bloc.dart';
 import 'package:counter_bloc/domain/data_providers/user_data_provider.dart';
 import 'package:counter_bloc/domain/entity/user.dart';
 
@@ -114,41 +115,46 @@ class UsersState {
   int get hashCode => currentUser.hashCode;
 }
 
-class UsersBloc {
+class UsersCubit extends Cubit<UsersState> {
   final _userDataProvider = UserDataProvider();
-  var _state = UsersState(currentUser: User(0));
+  // var _state = UsersState(currentUser: User(0));
 
-  final _stateController = StreamController<UsersState>.broadcast();
+  // final _stateController = StreamController<UsersState>.broadcast();
 
-  UsersState get state => _state;
+  // UsersState get state => _state;
 
-  Stream<UsersState> get stream => _stateController.stream;
+  // Stream<UsersState> get stream => _stateController.stream;
 
-  UsersBloc() {
+  // void updateState(UsersState state) {
+  //   if (_state == state) return;
+  //   _state = state;
+  //   _stateController.add(state);
+  // }
+  // void close() {
+  //   _stateController.close();
+  // }
+
+  UsersCubit() : super(UsersState(currentUser: User(0))) {
     _initilalize();
-  }
-  void updateState(UsersState state) {
-    if (_state == state) return;
-    _state = state;
-    _stateController.add(state);
   }
 
   Future<void> _initilalize() async {
     final user = await _userDataProvider.loadValue();
-    updateState(_state.copyWith(currentUser: user));
+    final newState = state.copyWith(currentUser: user);
+    emit(newState);
   }
 
   void incrementAge() {
-    var user = _state.currentUser;
+    var user = state.currentUser;
     user = user.copyWith(age: user.age + 1);
-    updateState(_state.copyWith(currentUser: user));
+    emit(state.copyWith(currentUser: user));
     _userDataProvider.saveValue(user);
   }
 
   void decrementAge() {
-    var user = _state.currentUser;
+    var user = state.currentUser;
     user = user.copyWith(age: max(user.age - 1, 0));
-    updateState(_state.copyWith(currentUser: user));
+    emit(state.copyWith(currentUser: user));
     _userDataProvider.saveValue(user);
   }
 }
