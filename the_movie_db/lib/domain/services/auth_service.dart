@@ -23,9 +23,9 @@ enum AuthStateStatus { authorized, notAuthorized, inProgress }
 
 abstract class AuthState {}
 
-class AuthUnAutorizedState extends AuthState {}
+class AuthUnauthorizedState extends AuthState {}
 
-class AuthAutorizedState extends AuthState {}
+class AuthAuthorizedState extends AuthState {}
 
 class AuthFailureState extends AuthState {
   final Object error;
@@ -33,7 +33,7 @@ class AuthFailureState extends AuthState {
   AuthFailureState(this.error);
 }
 
-class AuthProgressState extends AuthState {}
+class AuthInProgressState extends AuthState {}
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final _authApiClient = AuthApiClient();
@@ -44,7 +44,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthCheckStatusEvent>((event, emit) async {
       final sessionId = await _sessionDataProvider.getSessionId();
       final newState =
-          sessionId != null ? AuthAutorizedState() : AuthUnAutorizedState();
+          sessionId != null ? AuthAuthorizedState() : AuthUnauthorizedState();
       emit(newState);
     });
     on<AuthLoginEvent>((event, emit) async {
@@ -56,7 +56,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final accountId = await _accountApiClient.getAccountInfo(sessionId);
         await _sessionDataProvider.setSessionId(sessionId);
         await _sessionDataProvider.setAccountId(accountId);
-        emit(AuthAutorizedState());
+        emit(AuthAuthorizedState());
       } catch (e) {
         emit(AuthFailureState(e));
       }
@@ -65,7 +65,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         await _sessionDataProvider.deleteSessionId();
         await _sessionDataProvider.deleteAccountId();
-        emit(AuthUnAutorizedState());
       } catch (e) {
         emit(AuthFailureState(e));
       }
