@@ -46,7 +46,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final newState =
           sessionId != null ? AuthAutorizedState() : AuthUnAutorizedState();
       emit(newState);
-      ;
     });
     on<AuthLoginEvent>((event, emit) async {
       try {
