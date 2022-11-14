@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:the_movie_db/domain/api_client/account_api_client.dart';
-import 'package:the_movie_db/domain/api_client/api_client_exception.dart';
 import 'package:the_movie_db/domain/api_client/auth_api_client.dart';
 import 'package:the_movie_db/domain/data_providers/session_data_provider.dart';
 
