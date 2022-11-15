@@ -37,7 +37,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         children: [
           _screenFactory.makeNewsList(),
           _screenFactory.makeMovieList(),
-          _screenFactory.makeTVShowList(),
+          _screenFactory.makeTWShowList(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

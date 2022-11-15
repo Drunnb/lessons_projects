@@ -223,7 +223,6 @@ class MovieDetailsModel extends ChangeNotifier {
         MainNavigation.resetNavigation(context);
         break;
       default:
-      // print(exception);
     }
   }
 }

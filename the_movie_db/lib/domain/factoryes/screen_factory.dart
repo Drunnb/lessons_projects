@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:the_movie_db/domain/blocs/auth_bloc.dart';
 import 'package:the_movie_db/ui/widgets/auth/auth_model.dart';
 import 'package:the_movie_db/ui/widgets/auth/auth_widget.dart';
 import 'package:the_movie_db/ui/widgets/loader_widget/loader_view_model.dart';
@@ -14,11 +16,18 @@ import 'package:the_movie_db/ui/widgets/news/new_widget.dart';
 import 'package:the_movie_db/ui/widgets/tv_show_list/tv_show_list_widget.dart';
 
 class ScreenFactory {
+  AuthBloc? _authBloc;
+
   Widget makeLoader() {
-    return Provider(
-      create: (context) => LoaderViewModel(context),
-      lazy: false,
+    final authBloc = _authBloc ?? AuthBloc(AuthCheckStatusInProgressState());
+    _authBloc = authBloc;
+    return BlocProvider<LoaderViewCubit>(
+      create: (context) => LoaderViewCubit(
+        LoaderViewCubitState.unknown,
+        authBloc,
+      ),
       child: const LoaderWidget(),
+      lazy: false,
     );
   }
 
@@ -30,13 +39,16 @@ class ScreenFactory {
   }
 
   Widget makeMainScreen() {
+    _authBloc?.close();
+    _authBloc = null;
     return const MainScreenWidget();
   }
 
   Widget makeMovieDetails(int movieId) {
     return ChangeNotifierProvider(
-        create: (_) => MovieDetailsModel(movieId),
-        child: const MovieDetailsWidget());
+      create: (_) => MovieDetailsModel(movieId),
+      child: const MovieDetailsWidget(),
+    );
   }
 
   Widget makeMovieTrailer(String youtubeKey) {
@@ -54,7 +66,7 @@ class ScreenFactory {
     );
   }
 
-  Widget makeTVShowList() {
+  Widget makeTWShowList() {
     return const TWShowListWidget();
   }
 }

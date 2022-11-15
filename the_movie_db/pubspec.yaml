@@ -45,6 +45,7 @@ dependencies:
   youtube_player_flutter: ^8.1.1
   bloc: ^8.1.0
   flutter_bloc: ^8.1.1
+  bloc_concurrency: ^0.2.0
 
 dev_dependencies:
   flutter_test:
