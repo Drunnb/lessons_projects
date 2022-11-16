@@ -81,8 +81,8 @@ class AuthViewCubit extends Cubit<AuthViewCubitState> {
     if (state is AuthUnauthorizedState) {
       emit(AuthViewCubitFormFillInProgressSState());
     } else if (state is AuthAuthorizedState) {
-      emit(AuthViewCubitSuccessAuthState());
       authBlocSubscription.cancel();
+      emit(AuthViewCubitSuccessAuthState());
     } else if (state is AuthFailureState) {
       final message = _mapErrorToMessage(state.error);
       emit(AuthViewCubitErrorState(message));
