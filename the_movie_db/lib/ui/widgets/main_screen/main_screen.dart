@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/domain/factoryes/screen_factory.dart';
+import 'package:the_movie_db/domain/services/auth_service.dart';
 
 class MainScreenWidget extends StatefulWidget {
   const MainScreenWidget({super.key});
@@ -27,7 +28,10 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         title: const Text('TMDB'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // не забыть убрать "плохой код"
+              AuthService().logout();
+            },
             icon: const Icon(Icons.search),
           )
         ],
