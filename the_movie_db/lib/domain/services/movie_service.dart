@@ -11,11 +11,20 @@ class MovieService {
   final _accountApiClient = AccountApiClient();
 
   Future<PopularMovieResponse> popularMovie(int page, String locale) async =>
-      _movieApiClient.popularMovie(page, locale, Configuration.apiKey);
+      _movieApiClient.popularMovie(
+        page,
+        locale,
+        Configuration.apiKey,
+      );
 
   Future<PopularMovieResponse> searchMovie(
           int page, String locale, String query) async =>
-      _movieApiClient.searchMovie(page, locale, query, Configuration.apiKey);
+      _movieApiClient.searchMovie(
+        page,
+        locale,
+        query,
+        Configuration.apiKey,
+      );
 
   Future<MovieDetailsLocal> loadDetails({
     required int movieId,
