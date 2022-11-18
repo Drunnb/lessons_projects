@@ -74,6 +74,9 @@ class MovieListState {
 
   bool get isSearchMode => searchQuery.isNotEmpty;
 
+  List<Movie> get movies =>
+      isSearchMode ? searchMovieContainer.movies : popularMovieContainer.movies;
+
   const MovieListState.initial()
       : popularMovieContainer = const MovieListContainer.initial(),
         searchMovieContainer = const MovieListContainer.initial(),
@@ -178,8 +181,8 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
     if (container.isComplete) return null;
     final nextPage = container.currentPage + 1;
     final result = await loader(nextPage);
-    final movies = container.movies;
-    movies.addAll(result.movies);
+
+    final movies = List<Movie>.from(container.movies)..addAll(result.movies);
     final newContainer = container.copyWith(
       movies: movies,
       currentPage: result.page,
