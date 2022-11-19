@@ -1,9 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:di_example/ui/widgets/calculator_service.dart';
 import 'package:di_example/ui/widgets/example_widget.dart';
 
 class ExampleCalcViewModel implements ExampleViwModel {
-  final calculationService = const CalculatorService();
-  const ExampleCalcViewModel();
+  final CalculatorService calculationService;
+  const ExampleCalcViewModel(this.calculationService);
+
   @override
   void onPressMe() {
     final result =

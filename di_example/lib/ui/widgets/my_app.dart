@@ -1,11 +1,17 @@
-import 'package:di_example/ui/widgets/example_view_model.dart';
-import 'package:di_example/ui/widgets/example_widget.dart';
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+abstract class MainNavigation {
+  Map<String, Widget Function(BuildContext)> makeRoutes();
+  Route<Object> onGenerateRoute(RouteSettings settings);
+}
 
-  // This widget is the root of your application.
+class MyApp extends StatelessWidget {
+  final MainNavigation mainNavigation;
+  const MyApp({
+    Key? key,
+    required this.mainNavigation,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,7 +19,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ExampleWidget(model: ExampleCalcViewModel()),
+      routes: mainNavigation.makeRoutes(),
+      onGenerateRoute: mainNavigation.onGenerateRoute,
     );
   }
 }
