@@ -1,3 +1,4 @@
+import 'package:di_example/factories/di_container.dart';
 import 'package:flutter/material.dart';
 
 abstract class MainNavigation {
@@ -6,11 +7,8 @@ abstract class MainNavigation {
 }
 
 class MyApp extends StatelessWidget {
-  final MainNavigation mainNavigation;
-  const MyApp({
-    Key? key,
-    required this.mainNavigation,
-  }) : super(key: key);
+  final mainNavigation = ServiceLocator.instance.mainNavigation;
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

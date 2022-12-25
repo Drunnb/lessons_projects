@@ -1,4 +1,3 @@
-import 'package:di_example/main.dart';
 import 'package:di_example/ui/widgets/calculator_service.dart';
 import 'package:di_example/ui/widgets/example_view_model.dart';
 import 'package:di_example/ui/widgets/example_widget.dart';
@@ -7,10 +6,11 @@ import 'package:di_example/ui/widgets/my_app.dart';
 import 'package:di_example/ui/widgets/summator.dart';
 import 'package:flutter/material.dart';
 
-MainDIContainer makeDiContainer() => _DIContainer();
+class ServiceLocator implements ScreenFactory {
+  static final instance = ServiceLocator._();
+  ServiceLocator._();
 
-class _DIContainer implements MainDIContainer, ScreenFactory {
-  late final MainNavigation _mainNavigation;
+  late final MainNavigation mainNavigation;
 
   Summator _makeSummator() => const Summator();
   CalculatorService _makeCalculatorService() => CalculatorService(
@@ -25,10 +25,9 @@ class _DIContainer implements MainDIContainer, ScreenFactory {
         model: _makeExampleViewModel(),
       );
 
-  @override
-  Widget makeApp() => MyApp(mainNavigation: _mainNavigation);
+  Widget makeApp() => MyApp();
 
-  _DIContainer() {
-    _mainNavigation = MainNavigationDefault(this);
+  ServiceLocator() {
+    mainNavigation = MainNavigationDefault(this);
   }
 }
