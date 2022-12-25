@@ -1,5 +1,9 @@
 import 'package:di_example/factories/di_container.dart';
+import 'package:di_example/ui/widgets/example_view_model.dart';
+import 'package:di_example/ui/widgets/example_widget.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 abstract class MainNavigation {
   Map<String, Widget Function(BuildContext)> makeRoutes();
@@ -12,13 +16,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Provider<ExampleViewModel>(
+      create: (_) => ExampleCalcViewModel(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        routes: mainNavigation.makeRoutes(),
+        onGenerateRoute: mainNavigation.onGenerateRoute,
       ),
-      routes: mainNavigation.makeRoutes(),
-      onGenerateRoute: mainNavigation.onGenerateRoute,
     );
   }
 }

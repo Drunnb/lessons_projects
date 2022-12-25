@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-abstract class ExampleViwModel {
+abstract class ExampleViewModel {
   void onPressMe();
   void onPressMe2();
 }
 
 class ExampleWidget extends StatelessWidget {
-  final ExampleViwModel model;
-
-  const ExampleWidget({super.key, required this.model});
-
+  const ExampleWidget({super.key});
   @override
   Widget build(BuildContext context) {
+    final model = context.read<ExampleViewModel>();
     return Scaffold(
       body: SafeArea(
           child: Center(

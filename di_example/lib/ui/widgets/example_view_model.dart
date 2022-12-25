@@ -1,11 +1,12 @@
 // ignore_for_file: avoid_print
 
+import 'package:di_example/factories/di_container.dart';
 import 'package:di_example/ui/widgets/calculator_service.dart';
 import 'package:di_example/ui/widgets/example_widget.dart';
 
-class ExampleCalcViewModel implements ExampleViwModel {
-  final CalculatorService calculationService;
-  const ExampleCalcViewModel(this.calculationService);
+class ExampleCalcViewModel implements ExampleViewModel {
+  final calculationService = ServiceLocator.instance.makeCalculatorService();
+  ExampleCalcViewModel();
 
   @override
   void onPressMe() {
@@ -21,7 +22,7 @@ class ExampleCalcViewModel implements ExampleViwModel {
   }
 }
 
-class ExampelePetViewModel implements ExampleViwModel {
+class ExampelePetViewModel implements ExampleViewModel {
   const ExampelePetViewModel();
   @override
   void onPressMe() {
