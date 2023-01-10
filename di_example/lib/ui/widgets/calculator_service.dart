@@ -1,9 +1,11 @@
-import 'package:di_example/factories/di_container.dart';
+import 'package:di_example/ui/widgets/summator.dart';
+import 'package:get_it/get_it.dart';
 
 enum CalculatorServiceOperation { sum }
 
 class CalculatorService {
-  final summator = ServiceLocator.instance.makeSummator();
+  final summator = GetIt.instance<Summator>();
+  // final summator = ServiceLocator.instance.makeSummator();
   CalculatorService();
   int calculate(int a, int b, CalculatorServiceOperation operation) {
     if (operation == CalculatorServiceOperation.sum) {

@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_print
-
-import 'package:di_example/factories/di_container.dart';
 import 'package:di_example/ui/widgets/calculator_service.dart';
 import 'package:di_example/ui/widgets/example_widget.dart';
+import 'package:get_it/get_it.dart';
 
 class ExampleCalcViewModel implements ExampleViewModel {
-  final calculationService = ServiceLocator.instance.makeCalculatorService();
+  final calculationService = GetIt.instance<CalculatorService>();
+  // final calculationService = ServiceLocator.instance.makeCalculatorService();
   ExampleCalcViewModel();
 
   @override

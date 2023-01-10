@@ -1,18 +1,24 @@
-import 'package:di_example/factories/di_container.dart';
 import 'package:di_example/ui/widgets/my_app.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 abstract class MainNavigationRouteNames {
   static const example = '/';
 }
 
+abstract class ScreenFactory {
+  Widget makeExampleScreen();
+}
+
 class MainNavigationDefault implements MainNavigation {
+  final screenFactory = GetIt.instance<ScreenFactory>();
   MainNavigationDefault();
   @override
   Map<String, Widget Function(BuildContext)> makeRoutes() =>
       <String, Widget Function(BuildContext)>{
         MainNavigationRouteNames.example: (_) =>
-            ServiceLocator.instance.makeExampleScreen(),
+            screenFactory.makeExampleScreen(),
+        // ServiceLocator.instance.makeExampleScreen(),
       };
 
   @override
