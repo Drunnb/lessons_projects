@@ -3,8 +3,12 @@ import 'package:the_movie_db/domain/api_client/network_client.dart';
 import 'package:the_movie_db/domain/entity/movie_details.dart';
 import 'package:the_movie_db/domain/entity/popular_movie_response.dart';
 
-class MovieApiClient {
-  final _networkClient = NetworkClient();
+abstract class MovieApiClient {}
+
+class MovieApiClientDefault implements MovieApiClient {
+  final NetworkClient networkClient;
+
+  const MovieApiClientDefault(this.networkClient);
 
   Future<PopularMovieResponse> popularMovie(
     int page,
@@ -17,7 +21,7 @@ class MovieApiClient {
       return response;
     }
 
-    final result = _networkClient.get(
+    final result = networkClient.get(
       '/movie/popular',
       parser,
       <String, dynamic>{
@@ -41,7 +45,7 @@ class MovieApiClient {
       return response;
     }
 
-    final result = _networkClient.get(
+    final result = networkClient.get(
       '/search/movie',
       parser,
       <String, dynamic>{
@@ -65,7 +69,7 @@ class MovieApiClient {
       return response;
     }
 
-    final result = _networkClient.get(
+    final result = networkClient.get(
       '/movie/$movieId',
       parser,
       <String, dynamic>{
@@ -87,7 +91,7 @@ class MovieApiClient {
       return result;
     }
 
-    final result = _networkClient.get(
+    final result = networkClient.get(
       '/movie/$movieId/account_states',
       parser,
       <String, dynamic>{
