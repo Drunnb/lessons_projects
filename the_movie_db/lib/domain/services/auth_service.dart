@@ -2,8 +2,14 @@ import 'package:the_movie_db/domain/api_client/account_api_client.dart';
 import 'package:the_movie_db/domain/api_client/auth_api_client.dart';
 import 'package:the_movie_db/domain/data_providers/session_data_provider.dart';
 import 'package:the_movie_db/ui/widgets/auth/auth_model.dart';
+import 'package:the_movie_db/ui/widgets/loader_widget/loader_view_model.dart';
+import 'package:the_movie_db/ui/widgets/movie_details/movie_details_model.dart';
 
-class AuthService implements AuthViewModelLoginProvider {
+class AuthService
+    implements
+        AuthViewModelLoginProvider,
+        LoaderViewModelAuthStatusProvider,
+        MovieDetailsModelLogoutProvider {
   final AuthApiClient authApiClient;
 
   final AccountApiClient accountApiClient;
@@ -16,6 +22,7 @@ class AuthService implements AuthViewModelLoginProvider {
     required this.sessionDataProvider,
   });
 
+  @override
   Future<bool> isAuth() async {
     final sessionId = await sessionDataProvider.getSessionId();
     final isAuth = sessionId != null;
@@ -33,6 +40,7 @@ class AuthService implements AuthViewModelLoginProvider {
     await sessionDataProvider.setAccountId(accountId);
   }
 
+  @override
   Future<void> logout() async {
     await sessionDataProvider.deleteSessionId();
     await sessionDataProvider.deleteAccountId();

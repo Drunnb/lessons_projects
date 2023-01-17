@@ -3,13 +3,34 @@ import 'package:the_movie_db/domain/api_client/network_client.dart';
 import 'package:the_movie_db/domain/entity/movie_details.dart';
 import 'package:the_movie_db/domain/entity/popular_movie_response.dart';
 
-abstract class MovieApiClient {}
+abstract class MovieApiClient {
+  Future<PopularMovieResponse> popularMovie(
+    int page,
+    String locale,
+    String apiKey,
+  );
+  Future<PopularMovieResponse> searchMovie(
+    int page,
+    String locale,
+    String query,
+    String apiKey,
+  );
+  Future<MovieDetails> movieDetails(
+    int movieId,
+    String locale,
+  );
+  Future<bool> isFavorite(
+    int movieId,
+    String sessionId,
+  );
+}
 
 class MovieApiClientDefault implements MovieApiClient {
   final NetworkClient networkClient;
 
   const MovieApiClientDefault(this.networkClient);
 
+  @override
   Future<PopularMovieResponse> popularMovie(
     int page,
     String locale,
@@ -33,6 +54,7 @@ class MovieApiClientDefault implements MovieApiClient {
     return result;
   }
 
+  @override
   Future<PopularMovieResponse> searchMovie(
     int page,
     String locale,
@@ -59,6 +81,7 @@ class MovieApiClientDefault implements MovieApiClient {
     return result;
   }
 
+  @override
   Future<MovieDetails> movieDetails(
     int movieId,
     String locale,
@@ -81,6 +104,7 @@ class MovieApiClientDefault implements MovieApiClient {
     return result;
   }
 
+  @override
   Future<bool> isFavorite(
     int movieId,
     String sessionId,

@@ -1,14 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/domain/services/auth_service.dart';
 import 'package:the_movie_db/ui/navigation/main_navigation_route_name.dart';
+
+abstract class LoaderViewModelAuthStatusProvider {
+  Future<bool> isAuth();
+}
 
 class LoaderViewModel {
   final BuildContext context;
-  final _authService = AuthService();
+  final LoaderViewModelAuthStatusProvider authStatusProvider;
 
-  LoaderViewModel(this.context) {
+  LoaderViewModel({required this.context, required this.authStatusProvider}) {
     asyncInit();
   }
 
@@ -17,7 +20,7 @@ class LoaderViewModel {
   }
 
   Future<void> checkAuth() async {
-    final isAuth = await _authService.isAuth();
+    final isAuth = await authStatusProvider.isAuth();
     final nextScreen = isAuth
         ? MainNavigationRouteNames.mainScreen
         : MainNavigationRouteNames.auth;

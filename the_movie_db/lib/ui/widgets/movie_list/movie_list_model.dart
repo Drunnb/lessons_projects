@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:the_movie_db/Library/Widgets/inherited/localezed_model.dart';
 import 'package:the_movie_db/Library/paginator.dart';
 import 'package:the_movie_db/domain/entity/movie.dart';
-import 'package:the_movie_db/domain/services/movie_service.dart';
+import 'package:the_movie_db/domain/entity/popular_movie_response.dart';
 import 'package:the_movie_db/ui/navigation/main_navigation_route_name.dart';
 
 class MovieListRowData {
@@ -22,8 +22,14 @@ class MovieListRowData {
   });
 }
 
+abstract class MovieListViewModelMoviesProvider {
+  Future<PopularMovieResponse> popularMovie(int page, String locale);
+  Future<PopularMovieResponse> searchMovie(
+      int page, String locale, String query);
+}
+
 class MovieListViewModel extends ChangeNotifier {
-  final _movieService = MovieService();
+  final MovieListViewModelMoviesProvider moviesProvider;
   late final Paginator<Movie> _popularMoviePaginator;
   late final Paginator<Movie> _searchMoviePaginator;
 
@@ -41,17 +47,17 @@ class MovieListViewModel extends ChangeNotifier {
   List<MovieListRowData> get movies => List.unmodifiable(_movies);
   late DateFormat _dateFormat;
 
-  MovieListViewModel() {
+  MovieListViewModel(this.moviesProvider) {
     _popularMoviePaginator = Paginator<Movie>((page) async {
       final result =
-          await _movieService.popularMovie(page, _localeStorage.localeTag);
+          await moviesProvider.popularMovie(page, _localeStorage.localeTag);
       return PaginatorLoadResult(
           data: result.movies,
           currentPage: result.page,
           totalPage: result.totalPages);
     });
     _searchMoviePaginator = Paginator<Movie>((page) async {
-      final result = await _movieService.searchMovie(
+      final result = await moviesProvider.searchMovie(
         page,
         _localeStorage.localeTag,
         _searchQuery ?? '',

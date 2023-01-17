@@ -3,9 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:the_movie_db/Library/Widgets/inherited/localezed_model.dart';
 import 'package:the_movie_db/domain/api_client/api_client_exception.dart';
 import 'package:the_movie_db/domain/entity/movie_details.dart';
-import 'package:the_movie_db/domain/services/auth_service.dart';
-import 'package:the_movie_db/domain/services/movie_service.dart';
-import 'package:the_movie_db/ui/navigation/main_navigation.dart';
+import 'package:the_movie_db/domain/local_entity/movie_details_local.dart';
 import 'package:the_movie_db/ui/navigation/main_navigation_actions.dart';
 
 class MovieDetailsPosterData {
@@ -94,9 +92,25 @@ class MovieDetailsData {
       const <MovieDetailsMovieActorDataData>[];
 }
 
+abstract class MovieDetailsModelLogoutProvider {
+  Future<void> logout();
+}
+
+abstract class MovieDetailsModelMovieProvider {
+  Future<MovieDetailsLocal> loadDetails({
+    required int movieId,
+    required String locale,
+  });
+  Future<void> updateFavorite({
+    required int movieId,
+    required bool isFavorite,
+  });
+}
+
 class MovieDetailsModel extends ChangeNotifier {
-  final _authService = AuthService();
-  final _movieService = MovieService();
+  final MovieDetailsModelLogoutProvider logoutProvider;
+  final MovieDetailsModelMovieProvider movieProvider;
+  final MainNavigationAction navigationAction;
 
   final int movieId;
   final data = MovieDetailsData();
@@ -104,7 +118,12 @@ class MovieDetailsModel extends ChangeNotifier {
 
   late DateFormat _dateFormat;
 
-  MovieDetailsModel(this.movieId);
+  MovieDetailsModel(
+    this.movieId, {
+    required this.logoutProvider,
+    required this.movieProvider,
+    required this.navigationAction,
+  });
 
   Future<void> setupLocale(BuildContext context, Locale locale) async {
     if (!_localeStorage.updateLocale(locale)) return;
@@ -194,7 +213,7 @@ class MovieDetailsModel extends ChangeNotifier {
 
   Future<void> loadDetails(BuildContext context) async {
     try {
-      final details = await _movieService.loadDetails(
+      final details = await movieProvider.loadDetails(
         movieId: movieId,
         locale: _localeStorage.localeTag,
       );
@@ -209,7 +228,7 @@ class MovieDetailsModel extends ChangeNotifier {
         data.posterData.copyWith(isFavorite: !data.posterData.isFavorite);
     notifyListeners();
     try {
-      await _movieService.updateFavorite(
+      await movieProvider.updateFavorite(
           movieId: movieId, isFavorite: data.posterData.isFavorite);
     } on ApiClientException catch (e) {
       _handleApiClientException(e, context);
@@ -220,8 +239,8 @@ class MovieDetailsModel extends ChangeNotifier {
       ApiClientException exception, BuildContext context) {
     switch (exception.type) {
       case ApiClientExceptionType.sessionExpired:
-        _authService.logout();
-        MainNavigationAction.instance.resetNavigation(context);
+        logoutProvider.logout();
+        navigationAction.resetNavigation(context);
         break;
       default:
       // print(exception);
