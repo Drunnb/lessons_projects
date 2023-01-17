@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:the_movie_db/ui/widgets/app/my_app.dart';
+import 'package:the_movie_db/di/di_container.dart';
 
-abstract class AppFactory {}
+abstract class AppFactory {
+  Widget makeApp();
+}
+
+final appFactory = makeAppFactory();
 
 void main() {
-  const app = MyApp();
+  final app = appFactory.makeApp();
   runApp(app);
 }

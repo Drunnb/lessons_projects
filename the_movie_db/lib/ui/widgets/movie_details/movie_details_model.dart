@@ -5,7 +5,8 @@ import 'package:the_movie_db/domain/api_client/api_client_exception.dart';
 import 'package:the_movie_db/domain/entity/movie_details.dart';
 import 'package:the_movie_db/domain/services/auth_service.dart';
 import 'package:the_movie_db/domain/services/movie_service.dart';
-import 'package:the_movie_db/ui/navigation/maint_navigation.dart';
+import 'package:the_movie_db/ui/navigation/main_navigation.dart';
+import 'package:the_movie_db/ui/navigation/main_navigation_actions.dart';
 
 class MovieDetailsPosterData {
   final String? backdropPath;
@@ -220,7 +221,7 @@ class MovieDetailsModel extends ChangeNotifier {
     switch (exception.type) {
       case ApiClientExceptionType.sessionExpired:
         _authService.logout();
-        MainNavigation.resetNavigation(context);
+        MainNavigationAction.instance.resetNavigation(context);
         break;
       default:
       // print(exception);

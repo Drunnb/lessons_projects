@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/resources/resources.dart';
-import 'package:the_movie_db/ui/navigation/maint_navigation.dart';
+import 'package:the_movie_db/ui/navigation/main_navigation_route_name.dart';
 
 class TVShow {
   final int id;

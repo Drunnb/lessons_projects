@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/ui/Theme/app_colors.dart';
-import 'package:the_movie_db/ui/navigation/maint_navigation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:the_movie_db/ui/navigation/main_navigation_route_name.dart';
+
+abstract class MyAppNavigation {
+  Map<String, Widget Function(BuildContext)> get routes;
+  Route<Object> onGenerateRoute(RouteSettings settings);
+}
 
 class MyApp extends StatelessWidget {
-  static final mainNavigation = MainNavigation();
-  const MyApp({super.key});
+  final MyAppNavigation navigation;
+  const MyApp({super.key, required this.navigation});
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +35,9 @@ class MyApp extends StatelessWidget {
         Locale('ru', 'RU'),
         Locale('en', ''),
       ],
-      routes: mainNavigation.routes,
+      routes: navigation.routes,
       initialRoute: MainNavigationRouteNames.loaderWidget,
-      onGenerateRoute: mainNavigation.onGenerateRoute,
+      onGenerateRoute: navigation.onGenerateRoute,
     );
   }
 }

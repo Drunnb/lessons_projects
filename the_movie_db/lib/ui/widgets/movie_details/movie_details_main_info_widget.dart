@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_movie_db/domain/api_client/image_downloader.dart';
-import 'package:the_movie_db/ui/navigation/maint_navigation.dart';
+import 'package:the_movie_db/ui/navigation/main_navigation_route_name.dart';
 import 'package:the_movie_db/ui/widgets/elements/radial_percent_widget.dart';
 import 'package:the_movie_db/ui/widgets/movie_details/movie_details_model.dart';
 

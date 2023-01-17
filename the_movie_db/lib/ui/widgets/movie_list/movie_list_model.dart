@@ -5,7 +5,7 @@ import 'package:the_movie_db/Library/Widgets/inherited/localezed_model.dart';
 import 'package:the_movie_db/Library/paginator.dart';
 import 'package:the_movie_db/domain/entity/movie.dart';
 import 'package:the_movie_db/domain/services/movie_service.dart';
-import 'package:the_movie_db/ui/navigation/maint_navigation.dart';
+import 'package:the_movie_db/ui/navigation/main_navigation_route_name.dart';
 
 class MovieListRowData {
   final int id;

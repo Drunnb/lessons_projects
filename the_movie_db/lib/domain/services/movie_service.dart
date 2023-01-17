@@ -7,7 +7,7 @@ import 'package:the_movie_db/domain/local_entity/movie_details_local.dart';
 
 class MovieService {
   final _movieApiClient = MovieApiClient();
-  final _sessionDataProvider = SessionDataProvider();
+  final _sessionDataProvider = SessionDataProviderDefault();
   final _accountApiClient = AccountApiClient();
 
   Future<PopularMovieResponse> popularMovie(int page, String locale) async =>

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:the_movie_db/domain/services/auth_service.dart';
-import 'package:the_movie_db/ui/navigation/maint_navigation.dart';
+import 'package:the_movie_db/ui/navigation/main_navigation_route_name.dart';
 
 class LoaderViewModel {
   final BuildContext context;
