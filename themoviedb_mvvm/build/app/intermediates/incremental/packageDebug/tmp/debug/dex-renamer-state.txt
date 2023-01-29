@@ -1,0 +1,4 @@
+#Mon Sep 19 15:10:14 MSK 2022
+base.0=F\:\\Dev\\GitHub\\lessons_projects-1\\themoviedb_mvvm\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
