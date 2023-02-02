@@ -9,7 +9,7 @@ class ExampleWidget extends StatefulWidget {
 
 class _ExampleWidgetState extends State<ExampleWidget> {
   final _listKey = GlobalKey<AnimatedListState>();
-  var _data = [1, 2, 3, 4];
+  final _data = [1, 2, 3, 4];
   void _insert() {
     final element = (_data.isEmpty ? 0 : _data.last) + 1;
     _data.add(element);
@@ -18,6 +18,7 @@ class _ExampleWidgetState extends State<ExampleWidget> {
   }
 
   void _removeAtIndex(int index) {
+    // ignore: unused_local_variable
     final element = _data.removeAt(index);
     _listKey.currentState?.removeItem(index, (context, animation) {
       return SlideTransition(
@@ -62,7 +63,6 @@ class _ExampleWidgetState extends State<ExampleWidget> {
 
 class _RowWidget extends StatelessWidget {
   const _RowWidget({
-    super.key,
     required this.text,
   });
 
