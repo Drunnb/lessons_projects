@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animations/ui/widgets/fourth_example_widget.dart';
+import 'package:flutter_animations/ui/widgets/fifth_example_widget.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
