@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animations/ui/widgets/fifth_example_widget.dart';
+import 'package:flutter_animations/ui/widgets/sixth_example_widget.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -11,7 +11,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ExampleWidget(),
+      routes: {
+        '/': (_) => const ExampleWidget(),
+      },
+      onGenerateRoute: (_) {
+        return PageRouteBuilder<Object>(
+          transitionDuration: const Duration(seconds: 4),
+          pageBuilder: (_, __, ___) => const ExampleWidget2(),
+        );
+      },
     );
   }
 }
