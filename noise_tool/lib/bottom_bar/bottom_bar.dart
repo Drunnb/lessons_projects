@@ -14,6 +14,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     String? thisRoute() => ModalRoute.of(context)?.settings.name;
+    print(thisRoute());
     Color activeButtonColor(String route) {
       if (route == thisRoute()) {
         return const Color.fromARGB(255, 230, 230, 230);
@@ -64,14 +65,11 @@ class _BottomBarState extends State<BottomBar> {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
             onTap: () async {
-              if (thisRoute != AllRoutes.home) {
+              if (thisRoute() != AllRoutes.home) {
                 Navigator.of(context).pushNamed(AllRoutes.home);
-              }
-              if (thisRoute == AllRoutes.home &&
+              } else if (thisRoute() == AllRoutes.home &&
                   await Permission.microphone.status.isDenied) {
                 await Permission.microphone.request();
-              } else {
-                print(Permission.microphone);
               }
               if (getIsRecording() == false) {
                 getOnStart();
@@ -99,7 +97,9 @@ class _BottomBarState extends State<BottomBar> {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed(AllRoutes.saves);
+              if (thisRoute() != AllRoutes.saves) {
+                Navigator.of(context).pushNamed(AllRoutes.saves);
+              }
             },
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(18.0)),
