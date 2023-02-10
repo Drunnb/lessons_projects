@@ -23,7 +23,7 @@ class _BottomBarState extends State<BottomBar> {
     }
 
     getIsRecording() {
-      context.findAncestorStateOfType<HomeScreenState>()?.isRecording;
+      return context.findAncestorStateOfType<HomeScreenState>()?.isRecording;
     }
 
     void getOnStart() {
@@ -67,9 +67,12 @@ class _BottomBarState extends State<BottomBar> {
             onTap: () async {
               if (thisRoute() != AllRoutes.home) {
                 Navigator.of(context).pushNamed(AllRoutes.home);
-              } else if (thisRoute() == AllRoutes.home &&
+              }
+              if (thisRoute() == AllRoutes.home &&
                   await Permission.microphone.status.isDenied) {
                 await Permission.microphone.request();
+              } else {
+                print(Permission.microphone.status);
               }
               if (getIsRecording() == false) {
                 getOnStart();
