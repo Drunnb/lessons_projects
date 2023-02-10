@@ -8,6 +8,13 @@ void main() {
   runApp(const MainApp());
 }
 
+class AllRoutes {
+  static const String home = '/';
+  static const String saves = '/saves';
+  static const String info = '/info';
+  static const String settings = '/settings';
+}
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
@@ -18,10 +25,10 @@ class MainApp extends StatelessWidget {
         fontFamily: 'NeueMachina',
       ),
       routes: {
-        '/': (context) => const HomeScreen(),
-        '/saves': (context) => const SavesScreen(),
-        '/info': (context) => const InfoScreen(),
-        '/settings': (context) => const SettingsScreen(),
+        AllRoutes.home: (context) => const HomeScreen(),
+        AllRoutes.saves: (context) => const SavesScreen(),
+        AllRoutes.info: (context) => const InfoScreen(),
+        AllRoutes.settings: (context) => const SettingsScreen(),
       },
       initialRoute: '/',
     );

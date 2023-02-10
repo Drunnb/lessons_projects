@@ -1,35 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:noise_tool/main.dart';
+import 'package:noise_tool/screens/home_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-class BottomBar extends StatelessWidget {
+class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
 
   @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  @override
   Widget build(BuildContext context) {
-    var itRoute = ModalRoute.of(context)?.settings.name;
-    ifActivSavesButton() {
-      if (itRoute == '/saves') {
+    String? thisRoute() => ModalRoute.of(context)?.settings.name;
+    Color activeButtonColor(String route) {
+      if (route == thisRoute()) {
         return const Color.fromARGB(255, 230, 230, 230);
       }
       return Colors.transparent;
     }
 
-    ifActivMicButton() {
-      if (itRoute == '/') {
-        return const Color.fromARGB(255, 230, 230, 230);
-      }
-      return Colors.transparent;
+    getIsRecording() {
+      context.findAncestorStateOfType<HomeScreenState>()?.isRecording;
+    }
+
+    void getOnStart() {
+      context.findAncestorStateOfType<HomeScreenState>()?.start();
+    }
+
+    void getOnStop() {
+      context.findAncestorStateOfType<HomeScreenState>()?.stop();
     }
 
     return Row(
       children: [
         Material(
-          color: ifActivSavesButton(),
+          // color: activeButtonColor('/saves'),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
             onTap: () {
-              if (itRoute != '/saves') {
-                Navigator.of(context).pushNamed('/saves');
-              }
+              // if (thisRoute() != '/saves') {
+              //   Navigator.of(context).pushNamed('/saves');
+              // }
             },
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(18.0)),
@@ -47,12 +60,23 @@ class BottomBar extends StatelessWidget {
           ),
         ),
         Material(
-          color: ifActivMicButton(),
+          color: activeButtonColor(AllRoutes.home),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
-            onTap: () {
-              if (itRoute != '/') {
-                Navigator.of(context).pushNamed('/');
+            onTap: () async {
+              if (thisRoute != AllRoutes.home) {
+                Navigator.of(context).pushNamed(AllRoutes.home);
+              }
+              if (thisRoute == AllRoutes.home &&
+                  await Permission.microphone.status.isDenied) {
+                await Permission.microphone.request();
+              } else {
+                print(Permission.microphone);
+              }
+              if (getIsRecording() == false) {
+                getOnStart();
+              } else if (getIsRecording() == true) {
+                getOnStop();
               }
             },
             borderRadius:
@@ -71,11 +95,11 @@ class BottomBar extends StatelessWidget {
           ),
         ),
         Material(
-          color: ifActivSavesButton(),
+          color: activeButtonColor(AllRoutes.saves),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed('/saves');
+              Navigator.of(context).pushNamed(AllRoutes.saves);
             },
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(18.0)),
@@ -93,7 +117,7 @@ class BottomBar extends StatelessWidget {
           ),
         ),
         Material(
-          color: ifActivSavesButton(),
+          // color: activeButtonColor(),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
             onTap: () {},
