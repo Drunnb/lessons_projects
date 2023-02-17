@@ -1,29 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
 import 'package:flutter/material.dart';
-import 'package:noise_tool/main.dart';
-import 'package:noise_tool/screens/home_screen.dart';
+import 'package:noise_tool/services/inform_to_screens.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:noise_tool/screens/home_screen.dart';
+
+import '../services/all_routes.dart';
+
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+  final InformToScreens informToScreens;
+  const BottomBar(this.informToScreens, {Key? key}) : super(key: key);
 
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  String? thisRoute() => ModalRoute.of(context)?.settings.name;
-
   Color activeButtonColor(String route) {
-    if (route == thisRoute()) {
+    if (route == widget.informToScreens.thisRoute) {
       return const Color.fromARGB(255, 230, 230, 230);
     }
     return Colors.transparent;
-  }
-
-  void activeButtonNavigation(String route) {
-    if (thisRoute() != route) {
-      Navigator.of(context).pushNamed(route);
-    }
   }
 
   bool getIsRecording() {
@@ -43,14 +40,9 @@ class _BottomBarState extends State<BottomBar> {
     return Row(
       children: [
         Material(
-          // color: activeButtonColor('/saves'),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
-            onTap: () {
-              // if (thisRoute() != '/saves') {
-              //   Navigator.of(context).pushNamed('/saves');
-              // }
-            },
+            onTap: () {},
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(18.0)),
             child: SizedBox(
@@ -71,9 +63,8 @@ class _BottomBarState extends State<BottomBar> {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
             onTap: () async {
-              activeButtonNavigation(AllRoutes.home);
-
-              if (thisRoute() == AllRoutes.home &&
+              widget.informToScreens.goToRoute(AllRoutes.home);
+              if (widget.informToScreens.thisRoute == AllRoutes.home &&
                   await Permission.microphone.status.isDenied) {
                 await Permission.microphone.request();
               } else {
@@ -106,9 +97,7 @@ class _BottomBarState extends State<BottomBar> {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
             onTap: () {
-              if (thisRoute() != AllRoutes.saves) {
-                Navigator.of(context).pushNamed(AllRoutes.saves);
-              }
+              widget.informToScreens.goToRoute(AllRoutes.saves);
             },
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(18.0)),

@@ -1,11 +1,15 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first, avoid_print
 import 'dart:async';
-
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:noise_meter/noise_meter.dart';
 import 'package:noise_tool/bottom_bar/bottom_bar.dart';
+import 'package:noise_tool/services/inform_to_screens.dart';
+import '../services/all_routes.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final InformToScreens informToScreens;
+  const HomeScreen(this.informToScreens, {Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => HomeScreenState();
@@ -15,7 +19,9 @@ class HomeScreenState extends State<HomeScreen> {
   bool isRecording = false;
   StreamSubscription<NoiseReading>? noiseSubscription;
   late NoiseMeter noiseMeter;
-  double thisActualNoise = 0.0;
+  double thisActualNoise = 0;
+
+  List<double> listActualNoise = [0];
 
   @override
   void initState() {
@@ -37,6 +43,10 @@ class HomeScreenState extends State<HomeScreen> {
     });
     print(noiseReading.toString());
     thisActualNoise = noiseReading.maxDecibel;
+    listActualNoise.add(thisActualNoise);
+    if (listActualNoise.contains(0)) {
+      listActualNoise.removeAt(0);
+    }
   }
 
   void onError(Object error) {
@@ -72,7 +82,7 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomBar(),
+      bottomNavigationBar: BottomBar(widget.informToScreens),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,7 +95,7 @@ class HomeScreenState extends State<HomeScreen> {
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
-                      Navigator.of(context).pushNamed('/info');
+                      widget.informToScreens.goToRoute(AllRoutes.info);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -98,7 +108,7 @@ class HomeScreenState extends State<HomeScreen> {
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
                     onTap: () {
-                      Navigator.of(context).pushNamed('/settings');
+                      widget.informToScreens.goToRoute(AllRoutes.settings);
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -138,20 +148,20 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
-                            'Min 35.1',
-                            style: TextStyle(
+                            'Min ${listActualNoise.reduce(min).toStringAsFixed(2)}',
+                            style: const TextStyle(
                               fontSize: 18,
                               color: Colors.green,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Text(
-                            'Max 76.3',
-                            style: TextStyle(
+                            'Min ${listActualNoise.reduce(max).toStringAsFixed(2)}',
+                            style: const TextStyle(
                               fontSize: 18,
                               color: Colors.red,
                             ),
