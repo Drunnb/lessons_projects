@@ -11,29 +11,35 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
+  String? thisRoute() => ModalRoute.of(context)?.settings.name;
+
+  Color activeButtonColor(String route) {
+    if (route == thisRoute()) {
+      return const Color.fromARGB(255, 230, 230, 230);
+    }
+    return Colors.transparent;
+  }
+
+  void activeButtonNavigation(String route) {
+    if (thisRoute() != route) {
+      Navigator.of(context).pushNamed(route);
+    }
+  }
+
+  bool getIsRecording() {
+    setState(() {});
+    return context.findAncestorStateOfType<HomeScreenState>()?.isRecording ??
+        false;
+  }
+
+  void getOnStart() =>
+      context.findAncestorStateOfType<HomeScreenState>()?.start();
+
+  void getOnStop() =>
+      context.findAncestorStateOfType<HomeScreenState>()?.stop();
+
   @override
   Widget build(BuildContext context) {
-    String? thisRoute() => ModalRoute.of(context)?.settings.name;
-    print(thisRoute());
-    Color activeButtonColor(String route) {
-      if (route == thisRoute()) {
-        return const Color.fromARGB(255, 230, 230, 230);
-      }
-      return Colors.transparent;
-    }
-
-    getIsRecording() {
-      return context.findAncestorStateOfType<HomeScreenState>()?.isRecording;
-    }
-
-    void getOnStart() {
-      context.findAncestorStateOfType<HomeScreenState>()?.start();
-    }
-
-    void getOnStop() {
-      context.findAncestorStateOfType<HomeScreenState>()?.stop();
-    }
-
     return Row(
       children: [
         Material(
@@ -65,9 +71,8 @@ class _BottomBarState extends State<BottomBar> {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(18.0)),
           child: InkWell(
             onTap: () async {
-              if (thisRoute() != AllRoutes.home) {
-                Navigator.of(context).pushNamed(AllRoutes.home);
-              }
+              activeButtonNavigation(AllRoutes.home);
+
               if (thisRoute() == AllRoutes.home &&
                   await Permission.microphone.status.isDenied) {
                 await Permission.microphone.request();
@@ -90,6 +95,7 @@ class _BottomBarState extends State<BottomBar> {
                 child: Image.asset(
                   'assets/images/icon_mic.png',
                   scale: 14.0,
+                  color: getIsRecording() ? Colors.green : Colors.black,
                 ),
               ),
             ),
