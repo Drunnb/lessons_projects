@@ -29,7 +29,9 @@ class Movie extends MovieParameters with LanguageMixin {
     super.releaseDate,
     super.description,
     super.language,
-  );
+  ) {
+    fromStringEnum(language);
+  }
 }
 
 enum Language { ru, en, ge }

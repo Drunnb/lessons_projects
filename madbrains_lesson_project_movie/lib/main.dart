@@ -26,32 +26,34 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(
-                  'assets/images/backgraund.jpg',
-                ),
-                fit: BoxFit.cover),
-          ),
-          child: Center(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MovieWidget(
-                  title: moviesList[0].title,
-                  language: moviesList[0].languageType,
-                  picture: moviesList[0].picture,
-                  description: moviesList[0].description,
-                ),
-                MovieWidget(
-                  title: moviesList[1].title,
-                  language: moviesList[1].languageType,
-                  picture: moviesList[1].picture,
-                  description: moviesList[1].description,
-                ),
-              ],
+      home: SafeArea(
+        child: Scaffold(
+          body: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/backgraund.jpg',
+                  ),
+                  fit: BoxFit.cover),
+            ),
+            child: Center(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MovieWidget(
+                    title: moviesList[0].title,
+                    language: moviesList[0].languageType,
+                    picture: moviesList[0].picture,
+                    description: moviesList[0].description,
+                  ),
+                  MovieWidget(
+                    title: moviesList[1].title,
+                    language: moviesList[1].languageType,
+                    picture: moviesList[1].picture,
+                    description: moviesList[1].description,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -60,6 +62,6 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-void initFieldMovie(List<Movie>? list) {
+Future<void> initFieldMovie(List<Movie>? list) async {
   list?.map((e) => e.fromStringEnum(e.language));
 }

@@ -21,26 +21,29 @@ class MovieWidget extends StatelessWidget {
       fontSize: 14,
       fontWeight: FontWeight.w400,
     );
-    return Container(
-      width: 350,
-      height: 200,
-      decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 36, 26, 34),
-          borderRadius: BorderRadius.circular(20)),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              PosterWidget(picture: picture),
-              WidgetTextAboutAllInformation(
-                  title: title,
-                  language: language,
-                  description: description,
-                  myStyleDescriprionText: myStyleDescriprionText)
-            ],
-          )
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Container(
+        width: 350,
+        height: 200,
+        decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 36, 26, 34),
+            borderRadius: BorderRadius.circular(20)),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PosterWidget(picture: picture),
+                WidgetTextAboutAllInformation(
+                    title: title,
+                    language: language,
+                    description: description,
+                    myStyleDescriprionText: myStyleDescriprionText)
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
