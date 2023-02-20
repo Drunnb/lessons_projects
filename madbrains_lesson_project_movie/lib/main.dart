@@ -17,9 +17,48 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late List<Movie> myList;
+
   @override
   void initState() {
-    initFieldMovie(moviesList);
+    myList = [
+      Movie(
+        '01',
+        'Марсианин',
+        'assets/images/poster1.jpg',
+        8.9,
+        'releaseDate',
+        'Марсианская миссия «Арес-3» в процессе работы была вынуждена экстренно покинуть планету из-за надвигающейся песчаной бури. Инженер и биолог Марк Уотни получил повреждение скафандра во время песчаной бури. Сотрудники миссии, посчитав его погибшим. ',
+        'ru',
+      ),
+      Movie(
+        '02',
+        'Marokko',
+        'assets/images/poster2.jpg',
+        6.0,
+        'releaseDate',
+        'Марокко, конец 20-х. Певица Эми Жолли приезжает выступать в местное варьете. Богач и донжуан Ла Бессье предлагает ей своё покровительство, а спустя некоторое время — руку и сердце. Но Эми уже успела влюбиться в легионера-американца Брауна',
+        'de',
+      ),
+      Movie(
+        '03',
+        'Resident Evil',
+        'assets/images/poster3',
+        9.9,
+        'releaseDate',
+        'В гигантской подземной лаборатории выходит из-под контроля опаснейший вирус и мгновенно превращает своих жертв в прожорливых зомби. Достаточно одного их укуса или царапины, чтобы человек стал обезумевшим пожирателем живой плоти. Военные посылают в',
+        'de',
+      ),
+      Movie(
+        '04',
+        'long way',
+        'assets/images/poster4.jpg',
+        5.9,
+        'releaseDate',
+        'Вооружившись удивительной способностью уменьшаться в размере, но обладать при этом большой силой, мошенник Скотт Лэнг должен стать героем и помочь своему наставнику доктору Хэнку Пиму сохранить в тайне существование костюма Человека-муравья от угроз нового поколения.',
+        'en',
+      ),
+    ];
     super.initState();
   }
 
@@ -41,16 +80,16 @@ class _MyAppState extends State<MyApp> {
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   MovieWidget(
-                    title: moviesList[0].title,
-                    language: moviesList[0].languageType,
-                    picture: moviesList[0].picture,
-                    description: moviesList[0].description,
+                    title: myList[0].title,
+                    language: myList[0].languageType,
+                    picture: myList[0].picture,
+                    description: myList[0].description,
                   ),
                   MovieWidget(
-                    title: moviesList[1].title,
-                    language: moviesList[1].languageType,
-                    picture: moviesList[1].picture,
-                    description: moviesList[1].description,
+                    title: myList[1].title,
+                    language: myList[1].languageType,
+                    picture: myList[1].picture,
+                    description: myList[1].description,
                   ),
                 ],
               ),
@@ -60,8 +99,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
-
-Future<void> initFieldMovie(List<Movie>? list) async {
-  list?.map((e) => e.fromStringEnum(e.language));
 }
