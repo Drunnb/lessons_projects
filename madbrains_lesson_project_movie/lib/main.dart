@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:madbrains_lesson_project_movie/entity_movie.dart';
+
+import 'movie_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +19,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    moviesList[0].fromStringEnum(moviesList[0].language);
+    initFieldMovie(moviesList);
     super.initState();
   }
 
@@ -24,33 +27,39 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Column(
-          children: [
-            MovieWidget(
-              title: moviesList[0].title,
-              language: moviesList[0].languageType,
-              picture: moviesList[0].picture,
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/backgraund.jpg',
+                ),
+                fit: BoxFit.cover),
+          ),
+          child: Center(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MovieWidget(
+                  title: moviesList[0].title,
+                  language: moviesList[0].languageType,
+                  picture: moviesList[0].picture,
+                  description: moviesList[0].description,
+                ),
+                MovieWidget(
+                  title: moviesList[1].title,
+                  language: moviesList[1].languageType,
+                  picture: moviesList[1].picture,
+                  description: moviesList[1].description,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-class MovieWidget extends StatelessWidget {
-  final String title;
-  final String picture;
-  final Language language;
-  const MovieWidget({
-    Key? key,
-    required this.title,
-    required this.picture,
-    required this.language,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+void initFieldMovie(List<Movie>? list) {
+  list?.map((e) => e.fromStringEnum(e.language));
 }

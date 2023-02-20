@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, avoid_print, unused_local_variable, avoid_function_literals_in_foreach_calls
+
 import 'dart:async';
 
 void main() {
@@ -52,7 +54,7 @@ class Movie extends MovieParameters with LanguageMixin {
 
   @override
   void showIdAndTitle() {
-    print('i show u ID and Title \nid: ${this.id} \ntitle:${this.title}');
+    print('i show u ID and Title \nid: $id \ntitle:$title');
   }
 }
 
