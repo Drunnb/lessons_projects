@@ -18,16 +18,19 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   List<Movie> myList = [];
 
-  Future<List<Movie>> loadMovie() async {
-    // myList = moviesList;
-    await Future.delayed(const Duration(seconds: 4));
-    myList.addAll(moviesList);
-    return myList;
+  Future<List<Movie>> getMovies() async {
+    await Future.delayed(const Duration(seconds: 2));
+    var response = moviesList;
+    return response;
   }
 
   @override
   void initState() {
-    loadMovie();
+    getMovies().then((value) {
+      setState(() {
+        myList.addAll(value);
+      });
+    });
     super.initState();
   }
 
@@ -45,66 +48,26 @@ class _MyAppState extends State<MyApp> {
                   fit: BoxFit.cover),
             ),
             child: Center(
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: SizedBox(
-                    height: 400,
-                    child: FutureBuilder(
-                      initialData: myList,
-                      future: loadMovie(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        }
-                        return ListView.builder(
-                          itemCount: snapshot.data!.length,
+              child: myList.isNotEmpty
+                  ? Align(
+                      alignment: Alignment.topCenter,
+                      child: SizedBox(
+                        height: 450,
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: myList.length,
                           itemBuilder: (context, index) {
                             return MovieWidget(
-                                title: snapshot.data![index].picture,
-                                picture: snapshot.data![index].picture,
-                                description: snapshot.data![index].description,
-                                language: snapshot.data![index].languageType);
+                                title: myList[index].title,
+                                picture: myList[index].picture,
+                                description: myList[index].description,
+                                language: myList[index].languageType);
                           },
-                        );
-                        // MovieWidget(
-                        //     title: snapshot.data![0].picture,
-                        //     picture: snapshot.data![0].picture,
-                        //     description: snapshot.data![0].description,
-                        //     language: snapshot.data![0].languageType);
-                      },
+                        ),
+                      ),
                     )
-
-                    // ListView.builder(
-                    //   scrollDirection: Axis.vertical,
-                    //   itemCount: myList.length,
-                    //   itemBuilder: (context, index) {
-                    //     return MovieWidget(
-                    //         title: myList[index].title,
-                    //         picture: myList[index].picture,
-                    //         description: myList[index].description,
-                    //         language: myList[index].languageType);
-                    //   },
-                    // ),
-                    ),
-              ),
-              // child: Column(
-              //   // mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     MovieWidget(
-              //       title: myList[0].title,
-              //       language: myList[0].languageType,
-              //       picture: myList[0].picture,
-              //       description: myList[0].description,
-              //     ),
-              //     MovieWidget(
-              //       title: myList[1].title,
-              //       language: myList[1].languageType,
-              //       picture: myList[1].picture,
-              //       description: myList[1].description,
-              //     ),
-              //   ],
-              // ),
+                  : CircularProgressIndicator(
+                      color: Colors.black.withOpacity(0.5)),
             ),
           ),
         ),
