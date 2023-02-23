@@ -16,12 +16,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late List<Movie> myList;
+  List<Movie> myList = [];
 
-  loadMovie() {
-    myList = moviesList;
-    // await Future.delayed(const Duration(seconds: 10));
-    // myList.addAll(moviesList);
+  Future<List<Movie>> loadMovie() async {
+    // myList = moviesList;
+    await Future.delayed(const Duration(seconds: 4));
+    myList.addAll(moviesList);
+    return myList;
   }
 
   @override
@@ -48,17 +49,34 @@ class _MyAppState extends State<MyApp> {
                 alignment: Alignment.topCenter,
                 child: SizedBox(
                     height: 400,
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: myList.length,
-                      itemBuilder: (context, index) {
+                    child: FutureBuilder(
+                      initialData: myList,
+                      future: loadMovie(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        }
                         return MovieWidget(
-                            title: myList[index].title,
-                            picture: myList[index].picture,
-                            description: myList[index].description,
-                            language: myList[index].languageType);
+                            title: snapshot.data![0].picture,
+                            picture: snapshot.data![0].picture,
+                            description: snapshot.data![0].description,
+                            language: snapshot.data![0].languageType);
                       },
-                    )),
+                    )
+
+                    // ListView.builder(
+                    //   scrollDirection: Axis.vertical,
+                    //   itemCount: myList.length,
+                    //   itemBuilder: (context, index) {
+                    //     return MovieWidget(
+                    //         title: myList[index].title,
+                    //         picture: myList[index].picture,
+                    //         description: myList[index].description,
+                    //         language: myList[index].languageType);
+                    //   },
+                    // ),
+                    ),
               ),
               // child: Column(
               //   // mainAxisAlignment: MainAxisAlignment.center,
