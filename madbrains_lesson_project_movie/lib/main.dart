@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<List<Movie>> getMovies() async {
     await Future.delayed(const Duration(seconds: 2));
-    var response = moviesList;
+    var response = moviesList; // имитация обращения к ресурсам сеть\хранилище
     return response;
   }
 
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
                   ? Align(
                       alignment: Alignment.topCenter,
                       child: SizedBox(
-                        height: 450,
+                        // height: 450,
                         child: ListView.builder(
                           scrollDirection: Axis.vertical,
                           itemCount: myList.length,
