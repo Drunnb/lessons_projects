@@ -57,11 +57,21 @@ class _MyAppState extends State<MyApp> {
                             ConnectionState.waiting) {
                           return const CircularProgressIndicator();
                         }
-                        return MovieWidget(
-                            title: snapshot.data![0].picture,
-                            picture: snapshot.data![0].picture,
-                            description: snapshot.data![0].description,
-                            language: snapshot.data![0].languageType);
+                        return ListView.builder(
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return MovieWidget(
+                                title: snapshot.data![index].picture,
+                                picture: snapshot.data![index].picture,
+                                description: snapshot.data![index].description,
+                                language: snapshot.data![index].languageType);
+                          },
+                        );
+                        // MovieWidget(
+                        //     title: snapshot.data![0].picture,
+                        //     picture: snapshot.data![0].picture,
+                        //     description: snapshot.data![0].description,
+                        //     language: snapshot.data![0].languageType);
                       },
                     )
 
