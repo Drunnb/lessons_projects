@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/domain/entity/entity_movie.dart';
+import 'package:madbrains_lesson_project_movie/ui/theme/app_colors.dart';
 
 class MovieWidget extends StatelessWidget {
   final String title;
@@ -27,8 +28,9 @@ class MovieWidget extends StatelessWidget {
         width: 350,
         height: 200,
         decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 36, 26, 34),
-            borderRadius: BorderRadius.circular(20)),
+          borderRadius: BorderRadius.circular(20),
+          color: AppColors.mainPurpleColor,
+        ),
         child: Column(
           children: [
             Row(
@@ -129,7 +131,7 @@ class PosterWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: const [
           BoxShadow(
-            color: Colors.black12,
+            color: AppColors.mainPurpleColor,
             offset: Offset(0, 2),
             blurStyle: BlurStyle.solid,
           ),

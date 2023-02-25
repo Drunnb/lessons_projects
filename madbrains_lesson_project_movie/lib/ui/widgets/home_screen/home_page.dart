@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/ui/widgets/home_screen/movie_widget.dart';
 import 'package:madbrains_lesson_project_movie/domain/entity/entity_movie.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   List<Movie> myList = [];
 
   Future<List<Movie>> getMovies() async {
@@ -32,6 +32,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Movies'),
+          centerTitle: true,
+          leading: IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {},
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.sort),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {},
+            )
+          ],
+        ),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(

@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names, duplicate_ignore
 
-import '../home_screen/home_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:madbrains_lesson_project_movie/ui/theme/app_colors.dart';
+import 'package:madbrains_lesson_project_movie/ui/widgets/home_screen/from_lesson.dart';
+import 'package:madbrains_lesson_project_movie/ui/widgets/home_screen/home_page.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -14,9 +17,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: const HomeScreen(),
+          primarySwatch: AppColors.purpleMaterial,
+          textTheme: Typography.whiteCupertino),
+      home: const HomePageFromLesson(),
     );
   }
 }
