@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:madbrains_lesson_project_movie/entity_movie.dart';
-import 'package:madbrains_lesson_project_movie/movie_widget.dart';
+import 'package:madbrains_lesson_project_movie/ui/widgets/home_screen/movie_widget.dart';
+import 'package:madbrains_lesson_project_movie/domain/entity/entity_movie.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

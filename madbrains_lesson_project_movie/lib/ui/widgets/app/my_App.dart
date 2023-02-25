@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:madbrains_lesson_project_movie/main.dart';
 
 import '../home_screen/home_screen.dart';
 
@@ -13,8 +12,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: const HomeScreen(),
     );
   }
 }

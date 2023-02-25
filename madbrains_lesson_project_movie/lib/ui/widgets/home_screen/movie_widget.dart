@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:madbrains_lesson_project_movie/entity_movie.dart';
+import 'package:madbrains_lesson_project_movie/domain/entity/entity_movie.dart';
 
 class MovieWidget extends StatelessWidget {
   final String title;
