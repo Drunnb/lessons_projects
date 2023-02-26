@@ -1,8 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
 import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
+import 'package:madbrains_lesson_project_movie/app/widgets/film_tile.dart';
 
 class HomePageFromLesson extends StatefulWidget {
   const HomePageFromLesson({super.key});
