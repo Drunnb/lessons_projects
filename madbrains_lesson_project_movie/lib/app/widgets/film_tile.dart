@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
+import 'package:madbrains_lesson_project_movie/features/home/widgets/image_network.dart';
 
 class FilmTile extends StatelessWidget {
   final int id;
@@ -37,23 +38,14 @@ class FilmTile extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Image.network(
-            picture,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) {
-                return child;
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
+          child: ImageNetworkWidget(picture),
         ),
         Expanded(
           // flex: 2,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -87,11 +79,12 @@ class FilmTile extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 16, bottom: 8),
                   child: Text(
                     'Дата выхода: $releaseDate',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleSmall,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Text(description),
+                Text(description,
+                    maxLines: 12, overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
