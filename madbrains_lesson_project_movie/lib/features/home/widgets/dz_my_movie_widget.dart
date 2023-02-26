@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
 import 'package:madbrains_lesson_project_movie/domain/entity/entity_movie.dart';
-import 'package:madbrains_lesson_project_movie/ui/theme/app_colors.dart';
 
 class MovieWidget extends StatelessWidget {
   final String title;

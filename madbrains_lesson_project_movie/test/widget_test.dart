@@ -7,12 +7,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:madbrains_lesson_project_movie/app/my_app.dart';
+import 'package:madbrains_lesson_project_movie/app/my_apps.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const MyApps());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
