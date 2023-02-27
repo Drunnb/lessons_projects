@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
 import 'package:madbrains_lesson_project_movie/features/home/pages/catalog_page.dart';
 import 'package:madbrains_lesson_project_movie/features/home/pages/home_page.dart';
+import 'package:madbrains_lesson_project_movie/features/settings/pages/settings_page.dart';
 
 class _Tab {
   final Icon icon;
@@ -16,6 +17,7 @@ class _Tab {
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
+  static const path = '/';
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -59,7 +61,18 @@ class _MainPageState extends State<MainPage> {
           ),
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) {
+                    return SettingsPage(
+                      arguments: SettingsArguments('Bobik'),
+                    );
+                  },
+                ),
+              );
+            },
           )
         ],
       ),
