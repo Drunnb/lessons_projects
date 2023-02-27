@@ -46,7 +46,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movies'),
+        title: Text(_tabs[_selectedIndex].label),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.menu),
