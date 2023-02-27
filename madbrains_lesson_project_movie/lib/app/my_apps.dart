@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
-import 'package:madbrains_lesson_project_movie/features/home/pages/home_page.dart';
+import 'package:madbrains_lesson_project_movie/app/widgets/main_page.dart';
 
 class MyApps extends StatelessWidget {
   const MyApps({super.key});
@@ -11,7 +11,7 @@ class MyApps extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: AppColors.purpleMaterial,
           textTheme: Typography.blackCupertino),
-      home: const HomePageFromLesson(),
+      home: const MainPage(),
     );
   }
 }

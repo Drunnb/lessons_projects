@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
-import 'package:madbrains_lesson_project_movie/features/home/widgets/file_grid.dart';
+import 'package:madbrains_lesson_project_movie/app/widgets/film_tile.dart';
 
 class FilmList extends StatelessWidget {
   const FilmList({super.key});
@@ -60,6 +60,12 @@ class FilmList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FilmGrid();
+    return ListView.builder(
+      itemCount: FilmList.films.length * 100,
+      itemBuilder: (context, index) {
+        return FilmTile.fromModel(
+            model: FilmList.films[index % FilmList.films.length]);
+      },
+    );
   }
 }

@@ -1,37 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/features/home/widgets/film_list.dart';
 
-class HomePageFromLesson extends StatefulWidget {
-  const HomePageFromLesson({super.key});
+class HomePageFromLessonWithList extends StatefulWidget {
+  const HomePageFromLessonWithList({super.key});
 
   @override
-  State<HomePageFromLesson> createState() => _HomePageFromLessonState();
+  State<HomePageFromLessonWithList> createState() =>
+      _HomePageFromLessonWithListState();
 }
 
-class _HomePageFromLessonState extends State<HomePageFromLesson> {
+class _HomePageFromLessonWithListState
+    extends State<HomePageFromLessonWithList> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Movies'),
-          centerTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.sort),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {},
-            )
-          ],
-        ),
-        body: const FilmList(),
+        body: FilmList(),
       ),
     );
   }
