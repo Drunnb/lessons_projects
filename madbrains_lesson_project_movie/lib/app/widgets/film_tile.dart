@@ -41,7 +41,6 @@ class FilmTile extends StatelessWidget {
           child: ImageNetworkWidget(picture),
         ),
         Expanded(
-          // flex: 2,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -60,18 +59,7 @@ class FilmTile extends StatelessWidget {
                         Icons.star,
                         color: Colors.yellow,
                       ),
-                      Text(
-                        voteAverage.toStringAsFixed(1),
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: voteAverage < 4
-                              ? Colors.red
-                              : voteAverage >= 8
-                                  ? Colors.green
-                                  : Colors.black,
-                        ),
-                      ),
+                      ColoredRaiting(voteAverage: voteAverage),
                     ],
                   ),
                 ),
@@ -90,6 +78,31 @@ class FilmTile extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ColoredRaiting extends StatelessWidget {
+  const ColoredRaiting({
+    super.key,
+    required this.voteAverage,
+  });
+
+  final double voteAverage;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      voteAverage.toStringAsFixed(1),
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        fontSize: 16,
+        color: voteAverage < 4
+            ? Colors.red
+            : voteAverage >= 8
+                ? Colors.green
+                : Colors.black,
+      ),
     );
   }
 }

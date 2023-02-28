@@ -61,7 +61,7 @@ class FilmCard extends StatelessWidget {
           Positioned(
             right: 4,
             top: 4,
-            child: _RaitingChip(voteAverage),
+            child: RaitingChip(voteAverage),
           ),
           Align(
               alignment: Alignment.bottomCenter,
@@ -75,9 +75,9 @@ class FilmCard extends StatelessWidget {
   }
 }
 
-class _RaitingChip extends StatelessWidget {
+class RaitingChip extends StatelessWidget {
   final double voteAverage;
-  const _RaitingChip(
+  const RaitingChip(
     this.voteAverage, {
     Key? key,
   }) : super(key: key);

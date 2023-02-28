@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
 import 'package:madbrains_lesson_project_movie/app/widgets/film_tile.dart';
+import 'package:madbrains_lesson_project_movie/features/details/pages/details_from_list_movies.dart';
 
 class FilmList extends StatelessWidget {
   const FilmList({super.key});
@@ -63,8 +64,20 @@ class FilmList extends StatelessWidget {
     return ListView.builder(
       itemCount: FilmList.films.length * 100,
       itemBuilder: (context, index) {
-        return FilmTile.fromModel(
-            model: FilmList.films[index % FilmList.films.length]);
+        return Material(
+          child: InkWell(
+            child: FilmTile.fromModel(
+                model: FilmList.films[index % FilmList.films.length]),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        DetailsFromListMovies(movie: FilmList.films[index]),
+                  ));
+            },
+          ),
+        );
       },
     );
   }
