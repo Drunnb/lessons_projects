@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
 import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
 import 'package:madbrains_lesson_project_movie/app/widgets/buttons/primary_button.dart';
+import 'package:madbrains_lesson_project_movie/features/details/pages/details_from_grid_movies.dart';
 import 'package:madbrains_lesson_project_movie/features/home/widgets/image_network.dart';
 
 class FilmCard extends StatelessWidget {
@@ -67,7 +68,17 @@ class FilmCard extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 4.0),
-                child: PrimaryButton('More', onPressed: () {}),
+                child: PrimaryButton('More', onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      //////исправить косяки
+                      builder: (context) {
+                        return DetailsFromGridMovie();
+                      },
+                    ),
+                  );
+                }),
               )),
         ],
       ),
