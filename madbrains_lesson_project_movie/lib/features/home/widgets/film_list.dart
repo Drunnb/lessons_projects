@@ -72,8 +72,8 @@ class FilmList extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        DetailsFromListMovies(movie: FilmList.films[index]),
+                    builder: (context) => DetailsFromListMovies(
+                        movie: FilmList.films[index % FilmList.films.length]),
                   ));
             },
           ),
