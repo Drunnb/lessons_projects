@@ -38,6 +38,13 @@ class FilmCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var fromCardtoModel = FilmCardModel(
+        id: id,
+        title: title,
+        description: description,
+        picture: picture,
+        releaseDate: releaseDate,
+        voteAverage: voteAverage);
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -69,15 +76,8 @@ class FilmCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 4.0),
                 child: PrimaryButton('More', onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      //////исправить косяки
-                      builder: (context) {
-                        return DetailsFromGridMovie();
-                      },
-                    ),
-                  );
+                  Navigator.pushNamed(context, DetailsFromGridMovie.path,
+                      arguments: fromCardtoModel);
                 }),
               )),
         ],
