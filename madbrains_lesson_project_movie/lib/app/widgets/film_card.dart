@@ -76,8 +76,18 @@ class FilmCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 4.0),
                 child: PrimaryButton('More', onPressed: () {
-                  Navigator.pushNamed(context, DetailsFromGridMovie.path,
-                      arguments: fromCardtoModel);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const DetailsFromGridMovie();
+                      },
+                      settings: RouteSettings(arguments: fromCardtoModel),
+                    ),
+                  );
+
+                  // Navigator.pushNamed(context, DetailsFromGridMovie.path,
+                  //     arguments: fromCardtoModel);
                 }),
               )),
         ],
