@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
 import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
-import 'package:madbrains_lesson_project_movie/app/widgets/main_page.dart';
+import 'package:madbrains_lesson_project_movie/app/main_page.dart';
 import 'package:madbrains_lesson_project_movie/features/details/pages/details_from_grid_movies.dart';
 import 'package:madbrains_lesson_project_movie/features/settings/pages/settings_page.dart';
 
