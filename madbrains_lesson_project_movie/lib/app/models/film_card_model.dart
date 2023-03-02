@@ -5,6 +5,7 @@ class FilmCardModel {
   final double voteAverage;
   final String releaseDate;
   final String description;
+  final bool isFavorite;
 
   FilmCardModel({
     required this.id,
@@ -13,5 +14,6 @@ class FilmCardModel {
     this.voteAverage = 0,
     this.releaseDate = '',
     this.description = '',
+    this.isFavorite = false,
   });
 }

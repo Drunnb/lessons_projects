@@ -6,7 +6,7 @@ class ImageNetworkWidget extends StatelessWidget {
   final BoxFit fit;
   const ImageNetworkWidget(
     this.picture, {
-    this.fit = BoxFit.cover,
+    this.fit = BoxFit.fill,
     Key? key,
   }) : super(key: key);
 

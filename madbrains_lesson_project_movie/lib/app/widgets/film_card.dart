@@ -1,17 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
 import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
+import 'package:madbrains_lesson_project_movie/app/widgets/buttons/favorite_movie_button.dart';
 import 'package:madbrains_lesson_project_movie/app/widgets/buttons/primary_button.dart';
 import 'package:madbrains_lesson_project_movie/features/details/pages/details_from_grid_movies.dart';
 import 'package:madbrains_lesson_project_movie/features/home/widgets/image_network.dart';
 
-class FilmCard extends StatelessWidget {
+class FilmCard extends StatefulWidget {
   final int id;
   final String title;
   final String picture;
   final double voteAverage;
   final String releaseDate;
   final String description;
+  final bool isFavorite;
 
   const FilmCard({
     Key? key,
@@ -21,6 +25,7 @@ class FilmCard extends StatelessWidget {
     required this.voteAverage,
     required this.releaseDate,
     required this.description,
+    required this.isFavorite,
   }) : super(key: key);
 
   factory FilmCard.fromModel({
@@ -33,18 +38,25 @@ class FilmCard extends StatelessWidget {
       voteAverage: model.voteAverage,
       releaseDate: model.releaseDate,
       description: model.description,
+      isFavorite: model.isFavorite,
     );
   }
 
   @override
+  State<FilmCard> createState() => _FilmCardState();
+}
+
+class _FilmCardState extends State<FilmCard> {
+  late var _isFavorite = widget.isFavorite;
+  @override
   Widget build(BuildContext context) {
     var fromCardtoModel = FilmCardModel(
-        id: id,
-        title: title,
-        description: description,
-        picture: picture,
-        releaseDate: releaseDate,
-        voteAverage: voteAverage);
+        id: widget.id,
+        title: widget.title,
+        description: widget.description,
+        picture: widget.picture,
+        releaseDate: widget.releaseDate,
+        voteAverage: widget.voteAverage);
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -62,14 +74,14 @@ class FilmCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: ImageNetworkWidget(
-                picture,
+                widget.picture,
               ),
             ),
           ),
           Positioned(
             right: 4,
             top: 4,
-            child: RaitingChip(voteAverage),
+            child: RaitingChip(widget.voteAverage),
           ),
           Align(
               alignment: Alignment.bottomCenter,
@@ -90,6 +102,15 @@ class FilmCard extends StatelessWidget {
                   //     arguments: fromCardtoModel);
                 }),
               )),
+          Positioned(
+            left: 4,
+            top: 4,
+            child: MovieFavoriteButton(
+                isFavorite: _isFavorite,
+                onPress: () => setState(() {
+                      _isFavorite = !_isFavorite;
+                    })),
+          ),
         ],
       ),
     );

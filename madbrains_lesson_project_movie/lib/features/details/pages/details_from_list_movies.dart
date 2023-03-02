@@ -29,7 +29,7 @@ class DetailsFromListMovies extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(movie.releaseDate),
-              ColoredRaiting(voteAverage: movie.voteAverage),
+              MovieColoredRaiting(voteAverage: movie.voteAverage),
             ],
           ),
           const SizedBox(
