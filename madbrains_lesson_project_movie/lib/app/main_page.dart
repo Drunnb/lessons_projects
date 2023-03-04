@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
       page: const HomePageFromLessonWithList(),
     ),
     _Tab(
-      icon: const Icon(Icons.local_movies_outlined),
+      icon: const Icon(Icons.local_movies_rounded),
       label: 'Films Grid',
       page: const HomePageFromLessonWithGrid(),
     ),
