@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
+import 'package:madbrains_lesson_project_movie/domain/models/film_card_model.dart';
 import 'package:madbrains_lesson_project_movie/app/widgets/buttons/favorite_movie_button.dart';
 import 'package:madbrains_lesson_project_movie/features/home/widgets/image_network.dart';
 

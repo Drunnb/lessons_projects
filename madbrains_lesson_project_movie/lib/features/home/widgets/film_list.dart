@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
+import 'package:madbrains_lesson_project_movie/domain/models/film_card_model.dart';
 import 'package:madbrains_lesson_project_movie/app/widgets/film_tile.dart';
 import 'package:madbrains_lesson_project_movie/features/details/pages/details_from_list_movies.dart';
 
