@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
-import 'package:madbrains_lesson_project_movie/app/models/film_card_model.dart';
+import 'package:madbrains_lesson_project_movie/domain/models/film_card_model.dart';
 import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
 import 'package:madbrains_lesson_project_movie/app/widgets/buttons/favorite_movie_button.dart';
 import 'package:madbrains_lesson_project_movie/app/widgets/buttons/primary_button.dart';
