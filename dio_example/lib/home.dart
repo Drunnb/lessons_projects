@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+// https://cat-fact.herokuapp.com/facts/random
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,8 +13,28 @@ class _HomePageState extends State<HomePage> {
   String? text;
   String? imageUrl;
   bool isCached = false;
+  Dio dio = Dio();
 
-  void _sendRequest() async {}
+  @override
+  void initState() {
+    dio.interceptors.add(LogInterceptor());
+    dio.options.baseUrl = 'https://cat-fact.herokuapp.com/facts';
+    super.initState();
+  }
+
+  void _sendRequest() async {
+    try {
+      Response response = await dio.get('/random');
+      setState(() {
+        text = response.data['text'];
+        imageUrl = 'https://http.cat/${response.statusCode}';
+      });
+    } catch (e) {
+      setState(() {
+        text = e.toString();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +55,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ElevatedButton(
               onPressed: _sendRequest,
-              child: const Text('send request'),
+              child: const Text('update fact'),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
