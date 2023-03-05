@@ -1,0 +1,4 @@
+#Sat Mar 04 16:11:30 MSK 2023
+base.0=F\:\\Dev\\GitHub\\lessons_projects-1\\dio_example\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
