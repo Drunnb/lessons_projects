@@ -11,7 +11,7 @@ class ShowsCardDTO {
   final String url;
   @JsonKey(name: 'name', defaultValue: '')
   final String title;
-  final List<Genre> genres;
+  final List<String> genres;
   @JsonKey(name: 'premiered')
   final String? releaseDate;
   @JsonKey(name: 'rating')
@@ -55,29 +55,4 @@ class ShowsCardDTOImage {
   factory ShowsCardDTOImage.fromJson(Map<String, dynamic> json) =>
       _$ShowsCardDTOImageFromJson(json);
   Map<String, dynamic> toJson() => _$ShowsCardDTOImageToJson(this);
-}
-
-enum Genre {
-  DRAMA,
-  SCIENCE_FICTION,
-  THRILLER,
-  ACTION,
-  CRIME,
-  HORROR,
-  ROMANCE,
-  ADVENTURE,
-  ESPIONAGE,
-  MUSIC,
-  MYSTERY,
-  SUPERNATURAL,
-  FANTASY,
-  FAMILY,
-  ANIME,
-  COMEDY,
-  HISTORY,
-  MEDICAL,
-  LEGAL,
-  WESTERN,
-  WAR,
-  SPORTS
 }
