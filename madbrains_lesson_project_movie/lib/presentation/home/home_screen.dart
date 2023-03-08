@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/widgets/film_tile.dart';
+import 'package:madbrains_lesson_project_movie/components/delayed_action.dart';
 import 'package:madbrains_lesson_project_movie/data/repositories/moview_repository.dart';
 import 'package:madbrains_lesson_project_movie/domain/models/movie_card_model.dart';
 
@@ -11,6 +12,7 @@ class HomeScreenNetwork extends StatefulWidget {
 }
 
 class _HomeScreenNetworkState extends State<HomeScreenNetwork> {
+  final TextEditingController textController = TextEditingController();
   Future<HomeModel?>? dataLoadingState;
 
   @override
@@ -25,6 +27,19 @@ class _HomeScreenNetworkState extends State<HomeScreenNetwork> {
       child: Scaffold(
         body: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+              child: TextField(
+                controller: textController,
+                maxLines: 1,
+                decoration: const InputDecoration(
+                  labelText: 'Search',
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+                onChanged: _onSearchFieldTextChanged,
+              ),
+            ),
             FutureBuilder(
               future: dataLoadingState,
               builder: (context, data) {
@@ -49,5 +64,15 @@ class _HomeScreenNetworkState extends State<HomeScreenNetwork> {
         ),
       ),
     );
+  }
+
+  void _onSearchFieldTextChanged(String text) {
+    DelayedAction.run(() {
+      dataLoadingState = MoviesRepository.loadData(
+        context,
+        text.isNotEmpty ? text : null,
+      );
+      setState(() {});
+    });
   }
 }
