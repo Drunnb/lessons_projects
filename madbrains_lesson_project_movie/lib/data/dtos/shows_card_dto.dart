@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:madbrains_lesson_project_movie/data/tools/dto_strip_html.dart';
 
 part 'shows_card_dto.g.dart';
 
@@ -18,7 +19,7 @@ class ShowsCardDTO {
   final Rating averegeVoite;
   @JsonKey(name: 'image')
   final ShowsCardDTOImage? image;
-  @JsonKey(name: 'summary')
+  @JsonKey(name: 'summary', fromJson: stripHtmlIfneede)
   final String? description;
 
   ShowsCardDTO({

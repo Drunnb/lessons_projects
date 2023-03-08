@@ -17,7 +17,7 @@ ShowsCardDTO _$ShowsCardDTOFromJson(Map<String, dynamic> json) => ShowsCardDTO(
       image: json['image'] == null
           ? null
           : ShowsCardDTOImage.fromJson(json['image'] as Map<String, dynamic>),
-      description: json['summary'] as String?,
+      description: stripHtmlIfneede(json['summary'] as String?),
     );
 
 Map<String, dynamic> _$ShowsCardDTOToJson(ShowsCardDTO instance) =>
