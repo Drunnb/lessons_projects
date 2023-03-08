@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/app/theme/app_colors.dart';
-import 'package:madbrains_lesson_project_movie/data/repositories/moview_repository.dart';
-import 'package:madbrains_lesson_project_movie/domain/models/movie_card_model.dart';
 import 'package:madbrains_lesson_project_movie/features/home/pages/catalog_page.dart';
 import 'package:madbrains_lesson_project_movie/features/home/pages/home_page.dart';
 import 'package:madbrains_lesson_project_movie/features/settings/pages/settings_page.dart';
+import 'package:madbrains_lesson_project_movie/presentation/home/home_screen.dart';
 
 class _Tab {
   final Icon icon;
@@ -26,14 +25,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Future<HomeModel?>? dataLoadingState;
-
-  @override
-  void didChangeDependencies() {
-    dataLoadingState ??= MoviesRepository.loadData(context);
-    super.didChangeDependencies();
-  }
-
   var _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
@@ -52,6 +43,11 @@ class _MainPageState extends State<MainPage> {
       label: 'Films Grid',
       page: const HomePageFromLessonWithGrid(),
     ),
+    _Tab(
+      icon: const Icon(Icons.movie_sharp),
+      label: 'Films Grid',
+      page: const HomeScreenNetwork(),
+    ),
   ];
 
   @override
@@ -67,10 +63,7 @@ class _MainPageState extends State<MainPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.sort),
-            onPressed: () {
-              dataLoadingState
-                  ?.then((value) => print(value?.results?[4].description));
-            },
+            onPressed: () {},
           ),
           IconButton(
             icon: const Icon(Icons.settings),

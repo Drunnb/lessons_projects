@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:madbrains_lesson_project_movie/components/constants.dart';
@@ -40,5 +42,6 @@ class MoviesRepository {
       final statusCode = error.response?.statusCode;
       showErrorDialog(context, error: statusCode?.toString() ?? '');
     }
+    return null;
   }
 }

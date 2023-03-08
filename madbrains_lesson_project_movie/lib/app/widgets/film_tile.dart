@@ -25,16 +25,16 @@ class FilmTile extends StatefulWidget {
   }) : super(key: key);
 
   factory FilmTile.fromModel({
-    required FilmCardModel model,
+    required FilmCardModel? model,
   }) {
     return FilmTile(
-      id: model.id,
-      title: model.title,
-      picture: model.picture,
-      voteAverage: model.voteAverage,
-      releaseDate: model.releaseDate,
-      description: model.description,
-      isFavorire: model.isFavorite,
+      id: model?.id ?? 0,
+      title: model?.title ?? '',
+      picture: model?.picture ?? '',
+      voteAverage: model?.voteAverage ?? 0,
+      releaseDate: model?.releaseDate ?? '',
+      description: model?.description ?? '',
+      isFavorire: model?.isFavorite ?? false,
     );
   }
 
