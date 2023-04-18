@@ -1,0 +1,6 @@
+{
+  "appTitle": "bloc_counter_again",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
