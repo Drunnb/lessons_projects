@@ -11,7 +11,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MyHomePage(),
+      home: Wrapper(),
+    );
+  }
+}
+
+class Wrapper extends StatelessWidget {
+  const Wrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CounterBloc>(
+          create: (context) => CounterBloc(),
+        ),
+        BlocProvider<UserBloc>(
+          create: (context) => UserBloc(),
+        ),
+      ],
+      child: const MyHomePage(),
     );
   }
 }
@@ -21,23 +40,17 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final counterBloc = CounterBloc()..add(CounterIncEvent());
-    final userBloc = UserBloc();
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CounterBloc>(
-          create: (context) => counterBloc,
-        ),
-        BlocProvider<UserBloc>(
-          create: (context) => userBloc,
-        ),
-      ],
-      child: Scaffold(
+    return Builder(builder: (context) {
+      final counterBloc = BlocProvider.of<CounterBloc>(context);
+
+      return Scaffold(
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
               onPressed: () {
+                // final counterBloc = BlocProvider.of<CounterBloc>(context); старая форма записи
+
                 counterBloc.add(CounterIncEvent());
               },
               icon: const Icon(Icons.plus_one),
@@ -50,13 +63,17 @@ class MyHomePage extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                userBloc.add(UserGetUsersEvent(counterBloc.state));
+                final userBloc = context.read<UserBloc>();
+                userBloc
+                    .add(UserGetUsersEvent(context.read<CounterBloc>().state));
               },
               icon: const Icon(Icons.perm_contact_cal_rounded),
             ),
             IconButton(
               onPressed: () {
-                userBloc.add(UserGetUsersJobEvent(counterBloc.state));
+                final userBloc = context.read<UserBloc>();
+                userBloc.add(
+                    UserGetUsersJobEvent(context.read<CounterBloc>().state));
               },
               icon: const Icon(Icons.work),
             ),
@@ -68,23 +85,30 @@ class MyHomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 BlocBuilder<CounterBloc, int>(
-                  bloc: counterBloc,
+                  // bloc: counterBloc,
                   builder: (context, state) {
-                    return Text(
-                      state.toString(),
-                      style: const TextStyle(fontSize: 33),
+                    final users =
+                        context.select((UserBloc bloc) => bloc.state.users);
+                    return Column(
+                      children: [
+                        Text(
+                          state.toString(),
+                          style: const TextStyle(fontSize: 33),
+                        ),
+                        if (users.isNotEmpty) ...users.map((e) => Text(e.name)),
+                      ],
                     );
                   },
                 ),
                 BlocBuilder<UserBloc, UserState>(
-                  bloc: userBloc,
+                  // bloc: userBloc,
                   builder: (context, state) {
                     final users = state.users;
                     final job = state.job;
                     return Column(
                       children: [
                         if (state.isLoading) const CircularProgressIndicator(),
-                        if (users.isNotEmpty) ...users.map((e) => Text(e.name)),
+                        // if (users.isNotEmpty) ...users.map((e) => Text(e.name)),
                         if (job.isNotEmpty) ...job.map((e) => Text(e.name)),
                       ],
                     );
@@ -94,7 +118,7 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
