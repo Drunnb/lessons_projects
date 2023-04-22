@@ -21,13 +21,14 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final counterBloc = CounterBloc();
     return MultiBlocProvider(
       providers: [
         BlocProvider<CounterBloc>(
-          create: (context) => CounterBloc(),
+          create: (context) => counterBloc,
         ),
         BlocProvider<UserBloc>(
-          create: (context) => UserBloc(),
+          create: (context) => UserBloc(counterBloc),
         ),
       ],
       child: const MyHomePage(),
