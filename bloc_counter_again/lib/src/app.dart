@@ -2,6 +2,7 @@ import 'package:bloc_counter_again/src/bloc/counter_bloc.dart';
 import 'package:bloc_counter_again/src/bloc/user_bloc/user_bloc.dart';
 import 'package:bloc_counter_again/src/bloc/user_bloc/user_event.dart';
 import 'package:bloc_counter_again/src/bloc/user_bloc/user_state.dart';
+import 'package:bloc_counter_again/src/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -87,6 +88,17 @@ class MyHomePage extends StatelessWidget {
                     UserGetUsersJobEvent(context.read<CounterBloc>().state));
               },
               icon: const Icon(Icons.work),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const SearhPage(),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.person_search),
             ),
           ],
         ),
