@@ -2,28 +2,34 @@ import 'package:bloc_counter_again/src/bloc/search_bloc/search_bloc.dart';
 import 'package:bloc_counter_again/src/bloc/search_bloc/search_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:search_user_repository/search_user_repository.dart';
 
 class SearhPage extends StatelessWidget {
   const SearhPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => SearchBloc(),
-        ),
-      ],
-      child: MaterialApp(
-        theme: ThemeData(
-          textTheme: const TextTheme(
-            bodyMedium: TextStyle(fontSize: 33),
-            bodyLarge: TextStyle(fontSize: 22),
+    return RepositoryProvider(
+      create: (context) => SearchUserRepository(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => SearchBloc(
+                searchUserRepository:
+                    RepositoryProvider.of<SearchUserRepository>(context)),
           ),
-        ),
-        home: const Scaffold(
-          body: SafeArea(
-            child: MainSearchWidget(),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(
+            textTheme: const TextTheme(
+              bodyMedium: TextStyle(fontSize: 33),
+              bodyLarge: TextStyle(fontSize: 22),
+            ),
+          ),
+          home: const Scaffold(
+            body: SafeArea(
+              child: MainSearchWidget(),
+            ),
           ),
         ),
       ),
@@ -56,7 +62,7 @@ class MainSearchWidget extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(users[index]['username']),
+                  title: Text(users[index].userName ?? ''),
                 );
               },
               itemCount: users.length,
