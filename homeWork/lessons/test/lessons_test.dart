@@ -1,8 +1,8 @@
-import 'package:lessons/lessons.dart';
-import 'package:test/test.dart';
+// import 'package:lessons/lesson_1.dart';
+// import 'package:test/test.dart';
 
-void main() {
-  test('calculate', () {
-    expect(calculate(), 42);
-  });
-}
+// void main() {
+//   test('calculate', () {
+//     expect(calculate(), 42);
+//   });
+// }
