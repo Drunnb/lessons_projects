@@ -26,12 +26,12 @@ currentCourse:int (текущий курс): рассчитывается сле
 */
 
 void main(List<String> args) {
-  final Person Divora = Person('Divora Pchelka Amumu', 25);
-  final Person Scorpion = Person('Scorpion Red Fire', 99);
-  Divora.talk();
-  Scorpion.move();
-  final Bobby = Student('Bob Marley', 22, yearOfAdmission: DateTime(2020));
-  print(Bobby.toString());
+  final Person divora = Person('Divora Pchelka Amumu', 25);
+  final Person scorpion = Person('Scorpion Red Fire', 99);
+  divora.talk();
+  scorpion.move();
+  final bobby = Student('Bob Marley', 22, yearOfAdmission: DateTime(2020));
+  print(bobby.toString());
 }
 
 //1
