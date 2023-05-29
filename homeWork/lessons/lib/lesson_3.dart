@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 /*
 Куриная фабрика
 Написать Фабрику(Factory) по производству кур(Hen)
@@ -31,7 +32,10 @@
 void main(List<String> args) {
   final rassianHen = RussianHen();
   print(rassianHen.description);
-  final randomHen = HenFactory()..getHen('dsa');
+  final robin = Book(name: 'Robin Good')
+    ..printName()
+    ..burn();
+  final eldjeron = Magazine(name: 'Flowers for Eldjeron')..printName();
 }
 
 abstract class Hen {
@@ -102,4 +106,35 @@ class HenFactory {
   }
 }
 
-// interface class Printable {}
+abstract class Printable {
+  void printName();
+}
+
+class Book with Burnable implements Printable {
+  final String name;
+  Book({
+    required this.name,
+  });
+
+  @override
+  void printName() {
+    print('Название книги: $name');
+  }
+}
+
+class Magazine with Burnable implements Printable {
+  final String name;
+  Magazine({
+    required this.name,
+  });
+  @override
+  void printName() {
+    print('Название журнала: $name');
+  }
+}
+
+mixin Burnable {
+  void burn() {
+    print('Предмет загорелся!!!');
+  }
+}
