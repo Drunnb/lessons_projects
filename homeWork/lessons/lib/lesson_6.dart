@@ -48,6 +48,9 @@ void main(List<String> args) {
 
 //#3
   showPrimeNumber(2, 500);
+
+//#4
+  printAllNumbersBetween(10, 10);
 }
 
 int mirrorNumber(int number) {
@@ -88,7 +91,6 @@ double midOfList(List<int> list) {
   for (var i = 0; i < list.length; i++) {
     mid = mid + list[i].toDouble();
   }
-  print(mid);
   mid = mid / list.length;
   return mid;
 }
@@ -109,12 +111,31 @@ List<int> bubbleSortList(List<int> list) {
   return list;
 }
 
-//доделать
-void showPrimeNumber(int start, int end) {
-  for (var i = start; i <= end; i++) {
-    if (end % i == 0) {
-    } else {
-      print(i);
+void showPrimeNumber(int start, int stop) {
+  String result = 'Простые числа:\n';
+  for (int i = start; i <= stop; i++) {
+    bool isPrime = true;
+    final double squareRoot = sqrt(i) + 2;
+    int j = 2;
+    while (j <= squareRoot && isPrime) {
+      if (i % j == 0) isPrime = false;
+      j++;
     }
+    if (isPrime) {
+      result += ' ${i.toString()}';
+    }
+  }
+  print(result);
+}
+
+void printAllNumbersBetween(int a, int b) {
+  if (a > b) {
+    print(a);
+    printAllNumbersBetween(a - 1, b);
+  } else if (a < b) {
+    printAllNumbersBetween(a, b - 1);
+    print(b);
+  } else {
+    return;
   }
 }
