@@ -1,4 +1,65 @@
 /*
+Строение функции 
+Map<int, List<String>> myTask(String text) {
+  //Мапа ?
+  final Map<int, List<String>> map = {};
+  //ЛИст Слов ?
+  final List<String> wordList = [];
+  //Дробим текст на слова и пихаем в перечисления
+  final Iterable<Match> matches = CastomRegExp.wordsRegExp.allMatches(text);
+  //Преобразуем перечисления в сет, через метод МАП(уникальные слова от номера позиции символа слова к концу позиции символа)
+  final Set<String> setOfWords = (matches
+          .map((e) => e.input.substring(e.start, e.end).toLowerCase())
+          .toList())
+      .toSet();
+  // Пробегаем по всем словам сета
+  for (final String item in setOfWords) {
+    //Очищаем список слов
+    wordList.clear();
+    //Отбрасываем лишние знаки от слов
+    final counterRegExp =
+        RegExp('(^|[^а-яА-Я_])$item(?![а-яА-Я_])', caseSensitive: false);
+    // Проверяем слова, отбрасывая доп символы, получаем перечисление "чистых слов"
+    final Iterable<Match> repeatsOfWord = counterRegExp.allMatches(text);
+    //Узнаем кол-во "чистых слов" в перечислении
+    final k = repeatsOfWord.length;
+    //Проверяем на вхождение ключ в мапу
+    final key = map.containsKey(k);
+    //Добавляем стринг значение (перечисление) в лист типа стринг
+    wordList.add(item);
+    //Если слово повторяется, проверяем дальше на соответствие
+    if (k > 1) {
+      //Если ключа нет, то добавляем в мапу ключ + значение
+      if (!key) {
+        map.putIfAbsent(k, () => List<String>.from(wordList));
+      }
+      //Если ключ есть, то обновляем  мапу, записываем значение ключа
+      if (key) {
+        map.update(k, (value) => value + List<String>.from(wordList));
+      }
+    }
+  }
+//Создаем лист мап
+  final List<Map<int, List<String>>> listData = [];
+//Из старой мапы переносим все значения в лист мап
+  map.forEach((key, value) => listData.add({key: value}));
+//Сортируем Лист Мап по ключу, от большего к меньшему
+  listData.sort(((a, b) {
+    final aKey = a.keys.first;
+    final bKey = b.keys.first;
+    return aKey < bKey ? 1 : -1;
+  }));
+  Map<int, List<String>> sortedMap = {
+    for (var e in listData) e.keys.first: e.values.first
+  };
+
+  return sortedMap;
+}
+
+
+
+
+
 1. Регулярные выражения.
 
    Имеется текст в файле lesson_7_text.txt.
@@ -26,6 +87,7 @@
    Пример:
    Буква "А": 150 вхождений
    Буква "Ы": 120 вхождений
+
 
    4)
      a) Количество заглавных букв
@@ -71,45 +133,48 @@ WrongPasswordException и WrongLoginException - пользовательские
 
 import 'dart:io';
 
-void main(List<String> args) {
-  final String text = pathTest.readAsStringSync();
-
-  final Map<int, List<String>> resultMap = task1(text)..printAsRepeatedWords();
+void main(List<String> args) async {
+  Map<int, List<String>> repeatedWords = await readTxtFile(pathTest).then(task1)
+    ..printAsRepeatedWords();
+  Map<int, List<String>> lenghtOfWords = await readTxtFile(pathTest).then(task2)
+    ..printAsWordLenghts();
+  Map<String, int> lettersOnText = await readTxtFile(pathTest).then(task3)
+    ..printAsNumberOfLetters();
 }
 
 //#1
-final File pathTest = File('lib/lesson_7_text_test.txt');
+final String pathTest =
+    'F:/Dev/GitHub/lessons_projects-1/homeWork/lessons/lib/lesson_7_text_test.txt';
 
 // 'F:/Dev/GitHub/lessons_projects-1/homeWork/lessons/lib/lesson_7_text_test.txt';
 const String path =
     'F:/Dev/GitHub/lessons_projects-1/homeWork/lessons/lib/lesson_7_text.txt';
 
-Future<String> readTxtFile(String path) => File(path).readAsString();
+Future<String> readTxtFile(String path) =>
+    File(path).readAsString().whenComplete(() => print('file readed'));
+
+class CastomRegExp {
+  static final wordsRegExp = RegExp('[а-я]+', caseSensitive: false);
+  static final lettersRegExp = RegExp('[а-я]', caseSensitive: false);
+}
 
 //#1.1.
 Map<int, List<String>> task1(String text) {
-  final wordsRegExp = RegExp('[а-я]+', caseSensitive: false); // уточнить
-
   final Map<int, List<String>> map = {};
   final List<String> wordList = [];
-  final Iterable<Match> matches = wordsRegExp.allMatches(text);
-  print('matches: \n${matches.toString()}');
+  final Iterable<Match> matches = CastomRegExp.wordsRegExp.allMatches(text);
 
   final Set<String> setOfWords = (matches
           .map((e) => e.input.substring(e.start, e.end).toLowerCase())
           .toList())
       .toSet();
-  print('setOfWords: \n$setOfWords');
 
   for (final String item in setOfWords) {
     wordList.clear();
     final counterRegExp =
         RegExp('(^|[^а-яА-Я_])$item(?![а-яА-Я_])', caseSensitive: false);
-    print('counterRegExp: \n$counterRegExp');
     final Iterable<Match> repeatsOfWord = counterRegExp.allMatches(text);
-    print('repeatsOfWord: \n$repeatsOfWord');
     final k = repeatsOfWord.length;
-    print('k: \n$k');
     final key = map.containsKey(k);
     wordList.add(item);
     if (k > 1) {
@@ -124,17 +189,16 @@ Map<int, List<String>> task1(String text) {
 
   final List<Map<int, List<String>>> listData = [];
   map.forEach((key, value) => listData.add({key: value}));
-  print('listData: \n$listData');
 
   listData.sort(((a, b) {
     final aKey = a.keys.first;
     final bKey = b.keys.first;
     return aKey < bKey ? 1 : -1;
   }));
-  print('SortedListData: \n$listData');
-  final Map<int, List<String>> sortedMap = {
+  Map<int, List<String>> sortedMap = {
     for (var e in listData) e.keys.first: e.values.first
   };
+
   return sortedMap;
 }
 
@@ -142,10 +206,257 @@ extension PrintingAsRepeatedWords on Map<int, List<String>> {
   void printAsRepeatedWords() {
     forEach((key, value) {
       if (values.length > 1) {
-        print('$key раз повторяются слова: ${value.join(', ')}');
+        print('\n$key раз повторяются слова: ${value.join(', ')}');
       } else {
-        print('$key раз повторяется слово: ${value.join(', ')}');
+        print('\n$key раз повторяется слово: ${value.join(', ')}');
       }
     });
   }
 }
+
+//#1.2
+Map<int, List<String>> task2(String text) {
+  final Map<int, List<String>> map = {};
+  final List<String> wordList = [];
+  final Iterable<Match> matches = CastomRegExp.wordsRegExp.allMatches(text);
+  final Set<String> setOfWords = (matches
+          .map((e) => e.input.substring(e.start, e.end).toLowerCase())
+          .toList())
+      .toSet();
+  for (final String item in setOfWords) {
+    wordList.clear();
+    final int length = item.length;
+    wordList.add(item);
+    final bool key = map.containsKey(length);
+    if (!key) {
+      map.putIfAbsent(length, () => List<String>.from(wordList));
+    }
+    if (key) {
+      map.update(length, (value) => value + List<String>.from(wordList));
+    }
+  }
+  final List<Map<int, List<String>>> listData = [];
+  map.forEach((key, value) => listData.add({key: value}));
+  listData.sort(((a, b) {
+    final int aKey = a.keys.first;
+    final int bKey = b.keys.first;
+    return aKey < bKey ? 1 : -1;
+  }));
+  final Map<int, List<String>> sortedMap = {
+    for (var e in listData) e.keys.first: e.values.first
+  };
+  return sortedMap;
+}
+
+extension PrintingAsWordLengths on Map<int, List<String>> {
+  void printAsWordLenghts() {
+    forEach((key, value) {
+      if (value.length > 1) {
+        print('$key букв в словах: ${value.join(', ')}');
+      } else {
+        print('$key букв в слове: ${value.join(', ')}');
+      }
+    });
+  }
+}
+
+//#1.3
+Map<String, int> task3(String text) {
+  final Map<String, int> map = {};
+  final Iterable<Match> matches = CastomRegExp.lettersRegExp.allMatches(text);
+  final Set<String> setOfLetters = (matches
+          .map((e) => e.input.substring(e.start, e.end).toUpperCase())
+          .toList())
+      .toSet();
+  for (final String item in setOfLetters) {
+    final counter = RegExp(item, caseSensitive: false);
+    final Iterable<Match> repeatsOfLetters = counter.allMatches(text);
+    final int k = repeatsOfLetters.length;
+    map.putIfAbsent(item, () => k);
+  }
+  final List<Map<String, int>> listData = [];
+  map.forEach((key, value) => listData.add({key: value}));
+  listData.sort(((a, b) {
+    final int aKey = a.values.first;
+    final int bKey = b.values.first;
+    return aKey < bKey ? 1 : -1;
+  }));
+  final Map<String, int> sortedMap = {
+    for (var e in listData) e.keys.first: e.values.first
+  };
+  return sortedMap;
+}
+
+extension PrintingAsNumberOfLetters on Map<String, int> {
+  void printAsNumberOfLetters() {
+    forEach((key, value) {
+      print('Буква $key: $value вхождений');
+    });
+  }
+}
+
+//#1.4
+//a)
+extension UpperCaseLettersOnText on String {
+  String get getUpperCaseLettersOnText {
+    final int captialLettersLenghts = RegExp('[А-Я]').allMatches(this).length;
+    return 'Заглавных букв в тексте: $captialLettersLenghts';
+  }
+}
+
+//b)
+extension LowerCaseLettersOnText on String {
+  String get getLowerCaseLettersOnText {
+    final int lowerCaseLettersLenghts = RegExp('[а-я]').allMatches(this).length;
+    return 'Заглавных букв в тексте: $lowerCaseLettersLenghts';
+  }
+}
+
+//c)
+extension SymbolsOnText on String {
+  String get getSymbolsOnText {
+    final int symbolsLenghts = RegExp('[^А-Яа-я0-9_]').allMatches(this).length;
+    return 'Количество символов в тексте: $symbolsLenghts';
+  }
+}
+
+//d)
+extension DigitsOnText on String {
+  String get getDigitsOnText {
+    final int digitsLenghts = RegExp('[0-9]').allMatches(this).length;
+    return 'Цифр в тексте: $digitsLenghts';
+  }
+}
+
+//#2
+
+extension PrintingAsRepeatedWordsExtension on String {
+  void get printAsRepeatedWordsExtension {
+    final wordsRegExp = RegExp('[а-я]+', caseSensitive: false);
+    final map = <int, List<String>>{};
+    final wordList = List<String>.empty(growable: true);
+    final Iterable<Match> matches = wordsRegExp.allMatches(this);
+    final Set<String> setOfWords =
+        (matches.map((e) => e.input.substring(e.start, e.end).toLowerCase()))
+            .toList()
+            .toSet();
+
+    for (final String item in setOfWords) {
+      wordList.clear();
+      final counter =
+          RegExp('(^|[^а-я_])$item(?![а-я_])', caseSensitive: false);
+      final Iterable<Match> repeatsOfWord = counter.allMatches(this);
+      final k = repeatsOfWord.length;
+      final key = map.containsKey(k);
+      wordList.add(item);
+
+      if (k > 1) {
+        if (!key) {
+          map.putIfAbsent(k, () => List<String>.from(wordList));
+        }
+        if (key) {
+          map.update(k, (value) => value + List<String>.from(wordList));
+        }
+      }
+    }
+
+    final List<Map<int, List<String>>> listData = [];
+    map.forEach((key, value) => listData.add({key: value}));
+
+    listData.sort((a, b) {
+      final aKey = a.keys.first;
+      final bKey = b.keys.first;
+      return aKey < bKey ? 1 : -1;
+    });
+
+    final Map<int, List<String>> sortedMap = {
+      for (var e in listData) e.keys.first: e.values.first
+    }..forEach((key, value) {
+        if (value.length > 1) {
+          print('$key раз повторяются слова: ${value.join(', ')}');
+        } else {
+          print('$key раз повторяется слово: ${value.join(', ')}');
+        }
+      });
+  }
+}
+
+extension PrintingAsWordLengthsExtension on String {
+  void get printAsWordLengthsExtension {
+    final wordsRegExp = RegExp('[а-я]+', caseSensitive: false);
+    final map = <int, List<String>>{};
+    final wordList = List<String>.empty(growable: true);
+    final Iterable<Match> matches = wordsRegExp.allMatches(this);
+    final Set<String> setOfWords = (matches
+            .map((e) => e.input.substring(e.start, e.end).toLowerCase())
+            .toList())
+        .toSet();
+
+    for (final String item in setOfWords) {
+      wordList.clear();
+      final length = item.length;
+      wordList.add(item);
+      final key = map.containsKey(length);
+      if (!key) {
+        map.putIfAbsent(length, () => List<String>.from(wordList));
+      }
+      if (key) {
+        map.update(length, (value) => value + List<String>.from(wordList));
+      }
+    }
+
+    final List<Map<int, List<String>>> listData = [];
+    map.forEach((key, value) => listData.add({key: value}));
+
+    listData.sort((a, b) {
+      final aKey = a.keys.first;
+      final bKey = b.keys.first;
+      return aKey < bKey ? 1 : -1;
+    });
+
+    final Map<int, List<String>> sortedMap = {
+      for (var e in listData) e.keys.first: e.values.first
+    }..forEach((key, value) {
+        if (value.length > 1) {
+          print('$key букв в словах: ${value.join(', ')}');
+        } else {
+          print('$key букв в слове ${value.join(', ')}');
+        }
+      });
+  }
+}
+
+extension PrintingAsNumberOfLettersExtension on String {
+  void get printAsNumberOfLettersExtension {
+    final lettersRegExp = RegExp('[а-я]', caseSensitive: false);
+    final map = <String, int>{};
+    final Iterable<Match> matches = lettersRegExp.allMatches(this);
+    final Set<String> setOfLetters =
+        (matches.map((e) => e.input.substring(e.start, e.end).toUpperCase()))
+            .toList()
+            .toSet();
+
+    for (final item in setOfLetters) {
+      final counter = RegExp(item, caseSensitive: false);
+      final Iterable<Match> repeatsOfLetter = counter.allMatches(this);
+      final k = repeatsOfLetter.length;
+      map.putIfAbsent(item, () => k);
+    }
+
+    final List<Map<String, int>> listData = [];
+    map.forEach((key, value) => listData.add({key: value}));
+
+    listData.sort((a, b) {
+      final aKey = a.values.first;
+      final bKey = b.values.first;
+      return aKey < bKey ? 1 : -1;
+    });
+
+    final Map<String, int> sortedMap = {
+      for (var e in listData) e.keys.first: e.values.first
+    }..forEach((key, value) {
+        print('Буква "$key": $value вхождений');
+      });
+  }
+}
+//#3
