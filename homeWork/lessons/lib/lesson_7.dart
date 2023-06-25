@@ -134,12 +134,19 @@ WrongPasswordException и WrongLoginException - пользовательские
 import 'dart:io';
 
 void main(List<String> args) async {
-  Map<int, List<String>> repeatedWords = await readTxtFile(pathTest).then(task1)
-    ..printAsRepeatedWords();
-  Map<int, List<String>> lenghtOfWords = await readTxtFile(pathTest).then(task2)
-    ..printAsWordLenghts();
-  Map<String, int> lettersOnText = await readTxtFile(pathTest).then(task3)
-    ..printAsNumberOfLetters();
+  // Map<int, List<String>> repeatedWords = await readTxtFile(pathTest).then(task1)
+  //   ..printAsRepeatedWords();
+  // Map<int, List<String>> lenghtOfWords = await readTxtFile(pathTest).then(task2)
+  //   ..printAsWordLenghts();
+  // Map<String, int> lettersOnText = await readTxtFile(pathTest).then(task3)
+  //   ..printAsNumberOfLetters();
+  String texting = '';
+  String repeatedString =
+      await readTxtFile(pathTest).then((value) => texting = value);
+  texting.printAsWordLengthsExtension;
+  final bool newUser = UserValidating.userCheck(
+      login: 'login', password: 'password', confirmPassword: 'password');
+  print(newUser);
 }
 
 //#1
@@ -460,3 +467,54 @@ extension PrintingAsNumberOfLettersExtension on String {
   }
 }
 //#3
+
+class WrongLoginException implements Exception {
+  final String message;
+
+  WrongLoginException(this.message);
+  WrongLoginException.toParent(this.message) : super();
+}
+
+class WrongPasswordException implements Exception {
+  final String message;
+
+  WrongPasswordException(this.message);
+  WrongPasswordException.toParent(this.message) : super();
+}
+
+class UserValidating {
+  static bool userCheck(
+      {required String login,
+      required String password,
+      required String confirmPassword}) {
+    try {
+      if (login.length > 20) {
+        throw WrongLoginException('Слишком длинный логин');
+      }
+      if (login.contains(RegExp('[^A-Za-z _ 0-9]'))) {
+        throw WrongLoginException(
+            'Логин должен содержать только буквы и цифры английского алфавита а также символ "_"');
+      }
+      if (password.length > 20) {
+        throw WrongPasswordException(
+            'Пароль не должен содержать больше 20-ти символов');
+      }
+      if (password.contains(RegExp('[^A-Za-z _ 0-9]'))) {
+        throw WrongPasswordException(
+            'Пароль должен содержать только буквы и цифры английского алфавита а также символ "_"');
+      }
+      if (password != confirmPassword) {
+        throw WrongPasswordException('Пароли не совпадают');
+      }
+    } on WrongLoginException catch (e) {
+      print(e.message);
+      return false;
+    } on WrongPasswordException catch (e) {
+      print(e.message);
+      return false;
+    }
+
+    print('Successful');
+    return true;
+  }
+}
