@@ -15,15 +15,27 @@ import 'package:translator/translator.dart';
 
 void main(List<String> args) async {
   final translator = GoogleTranslator();
-  final poemRepository = JokeRepository();
-  Future<Joke> poems = poemRepository.getFiveRandomPoems();
-  poems.then((value) {
-    translator
-        .translate(
-          value.insult,
-          to: 'ru',
-        )
-        .then(print);
-    // print(value.insult);
+  final jokeRepository = JokeRepository();
+  jokeRepository
+      .getRandomJoke()
+      .then((value) => translator.translate(value.insult, to: 'ru'))
+      .then(print);
+
+  jokeRepository.getFiveRandomJokes().then((value) {
+    for (var element in value) {
+      translator.translate(element.insult, to: 'ru').then(print);
+    }
   });
+
+  final Joke jokeFromAsync = await jokeRepository.getRandomJoke();
+  final Translation translatedJokeFromAsync =
+      await translator.translate(jokeFromAsync.toString(), to: 'ru');
+  print('translatedJokeFromAsync: $translatedJokeFromAsync');
+
+  final List<Joke> listJokesFromAsync =
+      await jokeRepository.getFiveRandomJokes();
+  for (final joke in listJokesFromAsync) {
+    final translated = await translator.translate(joke.toString(), to: 'ru');
+    print(translated);
+  }
 }
