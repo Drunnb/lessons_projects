@@ -219,6 +219,7 @@ class MovieDetailsModel extends ChangeNotifier {
       );
       updateData(details.details, details.isFavorite);
     } on ApiClientException catch (e) {
+      // ignore: use_build_context_synchronously
       _handleApiClientException(e, context);
     }
   }

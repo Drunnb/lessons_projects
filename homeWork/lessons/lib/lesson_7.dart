@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 /*
 Строение функции 
 Map<int, List<String>> myTask(String text) {

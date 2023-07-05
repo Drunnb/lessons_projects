@@ -182,8 +182,8 @@ class _ScoreWidget extends StatelessWidget {
                     MainNavigationRouteNames.movieTrailerWidget,
                     arguments: trailerKey,
                   ),
-              child: Row(
-                children: const [
+              child: const Row(
+                children: [
                   Icon(Icons.play_arrow),
                   Text('Play Trailer'),
                 ],

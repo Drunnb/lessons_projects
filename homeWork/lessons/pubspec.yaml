@@ -6,8 +6,12 @@ version: 1.0.0
 environment:
   sdk: '>=2.19.0-401.0.dev <3.0.0'
 
-# dependencies:
-#   path: ^1.8.0
+dependencies:
+  http: ^0.13.6
+  # http: ^1.1.0
+  path: ^1.8.0
+  translator: ^0.1.7
+  
 
 dev_dependencies:
   lints: ^2.0.0
