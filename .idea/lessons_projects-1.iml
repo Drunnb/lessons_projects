@@ -2,8 +2,77 @@
 <module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/flutter_animations/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_animations/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_animations/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app_v2/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app_v2/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app_v2/build" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/new_p/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/new_p/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/new_p/build" />
+      <excludeFolder url="file://$MODULE_DIR$/dice_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/dice_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/dice_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/madbrains_lesson_project_movie/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/madbrains_lesson_project_movie/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/madbrains_lesson_project_movie/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_fest/build" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_fest/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/flutter_fest/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/mvvm_counter/build" />
+      <excludeFolder url="file://$MODULE_DIR$/mvvm_counter/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/mvvm_counter/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/new_p/patterns_codelab/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/new_p/patterns_codelab/build" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/new_p/patterns_codelab/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bloc_counter_again/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bloc_counter_again/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/bloc_counter_again/build" />
+      <excludeFolder url="file://$MODULE_DIR$/social_media_app_v1/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/social_media_app_v1/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/social_media_app_v1/build" />
+      <excludeFolder url="file://$MODULE_DIR$/black_jack_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/black_jack_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/black_jack_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/stb_v1/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/stb_v1/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/stb_v1/build" />
+      <excludeFolder url="file://$MODULE_DIR$/meditation_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/meditation_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/meditation_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/dart_application_1_test/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/dart_application_1_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/dart_application_1_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app_v1/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app_v1/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app_v1/build" />
+      <excludeFolder url="file://$MODULE_DIR$/the_movie_db/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/the_movie_db/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/the_movie_db/build" />
+      <excludeFolder url="file://$MODULE_DIR$/test_new_settings_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/test_new_settings_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/test_new_settings_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/counter_bloc/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/counter_bloc/build" />
+      <excludeFolder url="file://$MODULE_DIR$/counter_bloc/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app/build" />
+      <excludeFolder url="file://$MODULE_DIR$/gallery_app/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/noise_tool/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/noise_tool/build" />
+      <excludeFolder url="file://$MODULE_DIR$/noise_tool/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/lessons/build" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/lessons/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/homeWork/lessons/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/di_example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/di_example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/di_example/.pub" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Dart SDK" level="project" />
+    <orderEntry type="library" name="Dart Packages" level="project" />
   </component>
 </module>
